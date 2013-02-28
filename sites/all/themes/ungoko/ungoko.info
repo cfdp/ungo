@@ -18,7 +18,7 @@ stylesheets[all][] = css/ungoko-style.css
 
 settings[toggle_name] = 0
 settings[toggle_search] = 1
-settings[cdn_bootstrap] = 0
+settings[cdn_bootstrap] = 1
 settings[cdn_jquery] = 0
 
 ;Exclude
