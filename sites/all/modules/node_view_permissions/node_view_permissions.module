@@ -1,0 +1,90 @@
+<?php
+
+/**
+ * Requirements. 
+ */
+require_once 'includes/node_view_permissions.api.inc';
+
+/**
+ * Implements hook_menu(). 
+ */
+function node_view_permissions_menu() {
+  $items = array();
+  
+  $items['admin/config/content/node-view-permissions'] = array(
+    'title' => 'Node view permissions',
+    'description' => t('Adds extra permissions "View own content" and "View any content" for each content type.'),
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('node_view_permissions_settings_page_form'),
+    'file' => 'includes/pages/node_view_permissions.settings.inc',
+    'access arguments' => array('administer site configuration'),
+  );
+  
+  return $items;
+}
+
+/**
+ * Implements hook_permission().
+ */
+function node_view_permissions_permission() {
+  $perms = array();
+  
+  foreach (node_view_permissions_get_configured_types() as $type) {
+    $info = node_type_get_type($type);
+
+    $perms += array(
+      "view own $type content" => array(
+        'title' => t('%type_name: View own content', array('%type_name' => $info->name)),
+      ),
+      "view any $type content" => array(
+        'title' => t('%type_name: View any content', array('%type_name' => $info->name)),
+      ),
+    );
+  }
+  
+  return $perms;
+}
+
+/**
+ * Implements hook_node_access().
+ */
+function node_view_permissions_node_access($node, $op, $account) {
+  $type = is_string($node) ? $node : $node->type;
+  
+  if (node_view_permissions_check_node_type_activation($type)) {
+    if ($op == 'view') {
+      if (user_access('view any ' . $type . ' content', $account) || (user_access('view own ' . $type . ' content', $account) && ($account->uid == $node->uid))) {
+        return NODE_ACCESS_ALLOW;
+      }
+      if (!count(module_implements('node_grants'))) {
+        return NODE_ACCESS_DENY;
+      }
+    }
+  }
+
+  return NODE_ACCESS_IGNORE;
+}
+
+/**
+ * Implements hook_node_access_records().
+ */
+function node_view_permissions_node_access_records($node) {
+  if (!count(module_implements('node_grants'))) {
+    return array();
+  }
+  
+  $grants = array();
+  
+  if (node_view_permissions_check_node_type_activation($node->type)) {
+    $grants[] = array(
+      'realm' => 'all',
+      'gid' => 0,
+      'grant_view' => 0,
+      'grant_update' => 0,
+      'grant_delete' => 0,
+      'priority' => 0,
+    );
+  }
+  
+  return $grants;
+}
