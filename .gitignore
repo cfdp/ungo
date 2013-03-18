@@ -5,5 +5,3 @@ sites/*/settings*.php
 sites/*/files
 sites/*/private
 
-# Ignore themes
-sites/all/themes/bootstrap
