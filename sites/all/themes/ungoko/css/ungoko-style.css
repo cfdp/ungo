@@ -4,9 +4,17 @@
 
 
 /****************************************************************
-*                       Help Text under forms                   *
+*                             Forms                             *
 ****************************************************************/
+
+/* Help text under forms */
 .help-block{
   font-size: 0.8em;
   font-style: italic;
+}
+
+/* Removing filter and format options for some roles */
+body.role-client .filter-wrapper,
+body.role-counselor .filter-wrapper {
+  display:none;
 }
