@@ -5,3 +5,4 @@ sites/*/settings*.php
 sites/*/files
 sites/*/private
 sites/all/modules/devel
+sites/all/modules/devel_themer
