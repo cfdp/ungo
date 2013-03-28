@@ -11,7 +11,22 @@ function ungoko_preprocess_html(&$vars) {
   }
 }
 
-/* Adding */
+/**
+ * Preprocess variables for node.tpl.php
+ *
+ * @see node.tpl.php
+ */
+function ungoko_preprocess_node(&$variables) {
+  if ($variables['teaser']) {
+    $variables['classes_array'][] = 'row-fluid';
+  }
+  if ($variables['display_submitted']){
+    $variables['user_picture'] = ungoko_get_user_picture($variables, null);
+  }
+  
+}
+
+/* Adding the "Well" bootstrap effecto to comments */
 function ungoko_preprocess_comment(&$variables) {
   $comment = $variables['elements']['#comment'];
   $node = $variables['elements']['#node'];
@@ -30,7 +45,13 @@ function ungoko_preprocess_comment(&$variables) {
   }
 
   $variables['new'] = !empty($comment->new) ? t('new') : '';
-  $variables['picture'] = theme_get_setting('toggle_comment_user_picture') ? theme('user_picture', array('account' => $comment)) : '';
+  //$variables['picture'] = theme_get_setting('toggle_comment_user_picture') ? theme('user_picture', array('account' => $comment)) : '';
+  
+  /* benjamin@cfdp.dk: We take the user picture from the profile2 field */
+  if (theme_get_setting('toggle_comment_user_picture')){
+    $uid = $comment->uid;
+    $variables['picture'] = ungoko_get_user_picture($variables, $uid);
+  } 
   $variables['signature'] = $comment->signature;
 
   $uri = entity_uri('comment', $comment);
@@ -84,3 +105,41 @@ function ungoko_preprocess_comment(&$variables) {
   }
 }
 
+/* Returns the relevant profile2 user picture, $uid is sent along from comments */
+function ungoko_get_user_picture(&$variables, $uid){
+ 
+  // get user id from current node if it is not passed as parameter
+  if (arg(0) == 'node' && is_numeric(arg(1)) && !$uid ) {
+    // Get the nid
+    $nid = arg(1);
+    $node = node_load($nid);
+    $uid = $node->uid;
+  }
+  
+  $user = user_load($uid);
+
+  if (in_array('client', $user->roles)) {
+    $profile = profile2_load_by_user($uid, 'client');
+  }
+  else if (in_array('counselor', $user->roles)) {
+    $profile = profile2_load_by_user($uid, 'counselor');
+  }
+  else if (in_array('authenticated user', $user->roles)) {
+    $profile = profile2_load_by_user($uid, 'counselor');
+    debug('good god');
+  }
+  else {
+    //user is anonymous @todo: handle this case!
+
+  }
+
+  $display = array(
+                'type' => 'image',
+                'label'=> 'hidden',// inline, above
+                'settings'=>array(
+                            'image_style'=> 'ungo_profile_img',
+                            'image_link'=> 'content',
+                ));
+                
+  return drupal_render(field_view_field('profile2', $profile, 'field_profile_picture', $display));
+}
