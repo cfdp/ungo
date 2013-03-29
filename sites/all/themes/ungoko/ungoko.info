@@ -15,6 +15,7 @@ regions[footer]         = 'Footer'
 
 
 stylesheets[all][] = css/ungoko-style.css
+stylesheets[all][] = css/bootstrap_united.css
 
 settings[toggle_name] = 0
 settings[toggle_search] = 1
