@@ -14,7 +14,9 @@ regions[sidebar_second] = 'Secondary'
 regions[footer]         = 'Footer'
 
 
+stylesheets[all][] = css/bootstrap_united.css
 stylesheets[all][] = css/ungoko-style.css
+
 
 settings[toggle_name] = 0
 settings[toggle_search] = 1
