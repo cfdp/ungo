@@ -4,4 +4,6 @@ sites/*/settings*.php
 # Ignore paths that contain user-generated content.
 sites/*/files
 sites/*/private
-
+sites/all/modules/devel
+sites/all/modules/devel_themer
+sites/all/modules/simplehtmldom

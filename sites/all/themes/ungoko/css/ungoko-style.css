@@ -2,11 +2,35 @@
 *			Ungoko Custom Theme CSS			*
 ****************************************************************/
 
-
 /****************************************************************
-*                       Help Text under forms                   *
+*                             Views                             *
 ****************************************************************/
+/* Profile images on dashboard */
+body.page-oversigt .views-field-field-profile-picture .field-content{
+  padding-right: 10px;
+}
+
+/* Profile images on dashboard */
+body.page-oversigt .views-row{
+  padding-bottom: 10px;
+}
+/****************************************************************
+*                             Forms                             *
+****************************************************************/
+
+/* Keeping input fields within bounds */
+input, textarea, select, .uneditable-input {
+  width: auto;
+}
+
+/* Help text under forms */
 .help-block{
   font-size: 0.8em;
   font-style: italic;
+}
+
+/* Removing filter and format options for some roles */
+body.role-client .filter-wrapper,
+body.role-counselor .filter-wrapper {
+  display:none;
 }
