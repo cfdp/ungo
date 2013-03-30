@@ -2,10 +2,26 @@
 *			Ungoko Custom Theme CSS			*
 ****************************************************************/
 
+/****************************************************************
+*                             Views                             *
+****************************************************************/
+/* Profile images on dashboard */
+body.page-oversigt .views-field-field-profile-picture .field-content{
+  padding-right: 10px;
+}
 
+/* Profile images on dashboard */
+body.page-oversigt .views-row{
+  padding-bottom: 10px;
+}
 /****************************************************************
 *                             Forms                             *
 ****************************************************************/
+
+/* Keeping input fields within bounds */
+input, textarea, select, .uneditable-input {
+  width: auto;
+}
 
 /* Help text under forms */
 .help-block{
