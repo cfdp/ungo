@@ -3,13 +3,19 @@
 ****************************************************************/
 
 /****************************************************************
+*                             Dashboard                         *
+****************************************************************/
+h2 {
+  font-size: 22px;
+}
+
+/****************************************************************
 *                             Views                             *
 ****************************************************************/
 /* Profile images on dashboard */
 body.page-oversigt .views-field-field-profile-picture .field-content{
   padding-right: 10px;
 }
-
 /* Profile images on dashboard */
 body.page-oversigt .views-row{
   padding-bottom: 10px;
