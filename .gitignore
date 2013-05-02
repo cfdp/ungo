@@ -1,3 +1,6 @@
+# Ignore img folder inside the theme folder
+sites/all/themes/ungoko/img
+
 # Ignore configuration files that may contain sensitive information.
 sites/*/settings*.php
 

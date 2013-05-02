@@ -57,4 +57,3 @@ function cfdp_uf_get_counselor_uid(){
   }
   return $cid;
 }
-
