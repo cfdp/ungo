@@ -1,0 +1,43 @@
+@import "variables.less"; // Modify this for custom colors, font-sizes, etc
+
+@import "../../bootstrap/less/bootstrap.less";
+
+/****************************************************************
+*     Ungoko Custom Theme SASS     *
+****************************************************************/
+
+
+/****************************************************************
+*                             Views                             *
+****************************************************************/
+/* Profile images on dashboard */
+.page-oversigt {
+  .views-field-field-profile-picture .field-content{
+    padding-right: 10px; }
+
+  .views-row{
+    padding-bottom: 10px;
+  }
+}
+
+
+/****************************************************************
+*                             Forms                             *
+****************************************************************/
+
+/* Keeping input fields within bounds */
+input, textarea, select, .uneditable-input {
+  width: auto;
+}
+
+/* Help text under forms */
+.help-block{
+  font-size: 0.8em;
+  font-style: italic;
+}
+
+/* Removing filter and format options for some roles */
+.role-client .filter-wrapper,
+.role-counselor .filter-wrapper {
+  display:none;
+}
