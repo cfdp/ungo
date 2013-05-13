@@ -25,7 +25,7 @@
 @green:                 #38B44A;
 @red:                   #DF382C;
 @yellow:                #EFB73E;
-@orange:                #DD4814;
+@orange:                #ed6d31;
 @pink:                  #c3325f;
 @purple:                #772953;
 
@@ -38,7 +38,7 @@
 
 // Links
 // -------------------------
-@linkColor:             @orange;
+@linkColor:             #ed6d31;
 @linkColorHover:        darken(@linkColor, 15%);
 
 
@@ -85,11 +85,11 @@
 // Buttons
 // -------------------------
 @btnBackground:                     @white;
-@btnBackgroundHighlight:            darken(@white, 10%);
+@btnBackgroundHighlight:            darken(@white, 2%);
 @btnBorder:                         darken(@white, 20%);
 
 @btnPrimaryBackground:              @linkColor;
-@btnPrimaryBackgroundHighlight:     spin(@btnPrimaryBackground, 15%);
+@btnPrimaryBackgroundHighlight:     @linkColor;
 
 @btnInfoBackground:                 lighten(@purple, 15%);
 @btnInfoBackgroundHighlight:        @purple;
@@ -181,8 +181,8 @@
 @navbarCollapseDesktopWidth:      @navbarCollapseWidth + 1;
 
 @navbarHeight:                    40px;
-@navbarBackgroundHighlight:       #CE4213;
-@navbarBackground:                @orange;
+@navbarBackgroundHighlight:       lighten(@linkColor, 4%);
+@navbarBackground:                @linkColor;
 @navbarBorder:                    darken(@navbarBackground, 5%);
 
 @navbarText:                      @white;
