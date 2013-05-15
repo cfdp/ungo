@@ -10,3 +10,9 @@ sites/*/private
 sites/all/modules/devel
 sites/all/modules/devel_themer
 sites/all/modules/simplehtmldom
+
+# Stupid mac files
+.DS_Store
+
+# Sass cache
+.sass-cache
