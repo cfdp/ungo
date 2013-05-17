@@ -5276,23 +5276,25 @@ footer.footer:before {
   background: url('../img/hands.png');
 }
 /****************************************************************
-*                             Dashboard                         *
-****************************************************************/
-h2 {
-  font-size: 22px;
-}
-
-/****************************************************************
 *                             Views                             *
 ****************************************************************/
 /* Profile images on dashboard */
-.page-oversigt .views-field-field-profile-picture .field-content {
-  padding-right: 10px;
+.page-oversigt .views-field-field-profile-picture {
+  float: left;
 }
-
-/* Profile images on dashboard */
+.page-oversigt .views-field-field-profile-picture .field-content {
+  margin-right: 10px;
+}
 .page-oversigt .views-row {
-  padding-bottom: 10px;
+  background: white;
+  border: 1px solid #e3e3e3;
+  display: inline-block;
+  margin-bottom: 20px;
+  padding: 10px;
+  width: 46%;
+}
+.page-oversigt .pending-clients .views-row {
+  width: 89%;
 }
 /****************************************************************
 *                             Forms                             *
