@@ -5257,12 +5257,25 @@ a.badge:focus {
   position: fixed;
 }
 /****************************************************************
-*                     Ungoko Custom Theme SASS: ;               *
+*                     Ungoko Custom Theme LESS: ;               *
 ****************************************************************/
+/****************************************************************
+*                             General                            *
+****************************************************************/
+/****************************************************************
+*                               Menu                            *
+****************************************************************/
+/* Style active state on menu items */
+.navbar .nav > li > a.active {
+  background: #cf4e12;
+  color: white;
+  text-decoration: none;
+}
 /****************************************************************
 *                             Footer                            *
 ****************************************************************/
 footer.footer {
+  padding-bottom: 0;
   text-align: right;
 }
 footer.footer:before {
@@ -5276,23 +5289,24 @@ footer.footer:before {
   background: url('../img/hands.png');
 }
 /****************************************************************
-*                             Dashboard                         *
-****************************************************************/
-h2 {
-  font-size: 22px;
-}
-
-/****************************************************************
 *                             Views                             *
 ****************************************************************/
 /* Profile images on dashboard */
-.page-oversigt .views-field-field-profile-picture .field-content {
-  padding-right: 10px;
+.page-oversigt .views-field-field-profile-picture {
+  float: left;
 }
-
-/* Profile images on dashboard */
+.page-oversigt .views-field-field-profile-picture .field-content {
+  margin-right: 10px;
+}
 .page-oversigt .views-row {
-  padding-bottom: 10px;
+  border-bottom: 1px solid #e3e3e3;
+  display: inline-block;
+  padding: 0 0 10px;
+  margin-bottom: 20px;
+  width: 100%;
+}
+.page-oversigt .pending-clients .views-row {
+  width: 89%;
 }
 /****************************************************************
 *                             Forms                             *
@@ -5313,4 +5327,12 @@ select,
 .role-client .filter-wrapper,
 .role-counselor .filter-wrapper {
   display: none;
+}
+.panel-pane h2.pane-title {
+  font-size: 24.5px;
+}
+.views-field-created,
+.views-field-last-updated {
+  color: #999;
+  font-size: 11px;
 }
