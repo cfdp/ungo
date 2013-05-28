@@ -11,9 +11,26 @@
 ****************************************************************/
 
 /****************************************************************
+*                             General                            *
+****************************************************************/
+
+h1, h2, h3{
+  font-size: 20px; line-height: 30px;
+}
+
+/****************************************************************
+*                               Menu                            *
+****************************************************************/
+
+/* Style active state on menu items */
+
+.navbar .nav >li > a.active { background: rgb(207, 78, 18); color: white; text-decoration: none; }
+
+/****************************************************************
 *                             Footer                            *
 ****************************************************************/
 footer.footer {
+  padding-bottom: 0;
   text-align: right;
 
 
@@ -35,20 +52,20 @@ footer.footer {
 ****************************************************************/
 /* Profile images on dashboard */
 .page-oversigt {
-  .views-field-field-profile-picture{
-    float: left;
-  }
-  .views-field-field-profile-picture .field-content{
-    margin-right: 10px;}
+  .views-field-field-profile-picture {
+    float: left; }
 
-  .views-row{
+  .views-field-field-profile-picture .field-content {
+    margin-right: 10px; }
+
+  .views-row {
     border-bottom: 1px solid #e3e3e3;
     display: inline-block;
     padding: 0 0 10px;
     margin-bottom: 20px;
-    width: 100%;
-  }
-  .pending-clients .views-row{
+    width: 100%; }
+
+  .pending-clients .views-row {
     width: 89%;
   }
 }
@@ -80,4 +97,3 @@ input, textarea, select, .uneditable-input {
     font-size: 24.5px;
   }
 }
-
