@@ -5257,17 +5257,11 @@ a.badge:focus {
   position: fixed;
 }
 /****************************************************************
-*                     Ungoko Custom Theme SASS: ;               *
+*                     Ungoko Custom Theme LESS: ;               *
 ****************************************************************/
 /****************************************************************
 *                             General                            *
 ****************************************************************/
-h1,
-h2,
-h3 {
-  font-size: 20px;
-  line-height: 30px;
-}
 /****************************************************************
 *                               Menu                            *
 ****************************************************************/
@@ -5306,8 +5300,10 @@ footer.footer:before {
 }
 .page-oversigt .views-row {
   border-bottom: 1px solid #e3e3e3;
-  display: block;
-  padding: 10px;
+  display: inline-block;
+  padding: 0 0 10px;
+  margin-bottom: 20px;
+  width: 100%;
 }
 .page-oversigt .pending-clients .views-row {
   width: 89%;
@@ -5331,4 +5327,12 @@ select,
 .role-client .filter-wrapper,
 .role-counselor .filter-wrapper {
   display: none;
+}
+.panel-pane h2.pane-title {
+  font-size: 24.5px;
+}
+.views-field-created,
+.views-field-last-updated {
+  color: #999;
+  font-size: 11px;
 }

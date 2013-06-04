@@ -16,3 +16,5 @@ sites/all/modules/simplehtmldom
 
 # Sass cache
 .sass-cache
+
+tmp
