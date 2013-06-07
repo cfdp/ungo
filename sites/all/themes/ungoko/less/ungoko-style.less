@@ -99,6 +99,8 @@ input, textarea, select, .uneditable-input {
   width: 430px;
 
   .control-group,
+  .control-group input[type="text"],
+  .control-group input[type="password"],
   .form-submit {
     display: inline-block;
     margin: 0;
@@ -113,10 +115,10 @@ input, textarea, select, .uneditable-input {
     float: left;
     list-style: none;
     margin: 0;
-  }
-  
-  .form-submit {
-    margin-top: -10px;
+
+    a {
+      color: @white;
+    }
   }
 }
 

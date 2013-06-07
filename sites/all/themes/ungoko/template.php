@@ -104,3 +104,12 @@ function ungoko_preprocess_comment(&$variables) {
     }
   }
 }
+
+
+// Add placeholder attributes to the login form fields 
+function ungoko_form_user_login_block_alter(&$form, &$form_state, $form_id) {
+  
+    $form['name']['#attributes'] = array('placeholder' => t("Email"));
+    $form['pass']['#attributes'] = array('placeholder' => t("Password"));
+  
+}
