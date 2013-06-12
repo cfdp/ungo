@@ -1,8 +1,10 @@
-name = Profile2 Registration Path
-description = Attach profile2 profile forms to profile-specific registration urls.
+name = Profile2 Registration Path Blocks
+description = Generates a unique registration block per Profile2 profile type.
 core = 7.x
+
 dependencies[] = profile2
-files[] = profile2_regpath.test
+dependencies[] = profile2_regpath
+
 ; Information added by drupal.org packaging script on 2012-10-23
 version = "7.x-2.0-beta3"
 core = "7.x"

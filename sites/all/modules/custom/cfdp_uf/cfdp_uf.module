@@ -57,3 +57,14 @@ function cfdp_uf_get_counselor_uid(){
   }
   return $cid;
 }
+
+/* Setup permissions for marking questions done by using the status field on the question content type */
+
+function cfdp_uf_permission() {
+  return array(
+    'view question status' => array(
+      'title' => t('View the field value'),
+      'description' => t('Allows a user to view the status of a question')
+    ), 
+  );
+}

@@ -23,7 +23,10 @@
     hide($content['field_tags']);
     print render($content);
   ?>
-
+  <?php if(user_access('view question status')): ?> 
+    <a class="btn btn-primary">Archive</a>
+  <?php endif;?>
+  
   <?php if (!empty($content['field_tags']) || !empty($content['links'])): ?>
     <footer>
       <?php print render($content['field_tags']); ?>

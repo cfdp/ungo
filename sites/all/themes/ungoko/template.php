@@ -104,3 +104,27 @@ function ungoko_preprocess_comment(&$variables) {
     }
   }
 }
+
+
+// Add placeholder attributes to the login form fields 
+function ungoko_form_user_login_block_alter(&$form, &$form_state, $form_id) {
+  
+    $form['name']['#attributes'] = array('placeholder' => t("Email"));
+    $form['pass']['#attributes'] = array('placeholder' => t("Password"));
+  
+}
+
+// Change labels in the comment form 
+function ungoko_form_comment_form_alter(&$form, &$form_state, $form_id) {
+  
+  $label = t('Reply');
+  $form['actions']['submit']['#value'] = $label;
+  $form['actions']['submit']['#attributes']['class'][] = 'btn-primary';
+  
+}
+
+function ungoko_form_question_node_form_alter(&$form, &$form_state, $form_id){
+  $label = t('Send');
+  $form['actions']['submit']['#value'] = $label;
+  $form['actions']['submit']['#attributes']['class'][] = 'btn-primary';
+}
