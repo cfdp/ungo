@@ -65,6 +65,98 @@ function cfdp_uf_permission() {
     'view question status' => array(
       'title' => t('View the field value'),
       'description' => t('Allows a user to view the status of a question')
+    ),
+    'archive question' => array(
+      'title' => t('Set the status field value to arcchived'),
+      'description' => t('Allows a user to archive a question')
+    ),
+    'reopen question' => array(
+      'title' => t('Set the status field value from archived to open'),
+      'description' => t('Allows a user to reopen a question')
     ), 
   );
+}
+
+function cfdp_uf_menu() {
+ $items['cfdp_uf'] = array(
+  'title' => 'My title', //The name of the menu that will be displayed
+  'page callback' => 'cfdp_uf_page_callback', //The name of the function that will output a page
+ );
+ return $items;
+}
+
+function cfdp_uf_page_callback() {
+ //The argument is the name of the function with the form details
+ return drupal_get_form('cfdp_uf_form');
+}
+
+function cfdp_uf_form($form, &$form_state) {
+  
+  $node = cfdp_uf_get_current_node();
+
+
+  if($node->field_status['und'][0]['value'] == 'archived'){
+
+    $label = t('Open');
+
+  }else if($node->field_status['und'][0]['value'] == 'pending'){
+
+    $label = t('Archive');
+
+  }
+
+ $form = array (
+  '#action' => '#', //The action attribute of the HTML form tag
+  'archive' => array ( //We define a simple text field for the "name"
+   '#type' => 'hidden',
+   '#value' => 'archive',
+  ),
+  'submit' => array ( //We define a simple submit button
+   '#type' => 'submit',
+   '#value' => $label,
+   '#attributes' => array('onclick' => 'if(!confirm("Really Delete?")){return false;}'),
+  ),
+ );
+
+ return $form;
+}
+
+function cfdp_uf_form_submit($form, &$form_state) {
+ 
+ //drupal_set_message(t('Yay, your name is fine!'));
+
+  // Load the current node object
+  $node = cfdp_uf_get_current_node();
+
+  // Check if the value of the status field is archvived(string)
+  if($node->field_status['und'][0]['value'] == 'archived'){
+
+    $action = 'pending';
+    $comments = '2';
+
+  }else if($node->field_status['und'][0]['value'] == 'pending'){
+
+    $action = 'archived';
+    $comments = '1';
+
+  }
+  
+  $node->field_status['und'][0]['value'] = $action;
+  
+  //Enable or disable the comments
+  $node->comment = $comments;
+  
+  //Overwrite the current node with the new values
+  node_save($node);
+}
+
+
+//Help function to load the current node
+function cfdp_uf_get_current_node(){
+  
+  $node = menu_get_object();
+  $nid = $node->nid;
+  $node = node_load($nid);
+
+  return $node;
 }
