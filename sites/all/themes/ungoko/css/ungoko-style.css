@@ -5328,31 +5328,20 @@ select,
 .role-counselor .filter-wrapper {
   display: none;
 }
-/* Front page login form */
-#block-user-login form {
+/* Navbar logo and menu */
+.navbar .logo {
+  margin: 9px 0;
+}
+.navbar .menu {
+  margin: 18px 0;
+}
+/* Front page login block */
+.block-user-login {
   float: right;
-  margin: 0;
-  padding-top: 10px;
-  width: 435px;
+  margin: 18px 0;
 }
-#block-user-login form .control-group,
-#block-user-login form .control-group input[type="text"],
-#block-user-login form .control-group input[type="password"],
-#block-user-login form .form-submit {
-  display: inline-block;
-  margin: 0;
-}
-#block-user-login form label {
-  display: none;
-}
-#block-user-login form ul {
-  display: inline-block;
-  float: left;
-  list-style: none;
-  margin: 0;
-}
-#block-user-login form ul a {
-  color: #ffffff;
+.block-user-login a {
+  margin: 0 10px;
 }
 .panel-pane h2.pane-title {
   font-size: 24.5px;
