@@ -130,24 +130,3 @@ function ungoko_form_question_node_form_alter(&$form, &$form_state, $form_id){
   $form['actions']['submit']['#value'] = $label;
   $form['actions']['submit']['#attributes']['class'][] = 'btn-primary';
 }
-
-//Stops sending the delete account confirmation email and deletes the account
-variable_set('user_mail_cancel_confirm_notify', FALSE);
-function ungoko_form_user_cancel_confirm_form_alter(&$form, &$form_state, $form_id) {
-  $form['#submit'][0] = 'ungoko_user_cancel_form_submit';
-}
-
-function ungoko_user_cancel_form_submit(&$form, &$form_state) {
-  // Rather than negating the complex access expression from the original form we can
-  // just make the change in the else portion
-
-  global $user;
-  $account = $form_state['values']['_account'];
-  if (user_access('administer users') && empty($form_state['values']['user_cancel_confirm']) && $account->uid != $user->uid) {
-    // Account has already been cancelled by the system.
-  }
-  else {
-    // Cancel the account
-    user_cancel($form_state['values'], $account->uid, $form_state['values']['user_cancel_method']);
-  }
-}

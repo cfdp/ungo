@@ -160,3 +160,80 @@ function cfdp_uf_get_current_node(){
 
   return $node;
 }
+
+//Alter the cancellation process and stop cancellation while counselor has clients
+function cfdp_uf_form_user_cancel_confirm_form_alter(&$form, &$form_state, $form_id) {
+  //$form['#submit'][] = 'cfdp_uf_user_cancel_form_submit';
+  
+
+  // Get the uid of the user who's account is about to be cancelled
+  $fields = array();
+  foreach($form['_account']['#value'] as $key=>$value){
+      $fields[$key] = $value;
+  }
+  unset($value);
+  // Store counselor uid and typecast it as integer
+  $c_uid = (int)$fields['uid'];
+  
+  // Store the roles the user has
+  $user_roles = $fields['roles'];
+  
+  // Find if the user is a counselor or a client
+  foreach($user_roles as $key=>$value){
+      if($value == 'client'){
+        $user_role = 'client';
+      }elseif ($value == 'counselor') {
+        $user_role = 'counselor';
+      }else{
+        $user_role = null;
+      }
+  }
+
+  if($user_role == 'counselor'){
+
+    //drupal_set_message('<pre>' . check_plain(var_export($user_role, TRUE)) . '</pre>');
+    
+    // Load the node module
+    module_load_include('inc', 'node', 'node.admin');
+    
+    // Query the db for all client profiles linked to this cousnelor
+    $profiles = db_select('field_data_field_counselor', 'fdfc')
+    ->fields('fdfc', array('entity_id'))
+    ->condition('fdfc.field_counselor_target_id', $c_uid)
+    ->execute()->fetchAllAssoc('entity_id', $fetch = NULL);
+    
+    // Stop the cancellation chain if the counselor still has clients
+    if(count($profiles) >= 1){
+      watchdog('user', 'User account cancellation invoked for counselor with id %c_uid. Clients still attached.', array('%c_uid'=> $c_uid));
+
+      drupal_set_message('<p>' . "Please assign a different counselor to the clients receiving counselling from this counselor. " . '</p>');
+
+      // Remove form elements for the cancellation method
+      unset($form['user_cancel_method'], $form['user_cancel_confirm'], $form['user_cancel_notify'], $form['description']);
+      
+      // Remove the confirm button
+      unset($form['actions']['submit']);
+    }else{
+      watchdog('user', 'User account cancellation invoked for counselor with id %c_uid', array('%c_uid'=> $c_uid));
+      drupal_set_message('<p>' . "The counselor account can be removed." . '</p>');
+    }
+
+  }
+
+}
+
+function cfdp_uf_user_cancel_form_submit(&$form, &$form_state){
+  // Rather than negating the complex access expression from the original form we can
+  // just make the change in the else portion
+/*
+  global $user;
+  $account = $form_state['values']['_account'];
+  if (user_access('administer users') && empty($form_state['values']['user_cancel_confirm']) && $account->uid != $user->uid) {
+    // Account has already been cancelled by the system.
+  }
+  else {
+    // Cancel the account
+    //user_cancel($form_state['values'], $account->uid, $form_state['values']['user_cancel_method']);
+  }
+*/  
+}
