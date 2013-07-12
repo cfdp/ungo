@@ -192,12 +192,12 @@ function cfdp_uf_form_user_cancel_confirm_form_alter(&$form, &$form_state, $form
   $form['actions']['cancel']['#href'] = 'profile/'. $uid;
   $form['actions']['cancel']['#options']['path'] = 'profile/'. $uid;
 
+  // Load the node module
+  module_load_include('inc', 'node', 'node.admin');
+  
   if($user_role == 'counselor'){
 
     //drupal_set_message('<pre>' . check_plain(var_export($form['actions'], TRUE)) . '</pre>');
-    
-    // Load the node module
-    module_load_include('inc', 'node', 'node.admin');
     
     // Query the db for all client profiles linked to this cousnelor
     $profiles = db_select('field_data_field_counselor', 'fdfc')
@@ -225,11 +225,38 @@ function cfdp_uf_form_user_cancel_confirm_form_alter(&$form, &$form_state, $form
     }
 
   }elseif($user_role == 'client'){
-    watchdog('user', 'User account cancellation invoked for %user_role with id %uid', array('%uid'=> $uid, '%user_role' => $user_role));
-    drupal_set_message('All your uploaded files will be removed and all the questions you posted will be anonymized.');
-    unset($form['user_cancel_method'], $form['user_cancel_confirm'], $form['user_cancel_notify'], $form['description']);
-  }
+    
+    // Query the db for all questions created by this client that are still opened
+    $query = db_select('node', 'n');
+    $query->join('field_data_field_status', 'fdfs', 'n.nid = fdfs.entity_id');
+    $query->fields('n', array('nid'));
+    $query->condition('n.uid', $uid);
+    $query->condition('n.type', 'question');
+    $query->condition('fdfs.field_status_value', 'pending');
+    $questions = $query->execute()->fetchAllAssoc('nid', $fetch = NULL);
 
+    //drupal_set_message('<pre>' . check_plain(var_export($questions, TRUE)) . '</pre>');
+
+    watchdog('user', 'User account cancellation invoked for %user_role with id %uid', array('%uid'=> $uid, '%user_role' => $user_role));
+
+    if(count($questions) >= 1){
+    
+      // Remove form elements for the cancellation method
+      unset($form['user_cancel_method'], $form['user_cancel_confirm'], $form['user_cancel_notify'], $form['description']);
+  
+      // Remove the confirm button
+      unset($form['actions']['submit']);
+      
+      drupal_set_message('This client has pending questions still. Archive them before closing his account.');
+    
+    }else{
+      
+      // Remove form elements for the cancellation method
+      unset($form['user_cancel_method'], $form['user_cancel_confirm'], $form['user_cancel_notify'], $form['description']);
+
+      drupal_set_message('All your uploaded files will be removed and all the questions you posted will be anonymized.');
+    }
+  }
 }
 
 function cfdp_uf_user_cancel_form_submit(&$form, &$form_state){
