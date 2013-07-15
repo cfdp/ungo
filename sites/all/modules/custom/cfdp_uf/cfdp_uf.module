@@ -164,13 +164,13 @@ function cfdp_uf_get_current_node(){
 //Alter the cancellation process and stop cancellation while counselor has clients
 function cfdp_uf_form_user_cancel_confirm_form_alter(&$form, &$form_state, $form_id) {
   
-
   // Get the uid of the user who's account is about to be cancelled
   $fields = array();
   foreach($form['_account']['#value'] as $key=>$value){
       $fields[$key] = $value;
   }
   unset($value);
+
   // Store user id and typecast it as integer
   $uid = (int)$fields['uid'];
   
@@ -189,15 +189,21 @@ function cfdp_uf_form_user_cancel_confirm_form_alter(&$form, &$form_state, $form
   }
 
   //Rewrite the cancel link to take the user back to the profile page.
+  $form['actions']['cancel']['#title'] = 'Go back';
   $form['actions']['cancel']['#href'] = 'profile/'. $uid;
   $form['actions']['cancel']['#options']['path'] = 'profile/'. $uid;
 
   // Load the node module
-  module_load_include('inc', 'node', 'node.admin');
+  module_load_include('inc', 'node', 'node.admin');  
+  
+  // Disable all the radio buttons for the cancellaction methods
+  $form['user_cancel_method']['user_cancel_block']['#disabled'] = TRUE;
+  $form['user_cancel_method']['user_cancel_block_unpublish']['#disabled'] = TRUE;
+  $form['user_cancel_method']['user_cancel_reassign']['#disabled'] = TRUE;
+  $form['user_cancel_method']['user_cancel_delete']['#disabled'] = TRUE;
   
   if($user_role == 'counselor'){
 
-    //drupal_set_message('<pre>' . check_plain(var_export($form['actions'], TRUE)) . '</pre>');
     
     // Query the db for all client profiles linked to this cousnelor
     $profiles = db_select('field_data_field_counselor', 'fdfc')
@@ -216,8 +222,14 @@ function cfdp_uf_form_user_cancel_confirm_form_alter(&$form, &$form_state, $form
       
       // Remove the confirm button
       unset($form['actions']['submit']);
+
     }else{
+      
       watchdog('user', 'User account cancellation invoked for %user_role with id %uid', array('%uid'=> $uid, '%user_role' => $user_role));
+      
+      // Remove form elements for the cancellation method
+      unset($form['user_cancel_confirm'], $form['user_cancel_notify'], $form['description']);
+
       drupal_set_message('<p>' . "The counselor account can be removed." . '</p>');
       
       //Overwrite the submit function call
@@ -235,14 +247,12 @@ function cfdp_uf_form_user_cancel_confirm_form_alter(&$form, &$form_state, $form
     $query->condition('fdfs.field_status_value', 'pending');
     $questions = $query->execute()->fetchAllAssoc('nid', $fetch = NULL);
 
-    //drupal_set_message('<pre>' . check_plain(var_export($questions, TRUE)) . '</pre>');
-
     watchdog('user', 'User account cancellation invoked for %user_role with id %uid', array('%uid'=> $uid, '%user_role' => $user_role));
 
     if(count($questions) >= 1){
     
       // Remove form elements for the cancellation method
-      unset($form['user_cancel_method'], $form['user_cancel_confirm'], $form['user_cancel_notify'], $form['description']);
+      unset( $form['user_cancel_confirm'], $form['user_cancel_notify'], $form['description']);
   
       // Remove the confirm button
       unset($form['actions']['submit']);
@@ -259,22 +269,7 @@ function cfdp_uf_form_user_cancel_confirm_form_alter(&$form, &$form_state, $form
   }
 }
 
-function cfdp_uf_user_cancel_form_submit(&$form, &$form_state){
-  // Rather than negating the complex access expression from the original form we can
-  // just make the change in the else portion
-
-  global $user;
-  $account = $form_state['values']['_account'];
-  if (user_access('administer users') && empty($form_state['values']['user_cancel_confirm']) && $account->uid != $user->uid) {
-    // Account has already been cancelled by the system.
-  }
-  else {
-    // Cancel the account
-    user_cancel($form_state['values'], $account->uid, $form_state['values']['user_cancel_method']);
-  }
-
-}
-
+// Provide a cancel link on the edit profile page
 function cfdp_uf_form_profile2_edit_client_form_alter(&$form, &$form_state){
   
   // Get the uid of the user who's account is about to be cancelled
