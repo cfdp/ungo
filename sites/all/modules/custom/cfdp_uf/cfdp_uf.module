@@ -79,14 +79,14 @@ function cfdp_uf_permission() {
 
 function cfdp_uf_menu() {
  $items['cfdp_uf'] = array(
-  'title' => 'My title', //The name of the menu that will be displayed
-  'page callback' => 'cfdp_uf_page_callback', //The name of the function that will output a page
+  'title' => 'My title', // The name of the menu that will be displayed
+  'page callback' => 'cfdp_uf_page_callback', // The name of the function that will output a page
  );
  return $items;
 }
 
 function cfdp_uf_page_callback() {
- //The argument is the name of the function with the form details
+ // The argument is the name of the function with the form details
  return drupal_get_form('cfdp_uf_form');
 }
 
@@ -106,8 +106,8 @@ function cfdp_uf_form($form, &$form_state) {
   }
 
  $form = array (
-  '#action' => '#', //The action attribute of the HTML form tag
-  'archive' => array ( //We define a simple text field for the "name"
+  '#action' => '#',
+  'archive' => array (
    '#type' => 'hidden',
    '#value' => 'archive',
   ),
@@ -123,8 +123,6 @@ function cfdp_uf_form($form, &$form_state) {
 
 function cfdp_uf_form_submit($form, &$form_state) {
  
- //drupal_set_message(t('Yay, your name is fine!'));
-
   // Load the current node object
   $node = cfdp_uf_get_current_node();
 
@@ -143,15 +141,15 @@ function cfdp_uf_form_submit($form, &$form_state) {
   
   $node->field_status['und'][0]['value'] = $action;
   
-  //Enable or disable the comments
+  // Enable or disable the comments
   $node->comment = $comments;
   
-  //Overwrite the current node with the new values
+  // Overwrite the current node with the new values
   node_save($node);
 }
 
 
-//Help function to load the current node
+// Help function to load the current node
 function cfdp_uf_get_current_node(){
   
   $node = menu_get_object();
@@ -161,7 +159,7 @@ function cfdp_uf_get_current_node(){
   return $node;
 }
 
-//Alter the cancellation process and stop cancellation while counselor has clients
+// Alter the cancellation process and stop cancellation while counselor has clients
 function cfdp_uf_form_user_cancel_confirm_form_alter(&$form, &$form_state, $form_id) {
   
   // Get the uid of the user who's account is about to be cancelled
@@ -188,13 +186,13 @@ function cfdp_uf_form_user_cancel_confirm_form_alter(&$form, &$form_state, $form
       }
   }
 
-  //Rewrite the cancel link to take the user back to the profile page.
+  // Rewrite the cancel link to take the user back to the profile page.
   $form['actions']['cancel']['#title'] = 'Go back';
   $form['actions']['cancel']['#href'] = 'profile/'. $uid;
   $form['actions']['cancel']['#options']['path'] = 'profile/'. $uid;
 
   // Load the node module
-  module_load_include('inc', 'node', 'node.admin');  
+  module_load_include('inc', 'node', 'node.admin');
   
   // Disable all the radio buttons for the cancellaction methods
   $form['user_cancel_method']['user_cancel_block']['#disabled'] = TRUE;
@@ -232,7 +230,7 @@ function cfdp_uf_form_user_cancel_confirm_form_alter(&$form, &$form_state, $form
 
       drupal_set_message('<p>' . "The counselor account can be removed." . '</p>');
       
-      //Overwrite the submit function call
+      // Overwrite the submit function call
       $form['#submit'][] = 'cfdp_uf_user_cancel_form_submit';
     }
 
@@ -289,4 +287,68 @@ function cfdp_uf_form_profile2_edit_client_form_alter(&$form, &$form_state){
       '#weight' => 50,
       '#options' => array('path' => 'profile/'.$uid)
     );
+}
+
+  // Update all questions belonging to a client when a new cousnelor is assigned to them
+  // All open questions have to be reassigned to the new counselor
+function cfdp_uf_user_update(&$edit, $account, $category){
+  
+  watchdog('user', 'User profile update invoked.');
+  
+  if(user_access('edit any client profile')){
+    // Get the uid's of the new counselor and the client
+    $fields = array();
+    foreach($account as $key=>$value){
+        $fields[$key] = $value;
+    }
+    unset($value);
+
+    // Store the client's uid
+    $client_uid = (int)$fields['uid'];
+
+    // Store the new counselor's uid
+    if(array_key_exists('field_dependant_fallback_field_f', $fields)){
+      $new_counselor = (int)$fields['field_dependant_fallback_field_f']['und'][0]['target_id'];
+
+      // Get the uid of the old/current counselor
+      $original_fields = array();
+      foreach ($fields['original'] as $key => $value) {
+         $original_fields[$key] = $value;
+      }
+
+      // Store the old counselor's uid
+      $old_counselor = (int)$original_fields['field_dependant_fallback_field_f']['und'][0]['target_id'];
+    }else{
+      watchdog('error','Cound not find uid of old or new counselor.');
+      return;
+    }
+    // Load the node module
+    module_load_include('inc', 'node', 'node.admin');
+
+    // Query the db for all questions created by this client that are still opened
+    $query = db_select('node', 'n');
+    $query->join('field_data_field_status', 'fdfs', 'n.nid = fdfs.entity_id');
+    $query->fields('n', array('nid'));
+    $query->condition('n.uid', $client_uid);
+    $query->condition('n.type', 'question');
+    $query->condition('fdfs.field_status_value', 'pending');
+    $questions = $query->execute()->fetchAllAssoc('nid', $fetch = NULL);
+
+    if(count($questions) != 0){  
+      // Load each question and update the field_assigned_counselor with $new_counselor
+      foreach ($questions as $node) {
+        $question = node_load($node->nid);
+        $question->field_assigned_counselor['und'][0]['target_id'] = $new_counselor;
+
+        // Sotre changes made to the node in the database
+        node_save($question);
+
+        drupal_set_message('<pre>Question ' .  $question->nid . ' is now assigned to counselor ' . $question->field_assigned_counselor['und'][0]['target_id'] . '</pre>');
+
+        watchdog('content', 'Question node %nid reassigned from counselor %old_uid to counselor %new_uid.', array('%nid'=> $node->nid, '%old_uid'=>$old_counselor, '%new_uid'=>$new_counselor));
+      } // END foreach
+    }else{
+      watchdog('notice','Client %client_uid has no (open) question. Nothing to reassign.', array('%client_uid'=>$client_uid));
+    }
+  } // ENDIF user access
 }
