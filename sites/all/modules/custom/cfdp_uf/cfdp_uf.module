@@ -161,7 +161,6 @@ function cfdp_uf_get_current_node(){
 
 // Alter the cancellation process and stop cancellation while counselor has clients
 function cfdp_uf_form_user_cancel_confirm_form_alter(&$form, &$form_state, $form_id) {
-  
   // Get the uid of the user who's account is about to be cancelled
   $fields = array();
   foreach($form['_account']['#value'] as $key=>$value){
@@ -246,25 +245,50 @@ function cfdp_uf_form_user_cancel_confirm_form_alter(&$form, &$form_state, $form
     $questions = $query->execute()->fetchAllAssoc('nid', $fetch = NULL);
 
     watchdog('user', 'User account cancellation invoked for %user_role with id %uid', array('%uid'=> $uid, '%user_role' => $user_role));
+    $count_questions = count($questions);
 
-    if(count($questions) >= 1){
+    if($count_questions >= 1){
     
       // Remove form elements for the cancellation method
-      unset( $form['user_cancel_confirm'], $form['user_cancel_notify'], $form['description']);
+      unset($form['user_cancel_method'], $form['user_cancel_confirm'], $form['user_cancel_notify'], $form['description']);
   
       // Remove the confirm button
       unset($form['actions']['submit']);
       
-      drupal_set_message('This client has pending questions still. Archive them before closing his account.');
+      // Inform the user about how many open questions this client has
+      drupal_set_message('This client has '.$count_questions.' pending questions. Archive them before closing his account.');
     
     }else{
       
+      //drupal_set_message('<pre>' . check_plain(var_export($form['user_cancel_method'], TRUE)) . '</pre>');
+      
       // Remove form elements for the cancellation method
-      unset($form['user_cancel_method'], $form['user_cancel_confirm'], $form['user_cancel_notify'], $form['description']);
+      unset($form['user_cancel_confirm'], $form['user_cancel_notify'], $form['description']);
 
       drupal_set_message('All your uploaded files will be removed and all the questions you posted will be anonymized.');
-    }
+
+      // Overwrite the submit function call      
+      $form['#submit'][] = 'cfdp_uf_user_cancel_form_submit';
+    } // END else
+  } // END elseif
+}
+
+function cfdp_uf_user_cancel_form_submit(&$form, &$form_state) {
+  // Rather than negating the complex access expression from the original form we can
+  // just make the change in the else portion
+
+  global $user;
+  $account = $form_state['values']['_account'];
+  if (user_access('administer users') && empty($form_state['values']['user_cancel_confirm']) && $account->uid != $user->uid) {
+    // Account has already been cancelled by the system.
   }
+  else {
+    // Cancel the account
+    user_cancel($form_state['values'], $account->uid, $form_state['values']['user_cancel_method']);
+  }
+  
+  // Redirect to dashboard
+  $form_state['redirect'] = 'oversigt';
 }
 
 // Provide a cancel link on the edit profile page
