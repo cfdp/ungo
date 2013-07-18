@@ -303,12 +303,12 @@ function cfdp_uf_form_profile2_edit_client_form_alter(&$form, &$form_state){
 
   // Add the cancel link to the form and allow user to get back to the profile page.
   $form['actions']['cancel'] = array(
-      '#type' => 'link',
-      '#title' => 'Cancel',
-      '#href' => 'profile/'. $uid,
-      '#weight' => 50,
-      '#options' => array('path' => 'profile/'.$uid)
-    );
+    '#type' => 'link',
+    '#title' => 'Cancel',
+    '#href' => 'profile/'. $uid,
+    '#weight' => 50,
+    '#options' => array('path' => 'profile/'.$uid)
+  );
 }
 
   // Update all questions belonging to a client when a new cousnelor is assigned to them
@@ -377,6 +377,4 @@ function cfdp_uf_user_update(&$edit, $account, $category){
       watchdog('notice','Client %client_uid has no (open) question. Nothing to reassign.', array('%client_uid'=>$client_uid));
     }
   } // ENDIF user access
-  //drupal_set_message('<pre>' . check_plain(var_export($account, TRUE)) . '</pre>');
-  //$form_state['redirect'] = 'oversigt';
 }
