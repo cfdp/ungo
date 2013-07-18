@@ -41,15 +41,26 @@ function cfdp_uf_get_user_picture(&$variables, $uid){
 }
 
 /* Returns the counselor uid (field_counselor) of the logged in client. 
- * Being used in Client View @todo: handle the case of the client not having a counselor */
+ * Used in Client View - My Counselor display*/
 function cfdp_uf_get_counselor_uid(){
   global $user;
   $cid = NULL;
   if (in_array('client', $user->roles)) {
+    //$account = user_load($user->uid);
     // Get the client profile
-    $profile = profile2_load_by_user($user->uid, 'client');
-    // digging right into the object - @todo: this should be done with field_view_field() or similar API function
-    $cid = $profile->field_counselor['und'][0]['target_id'];
+    $profile = profile2_load_by_user($user, 'client');
+    
+    // Fetch the filed_counselor value form the profile2 object 
+    $field = field_get_items('profile2', $profile, 'field_counselor');
+
+    if($field){
+      
+      // Store the counselor uid
+      $cid = $field[0]['target_id'];
+      
+    }else{
+      watchdog('warning','Client has no counselor assigned!');      
+    }
   }
   // The function was called for a non-client
   else {
