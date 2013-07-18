@@ -382,7 +382,12 @@ function cfdp_uf_user_update(&$edit, $account, $category){
 
         drupal_set_message('<pre>Question ' .  $question->nid . ' is now assigned to counselor ' . $question->field_assigned_counselor['und'][0]['target_id'] . '</pre>');
 
-        watchdog('content', 'Question node %nid reassigned from counselor %old_uid to counselor %new_uid.', array('%nid'=> $node->nid, '%old_uid'=>$old_counselor, '%new_uid'=>$new_counselor));
+        if(array_key_exists('old_counselor', $GLOBALS)){
+          watchdog('content', 'Question node %nid reassigned from counselor %old_uid to counselor %new_uid.', array('%nid'=> $node->nid, '%old_uid'=>$old_counselor, '%new_uid'=>$new_counselor));
+        }else{
+          watchdog('content', 'Question node %nid assigned to counselor %new_uid.', array('%nid'=> $node->nid, '%new_uid'=>$new_counselor));
+        }
+
       } // END foreach
     }else{
       watchdog('notice','Client %client_uid has no (open) question. Nothing to reassign.', array('%client_uid'=>$client_uid));
