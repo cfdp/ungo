@@ -2,8 +2,11 @@
 
 /* Returns the relevant profile2 user picture, $uid is sent along from comments */
 function cfdp_uf_get_user_picture(&$variables, $uid){
- 
-  // get user id from current node if it is not passed as parameter
+  
+  // Store path to default image for when user has no profile picture
+  $profile_picture_default = '<img alt="" src="/sites/default/files/styles/ungo_profile_img/public/default_images/profile_client.jpg" typeof="foaf:Image">';
+
+  // Get user id from current node if it is not passed as parameter
   if (arg(0) == 'node' && is_numeric(arg(1)) && !$uid ) {
     // Get the nid
     $nid = arg(1);
@@ -11,33 +14,66 @@ function cfdp_uf_get_user_picture(&$variables, $uid){
     $uid = $node->uid;
   }
   
+  // Load the user object
   $user = user_load($uid);
 
-  /* @todo: if the user doesn't have a profile2 profile, we get a nasty error...'*/
-  if (in_array('client', $user->roles)) {
-    $profile = profile2_load_by_user($uid, 'client');
-  }
-  else if (in_array('counselor', $user->roles)) {
-    $profile = profile2_load_by_user($uid, 'counselor');
-  }
-  else if (in_array('authenticated user', $user->roles)) {
-    /* This is a pretty crude way of getting around the missing profile2 issue @todo: find better way */
-    return '<img alt="" src="/sites/default/files/default_images/profile_default_0.jpg" typeof="foaf:Image">';
-  }
-  else {
-    //user is anonymous - this could happen if anonymous users can post content. @todo: handle this case!
-    return '<img alt="" src="/sites/default/files/default_images/profile_default_0.jpg" typeof="foaf:Image">';
-  }
+  if($user && profile2_load_by_user($uid)){
+    
+    if(in_array('client', $user->roles) || in_array('counselor', $user->roles)) {
+      $profile = profile2_load_by_user($uid, 'client');
 
-  $display = array(
-                'type' => 'image',
-                'label'=> 'hidden',// inline, above
-                'settings'=>array(
-                            'image_style'=> 'ungo_profile_img',
-                            'image_link'=> 'content',
-                ));
+      // $profile is not an object when user has no profile2
+      if(is_object($profile)){
+        $profile_fields = array();
+        
+        foreach($profile as $key=>$value){
+            $profile_fields[$key] = $value;
+        }
+        unset($value);
                 
-  return drupal_render(field_view_field('profile2', $profile, 'field_profile_picture', $display));
+        if(!empty($profile_fields['field_profile_picture'])){
+        
+          $field_profile_picture = field_get_items('profile2', $profile, 'field_profile_picture');
+        }else{
+          $field_profile_picture = false;
+        }
+
+      }else{
+        $field_profile_picture = false;
+      }
+      
+      if($field_profile_picture){
+        
+        $display = array(
+              'type' => 'image',
+              'label'=> 'hidden',// inline, above
+              'settings'=>array(
+                          'image_style'=> 'ungo_profile_img',
+                          'image_link'=> 'content',
+                          )
+              );
+
+        // Return the profile_picture part of this profile2          
+        return drupal_render(field_view_field('profile2', $profile, 'field_profile_picture', $display));
+      
+      }else{
+        // Error returning the filed_profile_picture value, user has no picture, fallback to default picture
+        
+        return $profile_picture_default;
+      }
+      
+    }else{
+      // User is anonymous - this could happen if anonymous users can post content
+     
+      return $profile_picture_default;
+    }
+
+  }else{
+    // User has no profile2 profile
+    watchdog('warning','User %uid has no profile.', array('%uid'=>$uid));
+    
+    return $profile_picture_default;
+  }
 }
 
 /* Returns the counselor uid (field_counselor) of the logged in client. 
