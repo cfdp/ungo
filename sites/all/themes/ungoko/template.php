@@ -130,3 +130,35 @@ function ungoko_form_question_node_form_alter(&$form, &$form_state, $form_id){
   $form['actions']['submit']['#value'] = $label;
   $form['actions']['submit']['#attributes']['class'][] = 'btn-primary';
 }
+
+/*  Overrides bootstrap theme.inc file 
+    Loads specific local jQuery version 1.7.2 required by Bootstrap instead of default Drupal
+    Provide local bootstrap library file when CDN option is unchecked. */
+
+function bootstrap_js_alter(&$javascript) {
+  $theme_path = drupal_get_path('theme', 'bootstrap');
+  // Replace with current version.
+  $jQuery_version = '1.7.2';
+  $javascript['misc/jquery.js']['data'] = drupal_get_path('theme', 'bootstrap').'/js/jquery-1.7.2.min.js';
+  $javascript['misc/jquery.js']['version'] = $jQuery_version;
+  $files = array();
+  
+  if (theme_get_setting('cdn_bootstrap')) {
+    $files[] = 'http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/js/bootstrap.min.js';
+  }else{
+    $files[] = $theme_path . '/js/bootstrap.min.js';
+  }
+
+  // Rearrange / Add JS
+  $group = -50;
+  $weight = -100;
+  foreach ($files as $file) {
+    if (!isset($javascript[$file])) {
+      $javascript[$file] = drupal_js_defaults();
+      $javascript[$file]['data'] = $file;
+      $javascript[$file]['group'] = $group;
+      $javascript[$file]['weight'] = $weight;
+      $weight++;
+    }
+  }
+}
