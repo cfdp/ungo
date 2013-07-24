@@ -674,7 +674,7 @@ h4 small {
 .page-header {
   padding-bottom: 9px;
   margin: 20px 0 30px;
-  border-bottom: 1px solid #f5f5f5;
+  border-bottom: 1px solid #e5e5e5;
 }
 ul,
 ol {
@@ -750,7 +750,7 @@ dd {
 hr {
   margin: 20px 0;
   border: 0;
-  border-top: 1px solid #f5f5f5;
+  border-top: 1px solid #e5e5e5;
   border-bottom: 1px solid #ffffff;
 }
 abbr[title],
@@ -765,7 +765,7 @@ abbr.initialism {
 blockquote {
   padding: 0 0 0 15px;
   margin: 0 0 20px;
-  border-left: 5px solid #f5f5f5;
+  border-left: 5px solid #e5e5e5;
 }
 blockquote p {
   margin-bottom: 0;
@@ -785,7 +785,7 @@ blockquote.pull-right {
   float: right;
   padding-right: 15px;
   padding-left: 0;
-  border-right: 5px solid #f5f5f5;
+  border-right: 5px solid #e5e5e5;
   border-left: 0;
 }
 blockquote.pull-right p,
@@ -1227,7 +1227,7 @@ input[readonly],
 select[readonly],
 textarea[readonly] {
   cursor: not-allowed;
-  background-color: #f5f5f5;
+  background-color: #e5e5e5;
 }
 input[type="radio"][disabled],
 input[type="checkbox"][disabled],
@@ -1473,7 +1473,7 @@ select:focus:invalid:focus {
   line-height: 20px;
   text-align: center;
   text-shadow: 0 1px 0 #ffffff;
-  background-color: #f5f5f5;
+  background-color: #e5e5e5;
   border: 1px solid #ccc;
 }
 .input-append .add-on,
@@ -3356,7 +3356,7 @@ input[type="submit"].btn.btn-mini {
 .nav > li > a:hover,
 .nav > li > a:focus {
   text-decoration: none;
-  background-color: #f5f5f5;
+  background-color: #e5e5e5;
 }
 .nav > li > a > img {
   max-width: none;
@@ -3455,7 +3455,7 @@ input[type="submit"].btn.btn-mini {
 }
 .nav-tabs > li > a:hover,
 .nav-tabs > li > a:focus {
-  border-color: #f5f5f5 #f5f5f5 #dddddd;
+  border-color: #e5e5e5 #e5e5e5 #dddddd;
 }
 .nav-tabs > .active > a,
 .nav-tabs > .active > a:hover,
@@ -3653,7 +3653,7 @@ input[type="submit"].btn.btn-mini {
 }
 .tabs-left > .nav-tabs > li > a:hover,
 .tabs-left > .nav-tabs > li > a:focus {
-  border-color: #f5f5f5 #dddddd #f5f5f5 #f5f5f5;
+  border-color: #e5e5e5 #dddddd #e5e5e5 #e5e5e5;
 }
 .tabs-left > .nav-tabs .active > a,
 .tabs-left > .nav-tabs .active > a:hover,
@@ -3674,7 +3674,7 @@ input[type="submit"].btn.btn-mini {
 }
 .tabs-right > .nav-tabs > li > a:hover,
 .tabs-right > .nav-tabs > li > a:focus {
-  border-color: #f5f5f5 #f5f5f5 #f5f5f5 #dddddd;
+  border-color: #e5e5e5 #e5e5e5 #e5e5e5 #dddddd;
 }
 .tabs-right > .nav-tabs .active > a,
 .tabs-right > .nav-tabs .active > a:hover,
@@ -5223,7 +5223,7 @@ a.badge:focus {
   font-weight: 200;
   line-height: 30px;
   color: inherit;
-  background-color: #f5f5f5;
+  background-color: #e5e5e5;
   -webkit-border-radius: 6px;
   -moz-border-radius: 6px;
   border-radius: 6px;
@@ -5299,14 +5299,112 @@ footer.footer:before {
   margin-right: 10px;
 }
 .page-oversigt .views-row {
-  border-bottom: 1px solid #e3e3e3;
+  border-bottom: 1px solid #e5e5e5;
   display: inline-block;
-  padding: 0 0 10px;
-  margin-bottom: 20px;
+  padding: 20px 0;
+  position: relative;
   width: 100%;
 }
-.page-oversigt .pending-clients .views-row {
-  width: 89%;
+.page-oversigt .views-row.views-row-last,
+.page-oversigt .views-row.views-row-last.views-row-first {
+  border-bottom-color: transparent;
+  padding: 10px 0;
+}
+.questions .views-row {
+  border-bottom: 1px solid #e5e5e5;
+  padding: 15px;
+}
+.questions .views-row.views-row-first {
+  padding-top: 0;
+}
+.questions .views-row.views-row-last {
+  padding-bottom: 0;
+}
+.questions .views-field {
+  margin-bottom: 10px;
+}
+.questions .views-field-title {
+  font-size: 17.5px;
+  font-weight: bold;
+}
+.questions .views-field-field-name {
+  font-size: 14px;
+  margin: 0;
+}
+.questions .views-field-created,
+.questions .views-field-changed,
+.questions .views-field-last-updated,
+.questions .views-field-last-comment-timestamp,
+.questions .views-field-comment-count {
+  color: #999999;
+  font-size: 11.9px;
+}
+.questions .views-field-last-comment-name {
+  color: #999999;
+  font-size: 11.9px;
+  font-weight: bold;
+}
+.questions .views-field-comment-count i {
+  margin: 3px 3px 0 0;
+}
+.questions.dashboard .views-row {
+  position: relative;
+}
+.questions.dashboard .new-mark {
+  position: absolute;
+  top: 0;
+}
+.questions.dashboard .new-mark .label {
+  padding: 31px 5px;
+}
+.questions.dashboard .views-field-title,
+.questions.dashboard .views-field-last-updated,
+.questions.dashboard .views-field-comment-count {
+  margin-left: 30px;
+}
+.role-coordinator .questions .views-field-title,
+.role-counselor .questions.archive .views-field-title,
+.role-coordinator .questions .views-field-field-name,
+.role-counselor .questions.archive .views-field-field-name {
+  margin-bottom: 10px;
+}
+.role-coordinator .questions .views-field-field-name,
+.role-counselor .questions.archive .views-field-field-name,
+.role-coordinator .questions .views-field-changed,
+.role-counselor .questions.archive .views-field-changed {
+  font-weight: normal;
+}
+.role-coordinator .questions .views-field-last-updated .field-content,
+.role-counselor .questions.archive .views-field-last-updated .field-content,
+.role-coordinator .questions .views-field-changed .field-content,
+.role-counselor .questions.archive .views-field-changed .field-content,
+.role-coordinator .questions .views-field-created .field-content,
+.role-counselor .questions.archive .views-field-created .field-content,
+.role-coordinator .questions .views-field-comment-count .field-content,
+.role-counselor .questions.archive .views-field-comment-count .field-content {
+  margin-right: 10px;
+}
+.role-coordinator .questions .views-field-nothing .field-content,
+.role-counselor .questions.archive .views-field-nothing .field-content {
+  margin: 18px 5px 0 0;
+}
+.role-coordinator .questions .views-field-field-profile-picture .field-content,
+.role-counselor .questions.archive .views-field-field-profile-picture .field-content,
+.role-coordinator .questions .views-field-field-profile-picture-1 .field-content,
+.role-counselor .questions.archive .views-field-field-profile-picture-1 .field-content {
+  margin-right: 10px;
+}
+.role-counselor .questions.archive .views-field-changed {
+  margin-top: 40px;
+}
+.users .views-field-field-name,
+.users .views-field-field-name-1 {
+  font-size: 17.5px;
+  margin-bottom: 10px;
+}
+.counselors .views-field-field-name {
+  font-size: 14px;
+  margin-bottom: 0;
 }
 /****************************************************************
 *                             Forms                             *
@@ -5345,9 +5443,4 @@ select,
 }
 .panel-pane h2.pane-title {
   font-size: 24.5px;
-}
-.views-field-created,
-.views-field-last-updated {
-  color: #999;
-  font-size: 11px;
 }

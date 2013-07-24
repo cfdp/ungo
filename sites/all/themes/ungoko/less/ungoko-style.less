@@ -56,18 +56,74 @@ footer.footer {
     margin-right: 10px; }
 
   .views-row {
-    border-bottom: 1px solid #e3e3e3;
+    border-bottom: 1px solid @grayLighter;
     display: inline-block;
-    padding: 0 0 10px;
-    margin-bottom: 20px;
+    padding: 20px 0;
+    position: relative;
     width: 100%; }
+  .views-row.views-row-last,
+  .views-row.views-row-last.views-row-first{ border-bottom-color: transparent; padding: 10px 0;}
 
-  .pending-clients .views-row {
-    width: 89%;
-  }
+  // .pending-clients .views-row {
+  //   width: 89%;
+  // }
 }
 
+.questions{
+  .views-row { border-bottom: 1px solid @grayLighter; padding: 15px;}
+  .views-row.views-row-first { padding-top: 0; }
+  .views-row.views-row-last { padding-bottom: 0; }
+  .views-field { margin-bottom: 10px; }
+  .views-field-title {font-size: @fontSizeLarge; font-weight: bold; }
+  .views-field-field-name {font-size: @baseFontSize; margin: 0;}
+  .views-field-created,
+  .views-field-changed,
+  .views-field-last-updated,
+  .views-field-last-comment-timestamp,
+  .views-field-comment-count { color: @grayLight; font-size: @fontSizeSmall; }
+  .views-field-last-comment-name { color: @grayLight; font-size: @fontSizeSmall; font-weight: bold;}
+  .views-field-comment-count i { margin: 3px 3px 0 0; }
+}
 
+.questions.dashboard{
+  .views-row { position: relative; }
+  .new-mark { position: absolute; top: 0;
+    .label { padding: 31px 5px; }
+  }
+  .views-field-title,
+  .views-field-last-updated,
+  .views-field-comment-count { margin-left: 30px; }
+}
+
+.role-coordinator .questions,
+.role-counselor .questions.archive {
+  .views-field-title,
+  .views-field-field-name { margin-bottom: 10px; }
+  .views-field-field-name,
+  .views-field-changed { font-weight: normal; }
+  .views-field-last-updated .field-content,
+  .views-field-changed .field-content,
+  .views-field-created .field-content,
+  .views-field-comment-count .field-content { margin-right: 10px; }
+
+  .views-field-nothing .field-content { margin: 18px 5px 0 0; }
+  .views-field-field-profile-picture .field-content,
+  .views-field-field-profile-picture-1 .field-content { margin-right: 10px; }
+}
+
+.role-counselor .questions.archive{
+  .views-field-changed { margin-top: 40px; }
+}
+
+.users{
+  .views-field-field-name,
+  .views-field-field-name-1 {font-size: @fontSizeLarge; margin-bottom: 10px; }
+
+}
+
+.counselors{
+  .views-field-field-name { font-size: @baseFontSize; margin-bottom: 0;}
+}
 /****************************************************************
 *                             Forms                             *
 ****************************************************************/
@@ -115,10 +171,4 @@ input, textarea, select, .uneditable-input {
   h2.pane-title {
     font-size: 24.5px;
   }
-}
-
-.views-field-created,
-.views-field-last-updated {
-  color: #999;
-  font-size: 11px;
 }
