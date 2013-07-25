@@ -24,7 +24,8 @@
 ?>
 <?php 
 	// Allow only users with administrative rights to access the remove user account link on the client profile page
-	if(user_access('administer users')){
+	// OR allow the client to edit it's own profile
+	if(user_access('administer users') || user_access('edit own client profile') ){
 		print $output; 
 	}
 ?>
