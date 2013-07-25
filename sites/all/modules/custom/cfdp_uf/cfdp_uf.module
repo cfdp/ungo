@@ -346,8 +346,18 @@ function cfdp_uf_form_profile2_edit_client_form_alter(&$form, &$form_state){
   }
   unset($value);
   // Store user id and typecast it as integer
-  $uid = (int)$fields['uid'];
+  $profile_uid = (int)$fields['uid'];
 
+  // Store the logged in user's uid
+  global $user;
+  $current_uid = $user->uid;
+
+  // Check if the current user is editing it's own profile
+  if($profile_uid == $current_uid){
+    $uid = "";
+  }else{
+    $uid = $profile_uid;
+  }
   // Add the cancel link to the form and allow user to get back to the profile page.
   $form['actions']['cancel'] = array(
     '#type' => 'link',
