@@ -14,7 +14,9 @@
 *                             General                            *
 ****************************************************************/
 
+[class^="icon-"] {margin: 3px 3px 0 0; }
 
+.btn i { margin: 3px 7px 0 0; }
 /****************************************************************
 *                               Menu                            *
 ****************************************************************/
@@ -69,30 +71,33 @@ footer.footer {
   // }
 }
 
+.view-empty { color: @grayLight; }
+
 .questions{
-  .views-row { border-bottom: 1px solid @grayLighter; padding: 15px;}
+  .views-row { border-bottom: 1px solid @grayLighter; padding: 15px 0;}
   .views-row.views-row-first { padding-top: 0; }
-  .views-row.views-row-last { padding-bottom: 0; }
+  .views-row.views-row-last { border-bottom: 1px solid transparent; padding-bottom: 0; }
   .views-field { margin-bottom: 10px; }
   .views-field-title {font-size: @fontSizeLarge; font-weight: bold; }
   .views-field-field-name {font-size: @baseFontSize; margin: 0;}
+  .views-field-created { margin-left: 8px; margin-right: 8px; }
   .views-field-created,
   .views-field-changed,
   .views-field-last-updated,
   .views-field-last-comment-timestamp,
   .views-field-comment-count { color: @grayLight; font-size: @fontSizeSmall; }
   .views-field-last-comment-name { color: @grayLight; font-size: @fontSizeSmall; font-weight: bold;}
-  .views-field-comment-count i { margin: 3px 3px 0 0; }
 }
 
 .questions.dashboard{
-  .views-row { position: relative; }
-  .new-mark { position: absolute; top: 0;
+  .views-row { padding: 15px 0; position: relative; }
+  .new-mark { position: absolute; top: 8px;
     .label { padding: 31px 5px; }
   }
   .views-field-title,
   .views-field-last-updated,
   .views-field-comment-count { margin-left: 30px; }
+  .views-field-comment-count { margin-bottom: 0; }
 }
 
 .role-coordinator .questions,
@@ -123,6 +128,17 @@ footer.footer {
 
 .counselors{
   .views-field-field-name { font-size: @baseFontSize; margin-bottom: 0;}
+}
+
+
+/****************************************************************
+*                           Profiles                            *
+****************************************************************/
+.client-profile{
+  .views-field {color: @grayLight; margin: 5px 0;}
+  .field-content {color: @textColor;}
+
+  .views-field-field-profile-picture .field-content { margin: 0 10px 0 0; }
 }
 /****************************************************************
 *                             Forms                             *

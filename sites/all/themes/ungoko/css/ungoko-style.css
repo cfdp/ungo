@@ -5262,6 +5262,12 @@ a.badge:focus {
 /****************************************************************
 *                             General                            *
 ****************************************************************/
+[class^="icon-"] {
+  margin: 3px 3px 0 0;
+}
+.btn i {
+  margin: 3px 7px 0 0;
+}
 /****************************************************************
 *                               Menu                            *
 ****************************************************************/
@@ -5310,14 +5316,18 @@ footer.footer:before {
   border-bottom-color: transparent;
   padding: 10px 0;
 }
+.view-empty {
+  color: #999999;
+}
 .questions .views-row {
   border-bottom: 1px solid #e5e5e5;
-  padding: 15px;
+  padding: 15px 0;
 }
 .questions .views-row.views-row-first {
   padding-top: 0;
 }
 .questions .views-row.views-row-last {
+  border-bottom: 1px solid transparent;
   padding-bottom: 0;
 }
 .questions .views-field {
@@ -5330,6 +5340,10 @@ footer.footer:before {
 .questions .views-field-field-name {
   font-size: 14px;
   margin: 0;
+}
+.questions .views-field-created {
+  margin-left: 8px;
+  margin-right: 8px;
 }
 .questions .views-field-created,
 .questions .views-field-changed,
@@ -5344,15 +5358,13 @@ footer.footer:before {
   font-size: 11.9px;
   font-weight: bold;
 }
-.questions .views-field-comment-count i {
-  margin: 3px 3px 0 0;
-}
 .questions.dashboard .views-row {
+  padding: 15px 0;
   position: relative;
 }
 .questions.dashboard .new-mark {
   position: absolute;
-  top: 0;
+  top: 8px;
 }
 .questions.dashboard .new-mark .label {
   padding: 31px 5px;
@@ -5361,6 +5373,9 @@ footer.footer:before {
 .questions.dashboard .views-field-last-updated,
 .questions.dashboard .views-field-comment-count {
   margin-left: 30px;
+}
+.questions.dashboard .views-field-comment-count {
+  margin-bottom: 0;
 }
 .role-coordinator .questions .views-field-title,
 .role-counselor .questions.archive .views-field-title,
@@ -5405,6 +5420,19 @@ footer.footer:before {
 .counselors .views-field-field-name {
   font-size: 14px;
   margin-bottom: 0;
+}
+/****************************************************************
+*                           Profiles                            *
+****************************************************************/
+.client-profile .views-field {
+  color: #999999;
+  margin: 5px 0;
+}
+.client-profile .field-content {
+  color: #333333;
+}
+.client-profile .views-field-field-profile-picture .field-content {
+  margin: 0 10px 0 0;
 }
 /****************************************************************
 *                             Forms                             *
