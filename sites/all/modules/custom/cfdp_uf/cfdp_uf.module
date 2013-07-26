@@ -354,57 +354,62 @@ function cfdp_uf_add_cancel_to_profile2(&$form, &$form_state){
   $current_uid = $user->uid;
   $current_user_roles = $user->roles;
 
-  // Store the logged in users's roles and type of profile
-  if(in_array('counselor', $current_user_roles)){
-    $role = "counselor";
-    $type = "counselor";
-  }elseif (in_array('client', $current_user_roles)) {
-    $role = "client";
-    $type = "client";
-  }elseif(in_array("coordinator", $current_user_roles)){
-    $role = "coordinator";
-  }
-  
-  // When coordinator is editing profiles provide the profile type
-  if($role == "coordinator"){
-    if(array_key_exists("profile_counselor", $form)){
+  // If user is annonymous, this is the registration form and the cancel link points to the homepage
+  if($current_uid != 0){
+    // Store the logged in users's roles and type of profile
+    if(in_array('counselor', $current_user_roles)){
+      $role = "counselor";
       $type = "counselor";
-    }elseif(array_key_exists("profile_client", $form)){
+    }elseif (in_array('client', $current_user_roles)) {
+      $role = "client";
       $type = "client";
+    }elseif(in_array("coordinator", $current_user_roles)){
+      $role = "coordinator";
     }
-  }
+    
+    // When coordinator is editing profiles provide the profile type
+    if($role == "coordinator"){
+      if(array_key_exists("profile_counselor", $form)){
+        $type = "counselor";
+      }elseif(array_key_exists("profile_client", $form)){
+        $type = "client";
+      }
+    }
 
-  // Get the uid of the user who's account is about to be cancelled
-  $fields = array();
-  foreach($form['profile_'.$type]['#entity'] as $key=>$value){
-      $fields[$key] = $value;
-  }
-  unset($value);
+    // Get the uid of the user who's account is about to be cancelled
+    $fields = array();
+    foreach($form['profile_'.$type]['#entity'] as $key=>$value){
+        $fields[$key] = $value;
+    }
+    unset($value);
 
-  // Store user id and typecast it as integer
-  $profile_uid = (int)$fields['uid'];
+    // Store user id and typecast it as integer
+    $profile_uid = (int)$fields['uid'];
 
-  // Check if the current user is editing it's own profile
-  if($profile_uid == $current_uid){
+    // Check if the current user is editing it's own profile
+    if($profile_uid == $current_uid){
 
-    // Counselor profiles have a different path when viewing their own profile
-    if($role == "counselor"){
-      $path = "my-profile";
-    }elseif($role == "client"){
-      $path = "profile/";
+      // Counselor profiles have a different path when viewing their own profile
+      if($role == "counselor"){
+        $path = "my-profile";
+      }elseif($role == "client"){
+        $path = "profile/";
+      }
+    }else{
+      $path = "profile/" . $profile_uid;
     }
   }else{
-    $path = "profile/" . $profile_uid;
+    $path ="";
   }
-  
-  // Add the cancel link to the form and allow user to get back to the profile page.
-  $form['actions']['cancel'] = array(
-    '#type' => 'link',
-    '#title' => 'Cancel',
-    '#href' => $path,
-    '#weight' => 50,
-    '#options' => array('path' => $path)
-  );
+    
+    // Add the cancel link to the form and allow user to get back to the profile page.
+    $form['actions']['cancel'] = array(
+      '#type' => 'link',
+      '#title' => 'Cancel',
+      '#href' => $path,
+      '#weight' => 50,
+      '#options' => array('path' => $path)
+    );
 }
 
   // Update all questions belonging to a client when a new cousnelor is assigned to them
