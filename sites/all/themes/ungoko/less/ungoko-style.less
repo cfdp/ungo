@@ -60,7 +60,6 @@ footer.footer {
   .views-row {
     border-bottom: 1px solid @grayLighter;
     display: inline-block;
-    padding: 20px 0;
     position: relative;
     width: 100%; }
   .views-row.views-row-last,
@@ -134,11 +133,50 @@ footer.footer {
 /****************************************************************
 *                           Profiles                            *
 ****************************************************************/
-.client-profile{
+
+.client-profile,
+.counselor-profile{
   .views-field {color: @grayLight; margin: 5px 0;}
   .field-content {color: @textColor;}
 
   .views-field-field-profile-picture .field-content { margin: 0 10px 0 0; }
+}
+
+.profile-card {
+  border-bottom: 1px solid @grayLighter;
+  padding: 10px 0;
+
+  .views-row { min-height: 65px; }
+  .views-field { color: @grayLight; margin: 0 5px 3px 0; }
+  .field-content {color: @textColor;}
+  .views-field-field-profile-picture { margin: 6px 0 5px 0; }
+}
+  .profile-card.views-row-first { padding-top: 0; }
+  .profile-card.views-row-last { border-bottom: 1px solid transparent; padding-bottom: 0; }
+
+.on-counselor-profile .profile-card{
+  .views-field { margin: 0; }
+  .views-field-field-name .field-content { margin: 0 0 5px 0; }
+}
+
+.users.counselors {
+  .views-field-field-bank .field-content { color: @grayLight; }
+}
+.users.clients{
+  .views-field-url { bottom: 12px; display: none; position: absolute; right: 0; 
+    .btn-mini [class^="icon-"] { margin: 1px 5px 0 0; }
+  }
+  .profile-card:hover .views-field-url { display: inline-block };
+}
+
+.users.clients.dashboard{
+  .views-field-field-alder,
+  .views-field-field-k-n,
+  .views-field-field-postnummer { display: none; }
+  .profile-card {min-height: 103px; }
+  .profile-card:hover .views-field-field-alder { display: inline-block };
+  .profile-card:hover .views-field-field-k-n { display: inline-block };
+  .profile-card:hover .views-field-field-postnummer { display: inline-block };
 }
 /****************************************************************
 *                             Forms                             *
