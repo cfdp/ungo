@@ -5542,6 +5542,22 @@ footer.footer:before {
   text-align: right;
 }
 /****************************************************************
+*                        Question Comment                       *
+****************************************************************/
+.node-question .comment .submitted {
+  border-width: 0;
+  margin: 0;
+  padding: 0;
+  text-align: left;
+}
+.node-question .comment.well {
+  padding: 10px;
+}
+.node-question .comment.well h3 {
+  border-top: 1px solid #e5e5e5;
+  margin: 10px 0 0;
+}
+/****************************************************************
 *                             Forms                             *
 ****************************************************************/
 /* Keeping input fields within bounds */
