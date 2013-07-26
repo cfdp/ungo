@@ -8,12 +8,6 @@
     <?php endif; ?>
     <?php print render($title_suffix); ?>
 
-    <?php if ($display_submitted): ?>
-      <span class="submitted">
-        <?php /*print $user_picture;*/ ?>
-        <?php print $submitted; ?>
-      </span>
-    <?php endif; ?>
   </header>
 
   <?php
@@ -23,6 +17,12 @@
     hide($content['field_tags']);
     print render($content['body']);
   ?>
+    <?php if ($display_submitted): ?>
+      <div class="submitted">
+        <?php //print $user_picture; ?>
+        <?php print $submitted; ?>
+      </div>
+    <?php endif; ?>
   
   <?php if (!empty($content['field_tags']) || !empty($content['links'])): ?>
     <footer>

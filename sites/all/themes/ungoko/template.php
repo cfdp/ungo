@@ -23,7 +23,8 @@ function ungoko_preprocess_node(&$variables) {
   if ($variables['display_submitted']){
     $variables['user_picture'] = cfdp_uf_get_user_picture($variables, null);
   }
-  
+
+  $variables['submitted'] = "<i class=\"icon-calendar\"></i>" . t('@date', array('@date' => date(" j/M/Y - G:i A", $variables['created'])));
 }
 
 /* Adding the "Well" bootstrap effecto to comments */

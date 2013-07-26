@@ -5532,6 +5532,16 @@ footer.footer:before {
   margin-top: 10px;
 }
 /****************************************************************
+*                            Question                           *
+****************************************************************/
+.node-question .submitted {
+  border-bottom: 1px solid #e5e5e5;
+  border-top: 1px solid #e5e5e5;
+  font-style: normal;
+  padding: 1em 0;
+  text-align: right;
+}
+/****************************************************************
 *                             Forms                             *
 ****************************************************************/
 /* Keeping input fields within bounds */
