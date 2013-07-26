@@ -408,6 +408,7 @@ function cfdp_uf_add_cancel_to_profile2(&$form, &$form_state){
       '#title' => 'Cancel',
       '#href' => $path,
       '#weight' => 50,
+      '#attributes' => array('class' => 'btn btn-info pull-right'),
       '#options' => array('path' => $path)
     );
 }
