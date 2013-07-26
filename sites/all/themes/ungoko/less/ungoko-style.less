@@ -17,6 +17,11 @@
 [class^="icon-"] {margin: 3px 3px 0 0; }
 
 .btn i { margin: 3px 7px 0 0; }
+
+.reveal { display: none; }
+.hotspot:hover .reveal{ display: inline-block; }
+
+.block h2 { font-size: 24.5px; }
 /****************************************************************
 *                               Menu                            *
 ****************************************************************/
@@ -49,6 +54,11 @@ footer.footer {
 /****************************************************************
 *                             Views                             *
 ****************************************************************/
+
+.views-row { border-bottom: 1px solid @grayLighter; padding: 15px 0;}
+.views-row.views-row-first { padding-top: 0; }
+.views-row.views-row-last { border-bottom: 1px solid transparent; padding-bottom: 0; }
+
 /* Profile images on dashboard */
 .page-oversigt {
   .views-field-field-profile-picture {
@@ -63,19 +73,14 @@ footer.footer {
     position: relative;
     width: 100%; }
   .views-row.views-row-last,
-  .views-row.views-row-last.views-row-first{ border-bottom-color: transparent; padding: 10px 0;}
+  .views-row.views-row-last.views-row-first{ border-bottom-color: transparent;}
+  .views-row.views-row-last.views-row-first{ padding: 0;}
 
-  // .pending-clients .views-row {
-  //   width: 89%;
-  // }
 }
 
 .view-empty { color: @grayLight; }
 
 .questions{
-  .views-row { border-bottom: 1px solid @grayLighter; padding: 15px 0;}
-  .views-row.views-row-first { padding-top: 0; }
-  .views-row.views-row-last { border-bottom: 1px solid transparent; padding-bottom: 0; }
   .views-field { margin-bottom: 10px; }
   .views-field-title {font-size: @fontSizeLarge; font-weight: bold; }
   .views-field-field-name {font-size: @baseFontSize; margin: 0;}
@@ -90,7 +95,7 @@ footer.footer {
 
 .questions.dashboard{
   .views-row { padding: 15px 0; position: relative; }
-  .new-mark { position: absolute; top: 8px;
+  .new-mark { position: absolute; top: 1px;
     .label { padding: 31px 5px; }
   }
   .views-field-title,
@@ -170,14 +175,24 @@ footer.footer {
 }
 
 .users.clients.dashboard{
-  .views-field-field-alder,
-  .views-field-field-k-n,
-  .views-field-field-postnummer { display: none; }
   .profile-card {min-height: 103px; }
-  .profile-card:hover .views-field-field-alder { display: inline-block };
-  .profile-card:hover .views-field-field-k-n { display: inline-block };
-  .profile-card:hover .views-field-field-postnummer { display: inline-block };
 }
+
+/****************************************************************
+*                           Documents                           *
+****************************************************************/
+.documents,
+.documents.dashboard{
+  .document { padding: 10px; position: relative; word-break: break-all; }
+  .views-field-title .field-content { margin: 0; }
+  .views-field-created { color: @grayLight; font-size: @fontSizeSmall; 
+    [class^="icon-"] {margin: 1px 1px 0 0; }    
+  }
+  .views-field-field-dokument-fil { margin: 3px 0; }
+  .views-field-delete-node { position: absolute; right: 10px; bottom: 10px; }
+  .view-footer { margin-top: 10px; }
+}
+
 /****************************************************************
 *                             Forms                             *
 ****************************************************************/

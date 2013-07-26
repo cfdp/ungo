@@ -5268,6 +5268,15 @@ a.badge:focus {
 .btn i {
   margin: 3px 7px 0 0;
 }
+.reveal {
+  display: none;
+}
+.hotspot:hover .reveal {
+  display: inline-block;
+}
+.block h2 {
+  font-size: 24.5px;
+}
 /****************************************************************
 *                               Menu                            *
 ****************************************************************/
@@ -5297,6 +5306,17 @@ footer.footer:before {
 /****************************************************************
 *                             Views                             *
 ****************************************************************/
+.views-row {
+  border-bottom: 1px solid #e5e5e5;
+  padding: 15px 0;
+}
+.views-row.views-row-first {
+  padding-top: 0;
+}
+.views-row.views-row-last {
+  border-bottom: 1px solid transparent;
+  padding-bottom: 0;
+}
 /* Profile images on dashboard */
 .page-oversigt .views-field-field-profile-picture {
   float: left;
@@ -5313,21 +5333,12 @@ footer.footer:before {
 .page-oversigt .views-row.views-row-last,
 .page-oversigt .views-row.views-row-last.views-row-first {
   border-bottom-color: transparent;
-  padding: 10px 0;
+}
+.page-oversigt .views-row.views-row-last.views-row-first {
+  padding: 0;
 }
 .view-empty {
   color: #999999;
-}
-.questions .views-row {
-  border-bottom: 1px solid #e5e5e5;
-  padding: 15px 0;
-}
-.questions .views-row.views-row-first {
-  padding-top: 0;
-}
-.questions .views-row.views-row-last {
-  border-bottom: 1px solid transparent;
-  padding-bottom: 0;
 }
 .questions .views-field {
   margin-bottom: 10px;
@@ -5363,7 +5374,7 @@ footer.footer:before {
 }
 .questions.dashboard .new-mark {
   position: absolute;
-  top: 8px;
+  top: 1px;
 }
 .questions.dashboard .new-mark .label {
   padding: 31px 5px;
@@ -5481,22 +5492,44 @@ footer.footer:before {
 .users.clients .profile-card:hover .views-field-url {
   display: inline-block;
 }
-.users.clients.dashboard .views-field-field-alder,
-.users.clients.dashboard .views-field-field-k-n,
-.users.clients.dashboard .views-field-field-postnummer {
-  display: none;
-}
 .users.clients.dashboard .profile-card {
   min-height: 103px;
 }
-.users.clients.dashboard .profile-card:hover .views-field-field-alder {
-  display: inline-block;
+/****************************************************************
+*                           Documents                           *
+****************************************************************/
+.documents .document,
+.documents.dashboard .document {
+  padding: 10px;
+  position: relative;
+  word-break: break-all;
 }
-.users.clients.dashboard .profile-card:hover .views-field-field-k-n {
-  display: inline-block;
+.documents .views-field-title .field-content,
+.documents.dashboard .views-field-title .field-content {
+  margin: 0;
 }
-.users.clients.dashboard .profile-card:hover .views-field-field-postnummer {
-  display: inline-block;
+.documents .views-field-created,
+.documents.dashboard .views-field-created {
+  color: #999999;
+  font-size: 11.9px;
+}
+.documents .views-field-created [class^="icon-"],
+.documents.dashboard .views-field-created [class^="icon-"] {
+  margin: 1px 1px 0 0;
+}
+.documents .views-field-field-dokument-fil,
+.documents.dashboard .views-field-field-dokument-fil {
+  margin: 3px 0;
+}
+.documents .views-field-delete-node,
+.documents.dashboard .views-field-delete-node {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+}
+.documents .view-footer,
+.documents.dashboard .view-footer {
+  margin-top: 10px;
 }
 /****************************************************************
 *                             Forms                             *
