@@ -4,7 +4,8 @@
 function cfdp_uf_get_user_picture(&$variables, $uid){
   
   // Store path to default image for when user has no profile picture
-  $profile_picture_default = '<img alt="" src="/sites/default/files/styles/ungo_profile_img/public/default_images/profile_client.jpg" typeof="foaf:Image">';
+  $client_profile_picture_default = '<img alt="" src="/sites/default/files/styles/ungo_profile_img/public/default_images/profile_client.jpg" typeof="foaf:Image">';
+  $counselor_profile_picture_default = '<img alt="" src="/sites/default/files/styles/ungo_profile_img/public/default_images/profile_counselor.jpg" typeof="foaf:Image">';
 
   // Get user id from current node if it is not passed as parameter
   if (arg(0) == 'node' && is_numeric(arg(1)) && !$uid ) {
@@ -58,21 +59,24 @@ function cfdp_uf_get_user_picture(&$variables, $uid){
       
       }else{
         // Error returning the filed_profile_picture value, user has no picture, fallback to default picture
-        
-        return $profile_picture_default;
+        if(in_array('client', $user->roles)){
+          return $client_profile_picture_default;
+        }else{
+          return $counselor_profile_picture_default;
+        }
       }
       
     }else{
+      
       // User is anonymous - this could happen if anonymous users can post content
-     
-      return $profile_picture_default;
+      return $client_profile_picture_default;
     }
 
   }else{
     // User has no profile2 profile
     watchdog('warning','User %uid has no profile.', array('%uid'=>$uid));
     
-    return $profile_picture_default;
+    return $client_profile_picture_default;
   }
 }
 
