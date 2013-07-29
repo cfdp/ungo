@@ -165,7 +165,7 @@ function cfdp_uf_form($form, &$form_state) {
   'submit' => array ( //We define a simple submit button
    '#type' => 'submit',
    '#value' => $label,
-   '#attributes' => array('onclick' => 'if(!confirm("Really Delete?")){return false;}'),
+   '#attributes' => array('onclick' => 'if(!confirm("Really Delete?")){return false;}','class'=> array('btn-danger')),
   ),
  );
 

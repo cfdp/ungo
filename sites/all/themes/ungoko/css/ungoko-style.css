@@ -5566,6 +5566,15 @@ footer.footer:before {
   text-align: right;
 }
 /****************************************************************
+*                          Node Question                        *
+****************************************************************/
+.node-question .question-status-value {
+  color: #333333;
+}
+.node-question .question-status {
+  margin-right: 10px;
+}
+/****************************************************************
 *                        Question Comment                       *
 ****************************************************************/
 .node-question .comment .submitted {
