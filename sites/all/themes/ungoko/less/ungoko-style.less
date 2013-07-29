@@ -78,51 +78,12 @@ footer.footer {
 
 }
 
-.view-empty { color: @grayLight; }
-
-.questions{
-  .views-field { margin-bottom: 10px; }
-  .views-field-title {font-size: @fontSizeLarge; font-weight: bold; }
-  .views-field-field-name {font-size: @baseFontSize; margin: 0;}
-  .views-field-created { margin-left: 8px; margin-right: 8px; }
-  .views-field-created,
+.views-field-created,
   .views-field-changed,
   .views-field-last-updated,
   .views-field-last-comment-timestamp,
   .views-field-comment-count { color: @grayLight; font-size: @fontSizeSmall; }
-  .views-field-last-comment-name { color: @grayLight; font-size: @fontSizeSmall; font-weight: bold;}
-}
-
-.questions.dashboard{
-  .views-row { padding: 15px 0; position: relative; }
-  .new-mark { position: absolute; top: 1px;
-    .label { padding: 31px 5px; }
-  }
-  .views-field-title,
-  .views-field-last-updated,
-  .views-field-comment-count { margin-left: 30px; }
-  .views-field-comment-count { margin-bottom: 0; }
-}
-
-.role-coordinator .questions,
-.role-counselor .questions.archive {
-  .views-field-title,
-  .views-field-field-name { margin-bottom: 10px; }
-  .views-field-field-name,
-  .views-field-changed { font-weight: normal; }
-  .views-field-last-updated .field-content,
-  .views-field-changed .field-content,
-  .views-field-created .field-content,
-  .views-field-comment-count .field-content { margin-right: 10px; }
-
-  .views-field-nothing .field-content { margin: 18px 5px 0 0; }
-  .views-field-field-profile-picture .field-content,
-  .views-field-field-profile-picture-1 .field-content { margin-right: 10px; }
-}
-
-.role-counselor .questions.archive{
-  .views-field-changed { margin-top: 40px; }
-}
+.view-empty { color: @grayLight; }
 
 .users{
   .views-field-field-name,
@@ -134,6 +95,20 @@ footer.footer {
   .views-field-field-name { font-size: @baseFontSize; margin-bottom: 0;}
 }
 
+
+/****************************************************************
+*                           Articles                            *
+****************************************************************/
+.article .views-field-created { margin-top: 10px; }
+
+.article .views-field-title .field-content { margin-top: 0; }
+
+.article .views-field-field-image .field-content { margin-right: 19px; }
+
+.article .views-field-body .field-content {
+  display: inline-block;
+  width: 85%;
+}
 
 /****************************************************************
 *                           Profiles                            *
@@ -196,6 +171,50 @@ footer.footer {
 /****************************************************************
 *                            Question                           *
 ****************************************************************/
+.questions{
+  .views-field { margin-bottom: 10px; }
+  .views-field-title {font-size: @fontSizeLarge; font-weight: bold; }
+  .views-field-field-name {font-size: @baseFontSize; margin: 0;}
+  .views-field-created { margin-left: 8px; margin-right: 8px; }
+  .views-field-created,
+  .views-field-changed,
+  .views-field-last-updated,
+  .views-field-last-comment-timestamp,
+  .views-field-comment-count { color: @grayLight; font-size: @fontSizeSmall; }
+  .views-field-last-comment-name { color: @grayLight; font-size: @fontSizeSmall; font-weight: bold;}
+}
+
+.questions.dashboard{
+  .views-row { padding: 15px 0; position: relative; }
+  .new-mark { position: absolute; top: 1px;
+    .label { padding: 31px 5px; }
+  }
+  .views-field-title,
+  .views-field-last-updated,
+  .views-field-comment-count { margin-left: 30px; }
+  .views-field-comment-count { margin-bottom: 0; }
+}
+
+.role-coordinator .questions,
+.role-counselor .questions.archive {
+  .views-field-title,
+  .views-field-field-name { margin-bottom: 10px; }
+  .views-field-field-name,
+  .views-field-changed { font-weight: normal; }
+  .views-field-last-updated .field-content,
+  .views-field-changed .field-content,
+  .views-field-created .field-content,
+  .views-field-comment-count .field-content { margin-right: 10px; }
+
+  .views-field-nothing .field-content { margin: 18px 5px 0 0; }
+  .views-field-field-profile-picture .field-content,
+  .views-field-field-profile-picture-1 .field-content { margin-right: 10px; }
+}
+
+.role-counselor .questions.archive{
+  .views-field-changed { margin-top: 40px; }
+}
+
 .node-question {
   .submitted { border-bottom: 1px solid @grayLighter; border-top: 1px solid @grayLighter; font-style: normal; padding: 1em 0; text-align: right; }
 }

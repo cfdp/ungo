@@ -5337,90 +5337,16 @@ footer.footer:before {
 .page-oversigt .views-row.views-row-last.views-row-first {
   padding: 0;
 }
+.views-field-created,
+.views-field-changed,
+.views-field-last-updated,
+.views-field-last-comment-timestamp,
+.views-field-comment-count {
+  color: #999999;
+  font-size: 11.9px;
+}
 .view-empty {
   color: #999999;
-}
-.questions .views-field {
-  margin-bottom: 10px;
-}
-.questions .views-field-title {
-  font-size: 17.5px;
-  font-weight: bold;
-}
-.questions .views-field-field-name {
-  font-size: 14px;
-  margin: 0;
-}
-.questions .views-field-created {
-  margin-left: 8px;
-  margin-right: 8px;
-}
-.questions .views-field-created,
-.questions .views-field-changed,
-.questions .views-field-last-updated,
-.questions .views-field-last-comment-timestamp,
-.questions .views-field-comment-count {
-  color: #999999;
-  font-size: 11.9px;
-}
-.questions .views-field-last-comment-name {
-  color: #999999;
-  font-size: 11.9px;
-  font-weight: bold;
-}
-.questions.dashboard .views-row {
-  padding: 15px 0;
-  position: relative;
-}
-.questions.dashboard .new-mark {
-  position: absolute;
-  top: 1px;
-}
-.questions.dashboard .new-mark .label {
-  padding: 31px 5px;
-}
-.questions.dashboard .views-field-title,
-.questions.dashboard .views-field-last-updated,
-.questions.dashboard .views-field-comment-count {
-  margin-left: 30px;
-}
-.questions.dashboard .views-field-comment-count {
-  margin-bottom: 0;
-}
-.role-coordinator .questions .views-field-title,
-.role-counselor .questions.archive .views-field-title,
-.role-coordinator .questions .views-field-field-name,
-.role-counselor .questions.archive .views-field-field-name {
-  margin-bottom: 10px;
-}
-.role-coordinator .questions .views-field-field-name,
-.role-counselor .questions.archive .views-field-field-name,
-.role-coordinator .questions .views-field-changed,
-.role-counselor .questions.archive .views-field-changed {
-  font-weight: normal;
-}
-.role-coordinator .questions .views-field-last-updated .field-content,
-.role-counselor .questions.archive .views-field-last-updated .field-content,
-.role-coordinator .questions .views-field-changed .field-content,
-.role-counselor .questions.archive .views-field-changed .field-content,
-.role-coordinator .questions .views-field-created .field-content,
-.role-counselor .questions.archive .views-field-created .field-content,
-.role-coordinator .questions .views-field-comment-count .field-content,
-.role-counselor .questions.archive .views-field-comment-count .field-content {
-  margin-right: 10px;
-}
-.role-coordinator .questions .views-field-nothing .field-content,
-.role-counselor .questions.archive .views-field-nothing .field-content {
-  margin: 18px 5px 0 0;
-}
-.role-coordinator .questions .views-field-field-profile-picture .field-content,
-.role-counselor .questions.archive .views-field-field-profile-picture .field-content,
-.role-coordinator .questions .views-field-field-profile-picture-1 .field-content,
-.role-counselor .questions.archive .views-field-field-profile-picture-1 .field-content {
-  margin-right: 10px;
-}
-.role-counselor .questions.archive .views-field-changed {
-  margin-top: 40px;
 }
 .users .views-field-field-name,
 .users .views-field-field-name-1 {
@@ -5430,6 +5356,22 @@ footer.footer:before {
 .counselors .views-field-field-name {
   font-size: 14px;
   margin-bottom: 0;
+}
+/****************************************************************
+*                           Articles                            *
+****************************************************************/
+.article .views-field-created {
+  margin-top: 10px;
+}
+.article .views-field-title .field-content {
+  margin-top: 0;
+}
+.article .views-field-field-image .field-content {
+  margin-right: 19px;
+}
+.article .views-field-body .field-content {
+  display: inline-block;
+  width: 85%;
 }
 /****************************************************************
 *                           Profiles                            *
@@ -5534,6 +5476,88 @@ footer.footer:before {
 /****************************************************************
 *                            Question                           *
 ****************************************************************/
+.questions .views-field {
+  margin-bottom: 10px;
+}
+.questions .views-field-title {
+  font-size: 17.5px;
+  font-weight: bold;
+}
+.questions .views-field-field-name {
+  font-size: 14px;
+  margin: 0;
+}
+.questions .views-field-created {
+  margin-left: 8px;
+  margin-right: 8px;
+}
+.questions .views-field-created,
+.questions .views-field-changed,
+.questions .views-field-last-updated,
+.questions .views-field-last-comment-timestamp,
+.questions .views-field-comment-count {
+  color: #999999;
+  font-size: 11.9px;
+}
+.questions .views-field-last-comment-name {
+  color: #999999;
+  font-size: 11.9px;
+  font-weight: bold;
+}
+.questions.dashboard .views-row {
+  padding: 15px 0;
+  position: relative;
+}
+.questions.dashboard .new-mark {
+  position: absolute;
+  top: 1px;
+}
+.questions.dashboard .new-mark .label {
+  padding: 31px 5px;
+}
+.questions.dashboard .views-field-title,
+.questions.dashboard .views-field-last-updated,
+.questions.dashboard .views-field-comment-count {
+  margin-left: 30px;
+}
+.questions.dashboard .views-field-comment-count {
+  margin-bottom: 0;
+}
+.role-coordinator .questions .views-field-title,
+.role-counselor .questions.archive .views-field-title,
+.role-coordinator .questions .views-field-field-name,
+.role-counselor .questions.archive .views-field-field-name {
+  margin-bottom: 10px;
+}
+.role-coordinator .questions .views-field-field-name,
+.role-counselor .questions.archive .views-field-field-name,
+.role-coordinator .questions .views-field-changed,
+.role-counselor .questions.archive .views-field-changed {
+  font-weight: normal;
+}
+.role-coordinator .questions .views-field-last-updated .field-content,
+.role-counselor .questions.archive .views-field-last-updated .field-content,
+.role-coordinator .questions .views-field-changed .field-content,
+.role-counselor .questions.archive .views-field-changed .field-content,
+.role-coordinator .questions .views-field-created .field-content,
+.role-counselor .questions.archive .views-field-created .field-content,
+.role-coordinator .questions .views-field-comment-count .field-content,
+.role-counselor .questions.archive .views-field-comment-count .field-content {
+  margin-right: 10px;
+}
+.role-coordinator .questions .views-field-nothing .field-content,
+.role-counselor .questions.archive .views-field-nothing .field-content {
+  margin: 18px 5px 0 0;
+}
+.role-coordinator .questions .views-field-field-profile-picture .field-content,
+.role-counselor .questions.archive .views-field-field-profile-picture .field-content,
+.role-coordinator .questions .views-field-field-profile-picture-1 .field-content,
+.role-counselor .questions.archive .views-field-field-profile-picture-1 .field-content {
+  margin-right: 10px;
+}
+.role-counselor .questions.archive .views-field-changed {
+  margin-top: 40px;
+}
 .node-question .submitted {
   border-bottom: 1px solid #e5e5e5;
   border-top: 1px solid #e5e5e5;
