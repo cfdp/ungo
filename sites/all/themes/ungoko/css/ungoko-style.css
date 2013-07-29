@@ -5379,6 +5379,7 @@ footer.footer:before {
 .client-profile .views-field,
 .counselor-profile .views-field {
   color: #999999;
+  font-size: 14px;
   margin: 5px 0;
 }
 .client-profile .field-content,
@@ -5582,6 +5583,15 @@ footer.footer:before {
   margin: 0;
   padding: 0;
   text-align: left;
+}
+.node-question .comment header span {
+  color: #999999;
+}
+.node-question .comment header .username {
+  color: #333333;
+}
+.node-question .comment .field-name-field-profile-picture {
+  display: inline-block;
 }
 .node-question .comment.well {
   padding: 10px;
