@@ -136,7 +136,7 @@ function ungoko_form_question_node_form_alter(&$form, &$form_state, $form_id){
     Loads specific local jQuery version 1.7.2 required by Bootstrap instead of default Drupal
     Provide local bootstrap library file when CDN option is unchecked. */
 
-function bootstrap_js_alter(&$javascript) {
+function ungoko_js_alter(&$javascript) {
   $theme_path = drupal_get_path('theme', 'bootstrap');
   // Replace with current version.
   $jQuery_version = '1.7.2';
