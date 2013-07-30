@@ -5593,6 +5593,7 @@ a.badge:focus {
 }
 .node-question .comment header span {
   color: #999999;
+  margin-left: 5px;
 }
 .node-question .comment header .username {
   color: #333333;
@@ -5606,6 +5607,9 @@ a.badge:focus {
 .node-question .comment.well h3 {
   border-top: 1px solid #e5e5e5;
   margin: 10px 0 0;
+}
+.node-question .comment .field-name-comment-body {
+  margin-top: 10px;
 }
 /****************************************************************
 *                             Forms                             *

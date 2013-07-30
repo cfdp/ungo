@@ -63,7 +63,7 @@ function ungoko_preprocess_comment(&$variables) {
 
   $variables['title'] = l($comment->subject, $uri['path'], $uri['options']);
   $variables['permalink'] = l(t('Permalink'), $uri['path'], $uri['options']);
-  $variables['submitted'] = t('Submitted by !username on !datetime', array('!username' => $variables['author'], '!datetime' => $variables['created']));
+  $variables['submitted'] = t('!username on !datetime', array('!username' => $variables['author'], '!datetime' => $variables['created']));
 
   // Preprocess fields.
   field_attach_preprocess('comment', $comment, $variables['elements'], $variables);
