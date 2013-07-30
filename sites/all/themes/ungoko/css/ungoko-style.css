@@ -5263,9 +5263,6 @@ a.badge:focus {
 *                             General                            *
 ****************************************************************/
 [class^="icon-"] {
-  margin: 3px 3px 0 0;
-}
-.btn i {
   margin: 3px 7px 0 0;
 }
 .reveal {
@@ -5289,20 +5286,26 @@ a.badge:focus {
 /****************************************************************
 *                             Footer                            *
 ****************************************************************/
-footer.footer {
+.footer {
+  border: 0 solid transparent;
+}
+/*footer.footer {
   padding-bottom: 0;
   text-align: right;
+
+
+  &:before {
+    content:"";
+    display: block;
+    float: left;
+    position: relative;
+    bottom: 0;
+    width: 352px;
+    height: 230px;
+    background: url('../img/hands.png');
+  }
 }
-footer.footer:before {
-  content: "";
-  display: block;
-  float: left;
-  position: relative;
-  bottom: 0;
-  width: 352px;
-  height: 230px;
-  background: url('../img/hands.png');
-}
+*/
 /****************************************************************
 *                             Views                             *
 ****************************************************************/
@@ -5321,9 +5324,6 @@ footer.footer:before {
 .page-oversigt .views-field-field-profile-picture {
   float: left;
 }
-.page-oversigt .views-field-field-profile-picture .field-content {
-  margin-right: 10px;
-}
 .page-oversigt .views-row {
   border-bottom: 1px solid #e5e5e5;
   display: inline-block;
@@ -5336,6 +5336,9 @@ footer.footer:before {
 }
 .page-oversigt .views-row.views-row-last.views-row-first {
   padding: 0;
+}
+.views-field-field-profile-picture .field-content {
+  margin-right: 10px;
 }
 .views-field-created,
 .views-field-changed,
@@ -5438,6 +5441,10 @@ footer.footer:before {
 .users.clients.dashboard .profile-card {
   min-height: 103px;
 }
+/* Hide the view tab on the counselor's edit profile page */
+.page-profile-counselor-edit .nav-tabs li:first-child {
+  display: none;
+}
 /****************************************************************
 *                           Documents                           *
 ****************************************************************/
@@ -5456,10 +5463,6 @@ footer.footer:before {
   color: #999999;
   font-size: 11.9px;
 }
-.documents .views-field-created [class^="icon-"],
-.documents.dashboard .views-field-created [class^="icon-"] {
-  margin: 1px 1px 0 0;
-}
 .documents .views-field-field-dokument-fil,
 .documents.dashboard .views-field-field-dokument-fil {
   margin: 3px 0;
@@ -5469,6 +5472,10 @@ footer.footer:before {
   position: absolute;
   right: 10px;
   bottom: 10px;
+}
+.documents .views-field-delete-node [class^="icon-"],
+.documents.dashboard .views-field-delete-node [class^="icon-"] {
+  margin: 1px 5px 0 0;
 }
 .documents .view-footer,
 .documents.dashboard .view-footer {

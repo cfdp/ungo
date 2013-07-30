@@ -14,9 +14,7 @@
 *                             General                            *
 ****************************************************************/
 
-[class^="icon-"] {margin: 3px 3px 0 0; }
-
-.btn i { margin: 3px 7px 0 0; }
+[class^="icon-"] { margin: 3px 7px 0 0; }
 
 .reveal { display: none; }
 .hotspot:hover .reveal{ display: inline-block; }
@@ -33,7 +31,9 @@
 /****************************************************************
 *                             Footer                            *
 ****************************************************************/
-footer.footer {
+.footer { border: 0 solid transparent; }
+
+/*footer.footer {
   padding-bottom: 0;
   text-align: right;
 
@@ -49,7 +49,7 @@ footer.footer {
     background: url('../img/hands.png');
   }
 }
-
+*/
 
 /****************************************************************
 *                             Views                             *
@@ -64,8 +64,6 @@ footer.footer {
   .views-field-field-profile-picture {
     float: left; }
 
-  .views-field-field-profile-picture .field-content {
-    margin-right: 10px; }
 
   .views-row {
     border-bottom: 1px solid @grayLighter;
@@ -77,6 +75,7 @@ footer.footer {
   .views-row.views-row-last.views-row-first{ padding: 0;}
 
 }
+.views-field-field-profile-picture .field-content { margin-right: 10px; }
 
 .views-field-created,
   .views-field-changed,
@@ -153,6 +152,10 @@ footer.footer {
   .profile-card {min-height: 103px; }
 }
 
+/* Hide the view tab on the counselor's edit profile page */
+
+.page-profile-counselor-edit .nav-tabs li:first-child { display: none; }
+
 /****************************************************************
 *                           Documents                           *
 ****************************************************************/
@@ -161,10 +164,10 @@ footer.footer {
   .document { padding: 10px; position: relative; word-break: break-all; }
   .views-field-title .field-content { margin: 0; }
   .views-field-created { color: @grayLight; font-size: @fontSizeSmall; 
-    [class^="icon-"] {margin: 1px 1px 0 0; }    
   }
   .views-field-field-dokument-fil { margin: 3px 0; }
   .views-field-delete-node { position: absolute; right: 10px; bottom: 10px; }
+  .views-field-delete-node [class^="icon-"] {margin: 1px 5px 0 0; }    
   .view-footer { margin-top: 10px; }
 }
 
