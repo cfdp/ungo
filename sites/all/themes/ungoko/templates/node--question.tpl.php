@@ -37,9 +37,7 @@
         <?php
         // Display the button to allow users to reopen archived questions
          if(user_access('reopen question') && $content['field_status']['#items'][0]['value'] == 'archived'): ?>
-          <span class="question-status-reopen pull-left">
-          <?php print drupal_render(drupal_get_form('cfdp_uf_form')); ?>
-          <span>
+          <span class="question-status-reopen pull-left"><?php print drupal_render(drupal_get_form('cfdp_uf_form')); ?></span>
         <?php endif;?>
 
         <?php //print $user_picture; ?>

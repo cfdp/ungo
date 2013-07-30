@@ -5481,6 +5481,9 @@ a.badge:focus {
 .documents.dashboard .view-footer {
   margin-top: 10px;
 }
+.sidebar-second .document .views-field-created [class^="icon-"] {
+  margin: 1px 0 0;
+}
 /****************************************************************
 *                            Question                           *
 ****************************************************************/
@@ -5572,6 +5575,9 @@ a.badge:focus {
   font-style: normal;
   padding: 1em 0;
   text-align: right;
+}
+.node-question .submitted [class^='icon-'] {
+  margin: 3px 1px 0 0;
 }
 /****************************************************************
 *                          Node Question                        *

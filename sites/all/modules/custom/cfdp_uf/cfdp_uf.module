@@ -145,18 +145,20 @@ function cfdp_uf_form($form, &$form_state) {
   
   $node = cfdp_uf_get_current_node();
 
+  $alert_message = t("Are you sure you want to perform this action?"); 
 
   if($node->field_status['und'][0]['value'] == 'archived'){
 
     $label = t('Open');
+    $alert_message = t("Are you sure you want to reopen this question?");
 
   }else if($node->field_status['und'][0]['value'] == 'pending'){
 
     $label = t('Archive');
+    $alert_message = t("Are you sure you want to archive this question?");
 
   }
 
- $alert_message = t("Are you sure you want to archive this question?");
 
  $form = array (
   '#action' => '#',
