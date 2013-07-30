@@ -60,10 +60,11 @@ function ungoko_preprocess_comment(&$variables) {
     'class' => 'permalink',
     'rel' => 'bookmark',
   ));
+  $created = date("j/M/Y - G:i A", $comment->created);
 
   $variables['title'] = l($comment->subject, $uri['path'], $uri['options']);
   $variables['permalink'] = l(t('Permalink'), $uri['path'], $uri['options']);
-  $variables['submitted'] = t('!username on !datetime', array('!username' => $variables['author'], '!datetime' => $variables['created']));
+  $variables['submitted'] = t('!username !datetime', array('!username' => $variables['author'], '!datetime' => "<span class=\"comment-date pull-right\"><i class=\"icon-calendar\"></i>" . $created . "</span>"));
 
   // Preprocess fields.
   field_attach_preprocess('comment', $comment, $variables['elements'], $variables);
