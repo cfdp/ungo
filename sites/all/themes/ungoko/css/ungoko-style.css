@@ -5274,6 +5274,11 @@ a.badge:focus {
 .block h2 {
   font-size: 24.5px;
 }
+@media (min-width: 980px) {
+  body {
+    padding-top: 90px;
+  }
+}
 /****************************************************************
 *                               Menu                            *
 ****************************************************************/
@@ -5521,10 +5526,13 @@ a.badge:focus {
 }
 .questions.dashboard .new-mark {
   position: absolute;
-  top: 1px;
+  top: 19px;
 }
 .questions.dashboard .new-mark .label {
   padding: 31px 5px;
+}
+.questions.dashboard .new-mark .label.disable {
+  color: #e5e5e5;
 }
 .questions.dashboard .views-field-title,
 .questions.dashboard .views-field-last-updated,
