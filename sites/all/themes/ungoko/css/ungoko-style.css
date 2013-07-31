@@ -5365,6 +5365,9 @@ a.badge:focus {
   font-size: 14px;
   margin-bottom: 0;
 }
+.dashboard .view-footer p {
+  margin-top: 10px;
+}
 /****************************************************************
 *                           Articles                            *
 ****************************************************************/
@@ -5533,6 +5536,9 @@ a.badge:focus {
 }
 .questions.dashboard .new-mark .label.disable {
   color: #e5e5e5;
+}
+.questions.dashboard .views-row-first.views-row-last .new-mark {
+  top: 3px;
 }
 .questions.dashboard .views-field-title,
 .questions.dashboard .views-field-last-updated,
