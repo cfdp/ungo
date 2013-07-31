@@ -5274,6 +5274,11 @@ a.badge:focus {
 .block h2 {
   font-size: 24.5px;
 }
+@media (min-width: 980px) {
+  body {
+    padding-top: 90px;
+  }
+}
 /****************************************************************
 *                               Menu                            *
 ****************************************************************/
@@ -5306,6 +5311,20 @@ a.badge:focus {
   }
 }
 */
+/****************************************************************
+*                             Front                             *
+****************************************************************/
+.front-video,
+.front-signup {
+  margin-top: 30px;
+}
+.front-signup {
+  font-size: 17.5px;
+}
+.front-signup .signup-link,
+.front-signup .read-more {
+  margin-top: 30px;
+}
 /****************************************************************
 *                             Views                             *
 ****************************************************************/
@@ -5359,6 +5378,9 @@ a.badge:focus {
 .counselors .views-field-field-name {
   font-size: 14px;
   margin-bottom: 0;
+}
+.dashboard .view-footer p {
+  margin-top: 10px;
 }
 /****************************************************************
 *                           Articles                            *
@@ -5521,10 +5543,16 @@ a.badge:focus {
 }
 .questions.dashboard .new-mark {
   position: absolute;
-  top: 1px;
+  top: 19px;
 }
 .questions.dashboard .new-mark .label {
   padding: 31px 5px;
+}
+.questions.dashboard .new-mark .label.disable {
+  color: #e5e5e5;
+}
+.questions.dashboard .views-row-first.views-row-last .new-mark {
+  top: 3px;
 }
 .questions.dashboard .views-field-title,
 .questions.dashboard .views-field-last-updated,

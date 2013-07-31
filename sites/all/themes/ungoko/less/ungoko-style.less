@@ -20,6 +20,12 @@
 .hotspot:hover .reveal{ display: inline-block; }
 
 .block h2 { font-size: 24.5px; }
+
+@media(min-width: 980px) {
+  body {
+    padding-top: 90px;
+  }
+}
 /****************************************************************
 *                               Menu                            *
 ****************************************************************/
@@ -50,7 +56,16 @@
   }
 }
 */
+/****************************************************************
+*                             Front                             *
+****************************************************************/
 
+.front-video,
+.front-signup { margin-top: 30px; }
+.front-signup { font-size: @fontSizeLarge; }
+
+.front-signup .signup-link,
+.front-signup .read-more {margin-top: 30px; }
 /****************************************************************
 *                             Views                             *
 ****************************************************************/
@@ -94,6 +109,7 @@
   .views-field-field-name { font-size: @baseFontSize; margin-bottom: 0;}
 }
 
+.dashboard .view-footer p { margin-top: 10px; }
 
 /****************************************************************
 *                           Articles                            *
@@ -191,9 +207,11 @@
 
 .questions.dashboard{
   .views-row { padding: 15px 0; position: relative; }
-  .new-mark { position: absolute; top: 1px;
+  .new-mark { position: absolute; top: 19px;
     .label { padding: 31px 5px; }
+    .label.disable { color: @grayLighter; }
   }
+  .views-row-first.views-row-last .new-mark { top: 3px; }
   .views-field-title,
   .views-field-last-updated,
   .views-field-comment-count { margin-left: 30px; }
