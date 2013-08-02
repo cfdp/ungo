@@ -5619,11 +5619,18 @@ a.badge:focus {
 /****************************************************************
 *                        Question Comment                       *
 ****************************************************************/
+.node-question .comment {
+  border-bottom: 1px solid #e5e5e5;
+  padding: 15px 0 0;
+}
 .node-question .comment .submitted {
   border-width: 0;
   margin: 0;
   padding: 0;
   text-align: left;
+}
+.node-question .comment:last-child {
+  border-width: 0;
 }
 .node-question .comment header span {
   color: #999999;
@@ -5635,11 +5642,10 @@ a.badge:focus {
 .node-question .comment .field-name-field-profile-picture {
   display: inline-block;
 }
-.node-question .comment.well {
+.node-question .comment {
   padding: 10px;
 }
-.node-question .comment.well h3 {
-  border-top: 1px solid #e5e5e5;
+.node-question .comment h3 {
   margin: 10px 0 0;
 }
 .node-question .comment .field-name-comment-body {
