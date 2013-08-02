@@ -4,7 +4,7 @@
 function cfdp_uf_get_user_picture(&$variables, $uid){
   
   // Store path to default image for when user has no profile picture
-  $client_profile_picture_default = '<img alt="" src="/sites/default/files/styles/ungo_profile_img/public/default_images/profile_client.jpg" typeof="foaf:Image">';
+  $client_profile_picture_default = '<img alt="" src="/sites/default/files/styles/ungo_profile_img/public/default_images/def-client-profile-picture.jpg" typeof="foaf:Image">';
   $counselor_profile_picture_default = '<img alt="" src="/sites/default/files/styles/ungo_profile_img/public/default_images/profile_counselor.jpg" typeof="foaf:Image">';
 
   // Get user id from current node if it is not passed as parameter
