@@ -29,6 +29,8 @@
 /****************************************************************
 *                               Menu                            *
 ****************************************************************/
+/* Move main menu in between logo and user menu*/
+.nav-collapse ul.menu.nav:not(.pull-right) { margin-left: 167px; }
 
 /* Style active state on menu items */
 
@@ -246,12 +248,13 @@
 *                          Node Question                        *
 ****************************************************************/
 .node-question {
-  .submitted { border-bottom: 1px solid @grayLighter; border-top: 1px solid @grayLighter; font-style: normal; padding: 1em 0; text-align: right; 
+  .submitted { border-bottom: 1px solid @grayLighter; border-top: 1px solid @grayLighter; font-style: normal; padding: 1em 0; 
     [class^='icon-'] { margin: 3px 1px 0 0; }
   }
 }
-.node-question .question-status-value { color: @textColor; }
 .node-question .question-status { margin-right: 10px; }
+.node-question .question-status-value { color: @textColor; }
+.node-question .question-status-action form { display: inline-block; margin: 0; }
 /****************************************************************
 *                        Question Comment                       *
 ****************************************************************/
