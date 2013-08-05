@@ -111,6 +111,8 @@
 
 .dashboard .view-footer p { margin-top: 10px; }
 
+.dashboard.questions .view-content { margin-top: 30px; }
+
 /****************************************************************
 *                           Articles                            *
 ****************************************************************/
@@ -213,7 +215,6 @@
     .label.disable { color: @grayLighter; }
   }
   .views-row-first.views-row-last .new-mark { top: 3px; }
-  .views-field-title,
   .views-field-last-updated,
   .views-field-comment-count { margin-left: 30px; }
   .views-field-comment-count { margin-bottom: 0; }
@@ -239,15 +240,16 @@
   .views-field-changed { margin-top: 40px; }
 }
 
+.questions.dashboard.client .views-field-title { margin-left: 30px; }
+
+/****************************************************************
+*                          Node Question                        *
+****************************************************************/
 .node-question {
   .submitted { border-bottom: 1px solid @grayLighter; border-top: 1px solid @grayLighter; font-style: normal; padding: 1em 0; text-align: right; 
     [class^='icon-'] { margin: 3px 1px 0 0; }
   }
 }
-
-/****************************************************************
-*                          Node Question                        *
-****************************************************************/
 .node-question .question-status-value { color: @textColor; }
 .node-question .question-status { margin-right: 10px; }
 /****************************************************************

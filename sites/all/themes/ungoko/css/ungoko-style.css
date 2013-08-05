@@ -5382,6 +5382,9 @@ a.badge:focus {
 .dashboard .view-footer p {
   margin-top: 10px;
 }
+.dashboard.questions .view-content {
+  margin-top: 30px;
+}
 /****************************************************************
 *                           Articles                            *
 ****************************************************************/
@@ -5558,7 +5561,6 @@ a.badge:focus {
 .questions.dashboard .views-row-first.views-row-last .new-mark {
   top: 3px;
 }
-.questions.dashboard .views-field-title,
 .questions.dashboard .views-field-last-updated,
 .questions.dashboard .views-field-comment-count {
   margin-left: 30px;
@@ -5601,6 +5603,12 @@ a.badge:focus {
 .role-counselor .questions.archive .views-field-changed {
   margin-top: 40px;
 }
+.questions.dashboard.client .views-field-title {
+  margin-left: 30px;
+}
+/****************************************************************
+*                          Node Question                        *
+****************************************************************/
 .node-question .submitted {
   border-bottom: 1px solid #e5e5e5;
   border-top: 1px solid #e5e5e5;
@@ -5611,9 +5619,6 @@ a.badge:focus {
 .node-question .submitted [class^='icon-'] {
   margin: 3px 1px 0 0;
 }
-/****************************************************************
-*                          Node Question                        *
-****************************************************************/
 .node-question .question-status-value {
   color: #333333;
 }
