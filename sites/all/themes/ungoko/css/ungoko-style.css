@@ -5476,6 +5476,10 @@ a.badge:focus {
   position: relative;
   word-break: break-all;
 }
+.documents .document .views-field-created [class^="icon-"],
+.documents.dashboard .document .views-field-created [class^="icon-"] {
+  margin: 1px 0 0;
+}
 .documents .views-field-title .field-content,
 .documents.dashboard .views-field-title .field-content {
   margin: 0;
@@ -5497,7 +5501,7 @@ a.badge:focus {
 }
 .documents .views-field-delete-node [class^="icon-"],
 .documents.dashboard .views-field-delete-node [class^="icon-"] {
-  margin: 1px 5px 0 0;
+  margin: 1px 0 0;
 }
 .documents .view-footer,
 .documents.dashboard .view-footer {
