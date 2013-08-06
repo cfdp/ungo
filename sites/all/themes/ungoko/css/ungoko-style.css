@@ -5474,6 +5474,20 @@ a.badge:focus {
 .page-profile-counselor-edit .nav-tabs li:first-child {
   display: none;
 }
+/* Client profile page */
+.role-client .client-profile .edit-client {
+  border: 1px solid #e5e5e5;
+  padding: 8px;
+  overflow: hidden;
+}
+.role-client .client-profile .edit-client .views-label {
+  color: #333333;
+  display: inline-block;
+  padding: 4px 0 0;
+}
+.role-client .client-profile .edit-client a {
+  width: 105px;
+}
 /****************************************************************
 *                           Documents                           *
 ****************************************************************/
@@ -5621,9 +5635,6 @@ a.badge:focus {
 }
 .node-question .submitted [class^='icon-'] {
   margin: 3px 1px 0 0;
-}
-.node-question .submitted [property^='dc:created'] {
-  text-align: right;
 }
 .node-question .question-status {
   margin-right: 10px;
