@@ -24,7 +24,7 @@
 ?>
 <?php 
 	// Allow only users with administrative rights to access the edit client profile link on the client profile page
-	if(user_access('administer users')){
+	if(user_access('administer users') || user_access('edit own client profile')){
 		print $output; 
 	}
 ?>

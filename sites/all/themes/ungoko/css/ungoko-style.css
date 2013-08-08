@@ -5282,6 +5282,10 @@ a.badge:focus {
 /****************************************************************
 *                               Menu                            *
 ****************************************************************/
+/* Move main menu in between logo and user menu*/
+.nav-collapse ul.menu.nav:not(.pull-right) {
+  margin-left: 167px;
+}
 /* Style active state on menu items */
 .navbar .nav > li > a.active {
   background: #cf4e12;
@@ -5382,21 +5386,34 @@ a.badge:focus {
 .dashboard .view-footer p {
   margin-top: 10px;
 }
+.dashboard.questions .view-content {
+  margin-top: 30px;
+}
 /****************************************************************
 *                           Articles                            *
 ****************************************************************/
+.article {
+  clear: both;
+}
 .article .views-field-created {
   margin-top: 10px;
 }
 .article .views-field-title .field-content {
   margin-top: 0;
 }
+.article .views-field-field-image {
+  display: inline-block;
+  min-height: 67px;
+  min-width: 119px;
+}
 .article .views-field-field-image .field-content {
   margin-right: 19px;
 }
-.article .views-field-body .field-content {
-  display: inline-block;
-  width: 85%;
+.front .article .views-field-body {
+  max-width: 80%;
+}
+.article .views-field-body {
+  max-width: 87%;
 }
 /****************************************************************
 *                           Profiles                            *
@@ -5467,6 +5484,20 @@ a.badge:focus {
 .page-profile-counselor-edit .nav-tabs li:first-child {
   display: none;
 }
+/* Client profile page */
+.role-client .client-profile .edit-client {
+  border: 1px solid #e5e5e5;
+  padding: 8px;
+  overflow: hidden;
+}
+.role-client .client-profile .edit-client .views-label {
+  color: #333333;
+  display: inline-block;
+  padding: 4px 0 0;
+}
+.role-client .client-profile .edit-client a {
+  width: 105px;
+}
 /****************************************************************
 *                           Documents                           *
 ****************************************************************/
@@ -5475,6 +5506,10 @@ a.badge:focus {
   padding: 10px;
   position: relative;
   word-break: break-all;
+}
+.documents .document .views-field-created [class^="icon-"],
+.documents.dashboard .document .views-field-created [class^="icon-"] {
+  margin: 1px 0 0;
 }
 .documents .views-field-title .field-content,
 .documents.dashboard .views-field-title .field-content {
@@ -5497,7 +5532,7 @@ a.badge:focus {
 }
 .documents .views-field-delete-node [class^="icon-"],
 .documents.dashboard .views-field-delete-node [class^="icon-"] {
-  margin: 1px 5px 0 0;
+  margin: 1px 0 0;
 }
 .documents .view-footer,
 .documents.dashboard .view-footer {
@@ -5554,7 +5589,6 @@ a.badge:focus {
 .questions.dashboard .views-row-first.views-row-last .new-mark {
   top: 3px;
 }
-.questions.dashboard .views-field-title,
 .questions.dashboard .views-field-last-updated,
 .questions.dashboard .views-field-comment-count {
   margin-left: 30px;
@@ -5597,33 +5631,46 @@ a.badge:focus {
 .role-counselor .questions.archive .views-field-changed {
   margin-top: 40px;
 }
+.questions.dashboard.client .views-field-title {
+  margin-left: 30px;
+}
+/****************************************************************
+*                          Node Question                        *
+****************************************************************/
 .node-question .submitted {
   border-bottom: 1px solid #e5e5e5;
   border-top: 1px solid #e5e5e5;
   font-style: normal;
   padding: 1em 0;
-  text-align: right;
 }
 .node-question .submitted [class^='icon-'] {
   margin: 3px 1px 0 0;
 }
-/****************************************************************
-*                          Node Question                        *
-****************************************************************/
+.node-question .question-status {
+  margin-right: 10px;
+}
 .node-question .question-status-value {
   color: #333333;
 }
-.node-question .question-status {
-  margin-right: 10px;
+.node-question .question-status-action form {
+  display: inline-block;
+  margin: 0;
 }
 /****************************************************************
 *                        Question Comment                       *
 ****************************************************************/
+.node-question .comment {
+  border-bottom: 1px solid #e5e5e5;
+  padding: 15px 0 0;
+}
 .node-question .comment .submitted {
   border-width: 0;
   margin: 0;
   padding: 0;
   text-align: left;
+}
+.node-question .comment:last-child {
+  border-width: 0;
 }
 .node-question .comment header span {
   color: #999999;
@@ -5635,11 +5682,10 @@ a.badge:focus {
 .node-question .comment .field-name-field-profile-picture {
   display: inline-block;
 }
-.node-question .comment.well {
+.node-question .comment {
   padding: 10px;
 }
-.node-question .comment.well h3 {
-  border-top: 1px solid #e5e5e5;
+.node-question .comment h3 {
   margin: 10px 0 0;
 }
 .node-question .comment .field-name-comment-body {
@@ -5659,6 +5705,14 @@ select,
 .help-block {
   font-size: 0.8em;
   font-style: italic;
+}
+/* Align submit buttons to the left edge */
+.form-actions {
+  padding-left: 0;
+}
+/* Remove bottom space on the block sistem help */
+#block-system-help p {
+  margin-bottom: 0;
 }
 /* Removing filter and format options for some roles */
 .role-client .filter-wrapper,

@@ -83,7 +83,7 @@ function ungoko_preprocess_comment(&$variables) {
   }
   
   /* Adding the well class to comments...*/
-  $variables['classes_array'][] = "well";
+  //$variables['classes_array'][] = "well";
 
   // Gather comment classes.
   // 'comment-published' class is not needed, it is either 'comment-preview' or
