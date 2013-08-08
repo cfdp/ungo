@@ -118,17 +118,22 @@
 /****************************************************************
 *                           Articles                            *
 ****************************************************************/
+.article { clear: both; }
+
 .article .views-field-created { margin-top: 10px; }
 
 .article .views-field-title .field-content { margin-top: 0; }
 
+.article .views-field-field-image { display: inline-block; min-height: 67px; min-width: 119px; }
+
 .article .views-field-field-image .field-content { margin-right: 19px; }
 
-.article .views-field-body .field-content {
-  display: inline-block;
-  width: 85%;
+.front .article .views-field-body {
+  max-width: 80%;
 }
-
+ .article .views-field-body {
+  max-width: 87%;
+}
 /****************************************************************
 *                           Profiles                            *
 ****************************************************************/
