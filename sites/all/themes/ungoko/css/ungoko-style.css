@@ -5641,6 +5641,7 @@ a.badge:focus {
   border-bottom: 1px solid #e5e5e5;
   border-top: 1px solid #e5e5e5;
   font-style: normal;
+  overflow: hidden;
   padding: 1em 0;
 }
 .node-question .submitted [class^='icon-'] {
@@ -5655,6 +5656,9 @@ a.badge:focus {
 .node-question .question-status-action form {
   display: inline-block;
   margin: 0;
+}
+.role-counselor .node-question .question-post-date {
+  margin-top: 5px;
 }
 /****************************************************************
 *                        Question Comment                       *
