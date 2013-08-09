@@ -5262,6 +5262,10 @@ a.badge:focus {
 /****************************************************************
 *                             General                            *
 ****************************************************************/
+/* Add padding in order to keep the content below the menu */
+body {
+  padding-top: 90px;
+}
 [class^="icon-"] {
   margin: 3px 7px 0 0;
 }
@@ -5736,4 +5740,81 @@ select,
 }
 .panel-pane h2.pane-title {
   font-size: 24.5px;
+}
+.views-field-created,
+.views-field-last-updated {
+  color: #999;
+  font-size: 11px;
+}
+/* Fixing navigation bar dissapearance when responsive*/
+@media (max-width: 979px) {
+  .nav-collapse,
+  .nav-collapse.collapse {
+    overflow: visible;
+  }
+  .nav-collapse {
+    clear: none;
+  }
+  .nav-collapse .nav > li > a,
+  .nav-collapse .dropdown-menu a {
+    font-weight: 100;
+  }
+  .nav-collapse .nav > li > a {
+    margin-bottom: 0;
+  }
+  .navbar-fixed-top .navbar-inner,
+  .navbar-fixed-bottom .navbar-inner {
+    padding: 0;
+  }
+  .navbar .nav-collapse .nav.pull-right {
+    float: right;
+  }
+  .btn {
+    padding: 4px 10px;
+  }
+  .nav-collapse .dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 1000;
+    display: none;
+    float: left;
+    min-width: 160px;
+    padding: 5px 0;
+    margin: 2px 0 0;
+    list-style: none;
+    background-color: #FFF;
+    border: 1px solid #CCC;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
+    -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    -moz-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    -webkit-background-clip: padding-box;
+    -moz-background-clip: padding;
+    background-clip: padding-box;
+  }
+  .nav-collapse .dropdown-menu a {
+    display: block;
+    padding: 3px 20px;
+    clear: both;
+    font-weight: normal;
+    line-height: 20px;
+    color: #ED6D31;
+    white-space: nowrap;
+  }
+}
+@media (max-width: 767px) {
+  .navbar-fixed-top,
+  .navbar-fixed-bottom,
+  .navbar-static-top {
+    margin-left: 0;
+    margin-right: 0;
+  }
+  body {
+    padding-left: 0;
+    padding-right: 0;
+  }
 }
