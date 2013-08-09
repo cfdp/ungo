@@ -125,6 +125,7 @@ function bootstrap_css_alter(&$css) {
 /**
  * Implements hook_js_alter().
  */
+/* !!! Overwritten by ungoko template.php to provide newer jQuery version for Bootstrap
 function bootstrap_js_alter(&$js) {
   $theme_path = drupal_get_path('theme', 'bootstrap');
   $files = array();
@@ -172,7 +173,7 @@ function bootstrap_js_alter(&$js) {
     }
   }
 }
-
+*/
 function _bootstrap_alter($files, $type) {
   $output = array();
   

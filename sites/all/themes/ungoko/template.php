@@ -23,7 +23,8 @@ function ungoko_preprocess_node(&$variables) {
   if ($variables['display_submitted']){
     $variables['user_picture'] = cfdp_uf_get_user_picture($variables, null);
   }
-  
+
+  $variables['submitted'] = "<i class=\"icon-calendar\"></i>" . t('@date', array('@date' => date(" j/M/Y - G:i A", $variables['created'])));
 }
 
 /* Adding the "Well" bootstrap effecto to comments */
@@ -59,10 +60,11 @@ function ungoko_preprocess_comment(&$variables) {
     'class' => 'permalink',
     'rel' => 'bookmark',
   ));
+  $created = date("j/M/Y - G:i A", $comment->created);
 
   $variables['title'] = l($comment->subject, $uri['path'], $uri['options']);
   $variables['permalink'] = l(t('Permalink'), $uri['path'], $uri['options']);
-  $variables['submitted'] = t('Submitted by !username on !datetime', array('!username' => $variables['author'], '!datetime' => $variables['created']));
+  $variables['submitted'] = t('!username !datetime', array('!username' => $variables['author'], '!datetime' => "<span class=\"comment-date pull-right\"><i class=\"icon-calendar\"></i>" . $created . "</span>"));
 
   // Preprocess fields.
   field_attach_preprocess('comment', $comment, $variables['elements'], $variables);
@@ -81,7 +83,7 @@ function ungoko_preprocess_comment(&$variables) {
   }
   
   /* Adding the well class to comments...*/
-  $variables['classes_array'][] = "well";
+  //$variables['classes_array'][] = "well";
 
   // Gather comment classes.
   // 'comment-published' class is not needed, it is either 'comment-preview' or
@@ -107,11 +109,13 @@ function ungoko_preprocess_comment(&$variables) {
 
 
 // Add placeholder attributes to the login form fields 
+// Push links to the end of the form
 function ungoko_form_user_login_block_alter(&$form, &$form_state, $form_id) {
   
-    $form['name']['#attributes'] = array('placeholder' => t("Email"));
-    $form['pass']['#attributes'] = array('placeholder' => t("Password"));
-  
+  $form['name']['#attributes'] = array('placeholder' => t("Email"));
+  $form['pass']['#attributes'] = array('placeholder' => t("Password"));
+  $form['links']['#weight'] = 100;
+
 }
 
 // Change labels in the comment form 
@@ -129,23 +133,34 @@ function ungoko_form_question_node_form_alter(&$form, &$form_state, $form_id){
   $form['actions']['submit']['#attributes']['class'][] = 'btn-primary';
 }
 
-//Stops sending the delete account confirmation email and deletes the account
-variable_set('user_mail_cancel_confirm_notify', FALSE);
-function ungoko_form_user_cancel_confirm_form_alter(&$form, &$form_state, $form_id) {
-  $form['#submit'][0] = 'ungoko_user_cancel_form_submit';
-}
+/*  Overrides bootstrap theme.inc file 
+    Loads specific local jQuery version 1.7.2 required by Bootstrap instead of default Drupal
+    Provide local bootstrap library file when CDN option is unchecked. */
 
-function ungoko_user_cancel_form_submit(&$form, &$form_state) {
-  // Rather than negating the complex access expression from the original form we can
-  // just make the change in the else portion
-
-  global $user;
-  $account = $form_state['values']['_account'];
-  if (user_access('administer users') && empty($form_state['values']['user_cancel_confirm']) && $account->uid != $user->uid) {
-    // Account has already been cancelled by the system.
+function ungoko_js_alter(&$javascript) {
+  $theme_path = drupal_get_path('theme', 'bootstrap');
+  // Replace with current version.
+  $jQuery_version = '1.7.2';
+  $javascript['misc/jquery.js']['data'] = drupal_get_path('theme', 'bootstrap').'/js/jquery-1.7.2.min.js';
+  $javascript['misc/jquery.js']['version'] = $jQuery_version;
+  $files = array();
+  
+  if (theme_get_setting('cdn_bootstrap')) {
+    $files[] = 'http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/js/bootstrap.min.js';
+  }else{
+    $files[] = $theme_path . '/js/bootstrap.min.js';
   }
-  else {
-    // Cancel the account
-    user_cancel($form_state['values'], $account->uid, $form_state['values']['user_cancel_method']);
+
+  // Rearrange / Add JS
+  $group = -50;
+  $weight = -100;
+  foreach ($files as $file) {
+    if (!isset($javascript[$file])) {
+      $javascript[$file] = drupal_js_defaults();
+      $javascript[$file]['data'] = $file;
+      $javascript[$file]['group'] = $group;
+      $javascript[$file]['weight'] = $weight;
+      $weight++;
+    }
   }
 }

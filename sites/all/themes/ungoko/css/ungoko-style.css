@@ -674,7 +674,7 @@ h4 small {
 .page-header {
   padding-bottom: 9px;
   margin: 20px 0 30px;
-  border-bottom: 1px solid #f5f5f5;
+  border-bottom: 1px solid #e5e5e5;
 }
 ul,
 ol {
@@ -750,7 +750,7 @@ dd {
 hr {
   margin: 20px 0;
   border: 0;
-  border-top: 1px solid #f5f5f5;
+  border-top: 1px solid #e5e5e5;
   border-bottom: 1px solid #ffffff;
 }
 abbr[title],
@@ -765,7 +765,7 @@ abbr.initialism {
 blockquote {
   padding: 0 0 0 15px;
   margin: 0 0 20px;
-  border-left: 5px solid #f5f5f5;
+  border-left: 5px solid #e5e5e5;
 }
 blockquote p {
   margin-bottom: 0;
@@ -785,7 +785,7 @@ blockquote.pull-right {
   float: right;
   padding-right: 15px;
   padding-left: 0;
-  border-right: 5px solid #f5f5f5;
+  border-right: 5px solid #e5e5e5;
   border-left: 0;
 }
 blockquote.pull-right p,
@@ -1227,7 +1227,7 @@ input[readonly],
 select[readonly],
 textarea[readonly] {
   cursor: not-allowed;
-  background-color: #f5f5f5;
+  background-color: #e5e5e5;
 }
 input[type="radio"][disabled],
 input[type="checkbox"][disabled],
@@ -1473,7 +1473,7 @@ select:focus:invalid:focus {
   line-height: 20px;
   text-align: center;
   text-shadow: 0 1px 0 #ffffff;
-  background-color: #f5f5f5;
+  background-color: #e5e5e5;
   border: 1px solid #ccc;
 }
 .input-append .add-on,
@@ -3356,7 +3356,7 @@ input[type="submit"].btn.btn-mini {
 .nav > li > a:hover,
 .nav > li > a:focus {
   text-decoration: none;
-  background-color: #f5f5f5;
+  background-color: #e5e5e5;
 }
 .nav > li > a > img {
   max-width: none;
@@ -3455,7 +3455,7 @@ input[type="submit"].btn.btn-mini {
 }
 .nav-tabs > li > a:hover,
 .nav-tabs > li > a:focus {
-  border-color: #f5f5f5 #f5f5f5 #dddddd;
+  border-color: #e5e5e5 #e5e5e5 #dddddd;
 }
 .nav-tabs > .active > a,
 .nav-tabs > .active > a:hover,
@@ -3653,7 +3653,7 @@ input[type="submit"].btn.btn-mini {
 }
 .tabs-left > .nav-tabs > li > a:hover,
 .tabs-left > .nav-tabs > li > a:focus {
-  border-color: #f5f5f5 #dddddd #f5f5f5 #f5f5f5;
+  border-color: #e5e5e5 #dddddd #e5e5e5 #e5e5e5;
 }
 .tabs-left > .nav-tabs .active > a,
 .tabs-left > .nav-tabs .active > a:hover,
@@ -3674,7 +3674,7 @@ input[type="submit"].btn.btn-mini {
 }
 .tabs-right > .nav-tabs > li > a:hover,
 .tabs-right > .nav-tabs > li > a:focus {
-  border-color: #f5f5f5 #f5f5f5 #f5f5f5 #dddddd;
+  border-color: #e5e5e5 #e5e5e5 #e5e5e5 #dddddd;
 }
 .tabs-right > .nav-tabs .active > a,
 .tabs-right > .nav-tabs .active > a:hover,
@@ -5223,7 +5223,7 @@ a.badge:focus {
   font-weight: 200;
   line-height: 30px;
   color: inherit;
-  background-color: #f5f5f5;
+  background-color: #e5e5e5;
   -webkit-border-radius: 6px;
   -moz-border-radius: 6px;
   border-radius: 6px;
@@ -5262,9 +5262,30 @@ a.badge:focus {
 /****************************************************************
 *                             General                            *
 ****************************************************************/
+[class^="icon-"] {
+  margin: 3px 7px 0 0;
+}
+.reveal {
+  display: none;
+}
+.hotspot:hover .reveal {
+  display: inline-block;
+}
+.block h2 {
+  font-size: 24.5px;
+}
+@media (min-width: 980px) {
+  body {
+    padding-top: 90px;
+  }
+}
 /****************************************************************
 *                               Menu                            *
 ****************************************************************/
+/* Move main menu in between logo and user menu*/
+.nav-collapse ul.menu.nav:not(.pull-right) {
+  margin-left: 167px;
+}
 /* Style active state on menu items */
 .navbar .nav > li > a.active {
   background: #cf4e12;
@@ -5274,39 +5295,401 @@ a.badge:focus {
 /****************************************************************
 *                             Footer                            *
 ****************************************************************/
-footer.footer {
+.footer {
+  border: 0 solid transparent;
+}
+/*footer.footer {
   padding-bottom: 0;
   text-align: right;
+
+
+  &:before {
+    content:"";
+    display: block;
+    float: left;
+    position: relative;
+    bottom: 0;
+    width: 352px;
+    height: 230px;
+    background: url('../img/hands.png');
+  }
 }
-footer.footer:before {
-  content: "";
-  display: block;
-  float: left;
-  position: relative;
-  bottom: 0;
-  width: 352px;
-  height: 230px;
-  background: url('../img/hands.png');
+*/
+/****************************************************************
+*                             Front                             *
+****************************************************************/
+.front-video,
+.front-signup {
+  margin-top: 30px;
+}
+.front-signup {
+  font-size: 17.5px;
+}
+.front-signup .signup-link,
+.front-signup .read-more {
+  margin-top: 30px;
 }
 /****************************************************************
 *                             Views                             *
 ****************************************************************/
+.views-row {
+  border-bottom: 1px solid #e5e5e5;
+  padding: 15px 0;
+}
+.views-row.views-row-first {
+  padding-top: 0;
+}
+.views-row.views-row-last {
+  border-bottom: 1px solid transparent;
+  padding-bottom: 0;
+}
 /* Profile images on dashboard */
 .page-oversigt .views-field-field-profile-picture {
   float: left;
 }
-.page-oversigt .views-field-field-profile-picture .field-content {
-  margin-right: 10px;
-}
 .page-oversigt .views-row {
-  border-bottom: 1px solid #e3e3e3;
+  border-bottom: 1px solid #e5e5e5;
   display: inline-block;
-  padding: 0 0 10px;
-  margin-bottom: 20px;
+  position: relative;
   width: 100%;
 }
-.page-oversigt .pending-clients .views-row {
-  width: 89%;
+.page-oversigt .views-row.views-row-last,
+.page-oversigt .views-row.views-row-last.views-row-first {
+  border-bottom-color: transparent;
+}
+.page-oversigt .views-row.views-row-last.views-row-first {
+  padding: 0;
+}
+.views-field-field-profile-picture .field-content {
+  margin-right: 10px;
+}
+.views-field-created,
+.views-field-changed,
+.views-field-last-updated,
+.views-field-last-comment-timestamp,
+.views-field-comment-count {
+  color: #999999;
+  font-size: 11.9px;
+}
+.view-empty {
+  color: #999999;
+}
+.users .views-field-field-name,
+.users .views-field-field-name-1 {
+  font-size: 17.5px;
+  margin-bottom: 10px;
+}
+.counselors .views-field-field-name {
+  font-size: 14px;
+  margin-bottom: 0;
+}
+.dashboard .view-footer p {
+  margin-top: 10px;
+}
+.dashboard.questions .view-content {
+  margin-top: 30px;
+}
+/****************************************************************
+*                           Articles                            *
+****************************************************************/
+.article {
+  clear: both;
+}
+.article .views-field-created {
+  margin-top: 10px;
+}
+.article .views-field-title .field-content {
+  margin-top: 0;
+}
+.article .views-field-field-image {
+  display: inline-block;
+  min-height: 67px;
+  min-width: 119px;
+}
+.article .views-field-field-image .field-content {
+  margin-right: 19px;
+}
+.front .article .views-field-body {
+  max-width: 80%;
+}
+.article .views-field-body {
+  max-width: 87%;
+}
+/****************************************************************
+*                           Profiles                            *
+****************************************************************/
+.client-profile .views-field,
+.counselor-profile .views-field {
+  color: #999999;
+  font-size: 14px;
+  margin: 5px 0;
+}
+.client-profile .field-content,
+.counselor-profile .field-content {
+  color: #333333;
+}
+.client-profile .views-field-field-profile-picture .field-content,
+.counselor-profile .views-field-field-profile-picture .field-content {
+  margin: 0 10px 0 0;
+}
+.profile-card {
+  border-bottom: 1px solid #e5e5e5;
+  padding: 10px 0;
+}
+.profile-card .views-row {
+  min-height: 65px;
+}
+.profile-card .views-field {
+  color: #999999;
+  margin: 0 5px 3px 0;
+}
+.profile-card .field-content {
+  color: #333333;
+}
+.profile-card .views-field-field-profile-picture {
+  margin: 6px 0 5px 0;
+}
+.profile-card.views-row-first {
+  padding-top: 0;
+}
+.profile-card.views-row-last {
+  border-bottom: 1px solid transparent;
+  padding-bottom: 0;
+}
+.on-counselor-profile .profile-card .views-field {
+  margin: 0;
+}
+.on-counselor-profile .profile-card .views-field-field-name .field-content {
+  margin: 0 0 5px 0;
+}
+.users.counselors .views-field-field-bank .field-content {
+  color: #999999;
+}
+.users.clients .views-field-url {
+  bottom: 12px;
+  display: none;
+  position: absolute;
+  right: 0;
+}
+.users.clients .views-field-url .btn-mini [class^="icon-"] {
+  margin: 1px 5px 0 0;
+}
+.users.clients .profile-card:hover .views-field-url {
+  display: inline-block;
+}
+.users.clients.dashboard .profile-card {
+  min-height: 103px;
+}
+/* Hide the view tab on the counselor's edit profile page */
+.page-profile-counselor-edit .nav-tabs li:first-child {
+  display: none;
+}
+/* Client profile page */
+.role-client .client-profile .edit-client {
+  border: 1px solid #e5e5e5;
+  padding: 8px;
+  overflow: hidden;
+}
+.role-client .client-profile .edit-client .views-label {
+  color: #333333;
+  display: inline-block;
+  padding: 4px 0 0;
+}
+.role-client .client-profile .edit-client a {
+  width: 105px;
+}
+/****************************************************************
+*                           Documents                           *
+****************************************************************/
+.documents .document,
+.documents.dashboard .document {
+  padding: 10px;
+  position: relative;
+  word-break: break-all;
+}
+.documents .document .views-field-created [class^="icon-"],
+.documents.dashboard .document .views-field-created [class^="icon-"] {
+  margin: 1px 0 0;
+}
+.documents .views-field-title .field-content,
+.documents.dashboard .views-field-title .field-content {
+  margin: 0;
+}
+.documents .views-field-created,
+.documents.dashboard .views-field-created {
+  color: #999999;
+  font-size: 11.9px;
+}
+.documents .views-field-field-dokument-fil,
+.documents.dashboard .views-field-field-dokument-fil {
+  margin: 3px 0;
+}
+.documents .views-field-delete-node,
+.documents.dashboard .views-field-delete-node {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+}
+.documents .views-field-delete-node [class^="icon-"],
+.documents.dashboard .views-field-delete-node [class^="icon-"] {
+  margin: 1px 0 0;
+}
+.documents .view-footer,
+.documents.dashboard .view-footer {
+  margin-top: 10px;
+}
+.sidebar-second .document .views-field-created [class^="icon-"] {
+  margin: 1px 0 0;
+}
+/****************************************************************
+*                            Question                           *
+****************************************************************/
+.questions .views-field {
+  margin-bottom: 10px;
+}
+.questions .views-field-title {
+  font-size: 17.5px;
+  font-weight: bold;
+}
+.questions .views-field-field-name {
+  font-size: 14px;
+  margin: 0;
+}
+.questions .views-field-created {
+  margin-left: 8px;
+  margin-right: 8px;
+}
+.questions .views-field-created,
+.questions .views-field-changed,
+.questions .views-field-last-updated,
+.questions .views-field-last-comment-timestamp,
+.questions .views-field-comment-count {
+  color: #999999;
+  font-size: 11.9px;
+}
+.questions .views-field-last-comment-name {
+  color: #999999;
+  font-size: 11.9px;
+  font-weight: bold;
+}
+.questions.dashboard .views-row {
+  padding: 15px 0;
+  position: relative;
+}
+.questions.dashboard .new-mark {
+  position: absolute;
+  top: 19px;
+}
+.questions.dashboard .new-mark .label {
+  padding: 31px 5px;
+}
+.questions.dashboard .new-mark .label.disable {
+  color: #e5e5e5;
+}
+.questions.dashboard .views-row-first.views-row-last .new-mark {
+  top: 3px;
+}
+.questions.dashboard .views-field-last-updated,
+.questions.dashboard .views-field-comment-count {
+  margin-left: 30px;
+}
+.questions.dashboard .views-field-comment-count {
+  margin-bottom: 0;
+}
+.role-coordinator .questions .views-field-title,
+.role-counselor .questions.archive .views-field-title,
+.role-coordinator .questions .views-field-field-name,
+.role-counselor .questions.archive .views-field-field-name {
+  margin-bottom: 10px;
+}
+.role-coordinator .questions .views-field-field-name,
+.role-counselor .questions.archive .views-field-field-name,
+.role-coordinator .questions .views-field-changed,
+.role-counselor .questions.archive .views-field-changed {
+  font-weight: normal;
+}
+.role-coordinator .questions .views-field-last-updated .field-content,
+.role-counselor .questions.archive .views-field-last-updated .field-content,
+.role-coordinator .questions .views-field-changed .field-content,
+.role-counselor .questions.archive .views-field-changed .field-content,
+.role-coordinator .questions .views-field-created .field-content,
+.role-counselor .questions.archive .views-field-created .field-content,
+.role-coordinator .questions .views-field-comment-count .field-content,
+.role-counselor .questions.archive .views-field-comment-count .field-content {
+  margin-right: 10px;
+}
+.role-coordinator .questions .views-field-nothing .field-content,
+.role-counselor .questions.archive .views-field-nothing .field-content {
+  margin: 18px 5px 0 0;
+}
+.role-coordinator .questions .views-field-field-profile-picture .field-content,
+.role-counselor .questions.archive .views-field-field-profile-picture .field-content,
+.role-coordinator .questions .views-field-field-profile-picture-1 .field-content,
+.role-counselor .questions.archive .views-field-field-profile-picture-1 .field-content {
+  margin-right: 10px;
+}
+.role-counselor .questions.archive .views-field-changed {
+  margin-top: 40px;
+}
+.questions.dashboard.client .views-field-title {
+  margin-left: 30px;
+}
+/****************************************************************
+*                          Node Question                        *
+****************************************************************/
+.node-question .submitted {
+  border-bottom: 1px solid #e5e5e5;
+  border-top: 1px solid #e5e5e5;
+  font-style: normal;
+  padding: 1em 0;
+}
+.node-question .submitted [class^='icon-'] {
+  margin: 3px 1px 0 0;
+}
+.node-question .question-status {
+  margin-right: 10px;
+}
+.node-question .question-status-value {
+  color: #333333;
+}
+.node-question .question-status-action form {
+  display: inline-block;
+  margin: 0;
+}
+/****************************************************************
+*                        Question Comment                       *
+****************************************************************/
+.node-question .comment {
+  border-bottom: 1px solid #e5e5e5;
+  padding: 15px 0 0;
+}
+.node-question .comment .submitted {
+  border-width: 0;
+  margin: 0;
+  padding: 0;
+  text-align: left;
+}
+.node-question .comment:last-child {
+  border-width: 0;
+}
+.node-question .comment header span {
+  color: #999999;
+  margin-left: 5px;
+}
+.node-question .comment header .username {
+  color: #333333;
+}
+.node-question .comment .field-name-field-profile-picture {
+  display: inline-block;
+}
+.node-question .comment {
+  padding: 10px;
+}
+.node-question .comment h3 {
+  margin: 10px 0 0;
+}
+.node-question .comment .field-name-comment-body {
+  margin-top: 10px;
 }
 /****************************************************************
 *                             Forms                             *
@@ -5323,42 +5706,34 @@ select,
   font-size: 0.8em;
   font-style: italic;
 }
+/* Align submit buttons to the left edge */
+.form-actions {
+  padding-left: 0;
+}
+/* Remove bottom space on the block sistem help */
+#block-system-help p {
+  margin-bottom: 0;
+}
 /* Removing filter and format options for some roles */
 .role-client .filter-wrapper,
 .role-counselor .filter-wrapper {
   display: none;
 }
-/* Front page login form */
-#block-user-login form {
+/* Navbar logo and menu */
+.navbar .logo {
+  margin: 9px 0;
+}
+.navbar .menu {
+  margin: 18px 0;
+}
+/* Front page login block */
+.block-user-login {
   float: right;
-  margin: 0;
-  padding-top: 10px;
-  width: 435px;
+  margin: 18px 0;
 }
-#block-user-login form .control-group,
-#block-user-login form .control-group input[type="text"],
-#block-user-login form .control-group input[type="password"],
-#block-user-login form .form-submit {
-  display: inline-block;
-  margin: 0;
-}
-#block-user-login form label {
-  display: none;
-}
-#block-user-login form ul {
-  display: inline-block;
-  float: left;
-  list-style: none;
-  margin: 0;
-}
-#block-user-login form ul a {
-  color: #ffffff;
+.block-user-login a {
+  margin: 0 10px;
 }
 .panel-pane h2.pane-title {
   font-size: 24.5px;
-}
-.views-field-created,
-.views-field-last-updated {
-  color: #999;
-  font-size: 11px;
 }
