@@ -5362,34 +5362,3 @@ select,
   color: #999;
   font-size: 11px;
 }
-
-
-/* Fixing navigation bar dissapearance when responsive*/
-@media (max-width: 979px) {
-  
-  html body.admin-menu, body.admin-menu  {
-    margin-top: 90px !important;
-  }
-  .nav-collapse, .nav-collapse.collapse {
-    overflow: visible;
-  }
-  .nav-collapse {
-    clear: none;
-  }
-  .nav-collapse .nav>li>a, .nav-collapse .dropdown-menu a {
-    font-weight: 100;
-  }
-  .nav-collapse .nav>li>a {
-    margin-bottom: 0;
-  }
-  .navbar-fixed-top .navbar-inner, .navbar-fixed-bottom .navbar-inner { 
-    padding: 0;
-  }
-  .navbar .nav-collapse .nav.pull-right {
-    float: right;
-  }
-  .btn { 
-    padding: 4px 10px;
-  }
-  
-}
