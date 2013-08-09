@@ -368,6 +368,9 @@ function cfdp_uf_add_cancel_to_profile2(&$form, &$form_state){
   $current_uid = $user->uid;
   $current_user_roles = $user->roles;
 
+  // Default $path for the cancel link
+  $path = "oversigt";
+
   // If user is annonymous, this is the registration form and the cancel link points to the homepage
   if($current_uid != 0){
     // Store the logged in users's roles and type of profile
@@ -410,10 +413,14 @@ function cfdp_uf_add_cancel_to_profile2(&$form, &$form_state){
         $path = "profile/";
       }
     }else{
-      $path = "profile/" . $profile_uid;
+      if($profile_uid != 0 ){
+        $path = "profile/" . $profile_uid;
+      }else{
+        $path ="oversigt";
+      }
     }
   }else{
-    $path ="";
+    $path ="oversigt";
   }
     
     // Add the cancel link to the form and allow user to get back to the profile page.
@@ -498,4 +505,10 @@ function cfdp_uf_user_update(&$edit, $account, $category){
       watchdog('notice','Client %client_uid has no (open) question. Nothing to reassign.', array('%client_uid'=>$client_uid));
     }
   } // ENDIF user access
+}
+
+function cfdp_uf_form_alter(&$form, $form_state, $form_id){
+    if ($form_id == 'user_register_form') {
+        $form['account']['notify']['#default_value'] = TRUE;
+    }
 }
