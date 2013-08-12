@@ -41,7 +41,7 @@
         <?php endif;?>
 
         <?php //print $user_picture; ?>
-        <span class="pull-right"><?php print $submitted; ?></span>
+        <span class="question-post-date pull-right"><?php print $submitted; ?></span>
       </div>
     <?php endif; ?>
   
