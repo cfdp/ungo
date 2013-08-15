@@ -150,12 +150,12 @@ function cfdp_uf_form($form, &$form_state) {
   if($node->field_status['und'][0]['value'] == 'archived'){
 
     $label = t('Open');
-    $alert_message = t("Are you sure you want to reopen this question?");
+    $alert_message = t("Er du sikker på, at du vil genåbne dette spørgsmål? ");
 
   }else if($node->field_status['und'][0]['value'] == 'pending'){
 
     $label = t('Archive');
-    $alert_message = t("Are you sure you want to archive this question?");
+    $alert_message = t("Er du sikker på, at du vil afslutte dette spørgsmål?");
 
   }
 
@@ -184,12 +184,12 @@ function cfdp_uf_form_submit($form, &$form_state) {
   // Check if the value of the status field is archvived(string)
   if($node->field_status['und'][0]['value'] == 'archived'){
 
-    $action = 'pending';
+    $action = 'under behandling';
     $comments = '2';
 
   }else if($node->field_status['und'][0]['value'] == 'pending'){
 
-    $action = 'archived';
+    $action = 'færdig behandlet';
     $comments = '1';
 
   }
@@ -202,10 +202,10 @@ function cfdp_uf_form_submit($form, &$form_state) {
   // Overwrite the current node with the new values
   node_save($node);
 
-  if( $action == "pending" ){
-    drupal_set_message("Question now has the status of ". $action . ". Conversation is open.");
+  if( $action == "under behandling" ){
+    drupal_set_message("Spørgsmålet er nu ". $action . ". Samtalen er åben.");
   }else{
-    drupal_set_message("Question now has the status of ". $action . ". Conversation is closed. This question has been moved to the arkiv.");
+    drupal_set_message("Spørgsmålet er nu  ". $action . ". Samtalen er afsluttet. Samtalen er blevet flyttet til arkivet.");
   }
 }
 
@@ -273,7 +273,7 @@ function cfdp_uf_form_user_cancel_confirm_form_alter(&$form, &$form_state, $form
     if(count($profiles) >= 1){
       watchdog('user', 'User account cancellation invoked for %user_role with id %uid. Clients still attached.', array('%uid'=> $uid, '%user_role' => $user_role));
 
-      drupal_set_message('<p>' . "Please assign a different counselor to the clients receiving counselling from this counselor. " . '</p>');
+      drupal_set_message('<p>' . "Tildel venligst en anden rådgiver, til denne rådgiveres brugerer." . '</p>');
 
       // Remove form elements for the cancellation method
       unset($form['user_cancel_method'], $form['user_cancel_confirm'], $form['user_cancel_notify'], $form['description']);
@@ -288,7 +288,7 @@ function cfdp_uf_form_user_cancel_confirm_form_alter(&$form, &$form_state, $form
       // Remove form elements for the cancellation method
       unset($form['user_cancel_confirm'], $form['user_cancel_notify'], $form['description']);
 
-      drupal_set_message('<p>' . "The counselor account can be removed." . '</p>');
+      drupal_set_message('<p>' . "Rådgiverens konto kan blive fjernet." . '</p>');
       
       // Overwrite the submit function call
       $form['#submit'][] = 'cfdp_uf_user_cancel_form_submit';
@@ -317,14 +317,14 @@ function cfdp_uf_form_user_cancel_confirm_form_alter(&$form, &$form_state, $form
       unset($form['actions']['submit']);
       
       // Inform the user about how many open questions this client has
-      drupal_set_message('This client has '.$count_questions.' pending questions. Archive them before closing his account.');
-    
+      drupal_set_message('Denne bruger har '.$count_questions.' igangværende spørgsmål. Afslut dem, før du lukker brugerens konto.');
+
     }else{
       
       // Remove form elements for the cancellation method
       unset($form['user_cancel_confirm'], $form['user_cancel_notify'], $form['description']);
 
-      drupal_set_message('All your uploaded files will be removed and all the questions you posted will be anonymized.');
+      drupal_set_message('Alle dine uploadede filer, vil blive fjernet og alle dine spørgsmål vil blive anonymiserede.');
 
       // Overwrite the submit function call      
       $form['#submit'][] = 'cfdp_uf_user_cancel_form_submit';
@@ -426,7 +426,7 @@ function cfdp_uf_add_cancel_to_profile2(&$form, &$form_state){
     // Add the cancel link to the form and allow user to get back to the profile page.
     $form['actions']['cancel'] = array(
       '#type' => 'link',
-      '#title' => 'Cancel',
+      '#title' => t('Cancel'),
       '#href' => $path,
       '#weight' => 50,
       '#attributes' => array('class' => 'btn btn-info pull-right'),
@@ -495,9 +495,9 @@ function cfdp_uf_user_update(&$edit, $account, $category){
         drupal_set_message('<pre>Question ' .  $question->nid . ' is now assigned to counselor ' . $question->field_assigned_counselor['und'][0]['target_id'] . '</pre>');
 
         if(array_key_exists('old_counselor', $GLOBALS)){
-          watchdog('content', 'Question node %nid reassigned from counselor %old_uid to counselor %new_uid.', array('%nid'=> $node->nid, '%old_uid'=>$old_counselor, '%new_uid'=>$new_counselor));
+          watchdog('content', 'Question %nid reassigned from counselor %old_uid to counselor %new_uid.', array('%nid'=> $node->nid, '%old_uid'=>$old_counselor, '%new_uid'=>$new_counselor));
         }else{
-          watchdog('content', 'Question node %nid assigned to counselor %new_uid.', array('%nid'=> $node->nid, '%new_uid'=>$new_counselor));
+          watchdog('content', 'Question %nid assigned to counselor %new_uid.', array('%nid'=> $node->nid, '%new_uid'=>$new_counselor));
         }
 
       } // END foreach
