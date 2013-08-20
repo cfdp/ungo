@@ -1,3 +1,6 @@
+# Ignore img folder inside the theme folder
+sites/all/themes/ungoko/img
+
 # Ignore configuration files that may contain sensitive information.
 sites/*/settings*.php
 
@@ -8,5 +11,15 @@ sites/all/modules/devel
 sites/all/modules/devel_themer
 sites/all/modules/simplehtmldom
 
+<<<<<<< HEAD
 # Ignore mysql dumps
 /*.mysql
+=======
+# Stupid mac files
+.DS_Store
+
+# Sass cache
+.sass-cache
+
+tmp
+>>>>>>> b5692d2efa0aa557d39274b949162baf572ecb17

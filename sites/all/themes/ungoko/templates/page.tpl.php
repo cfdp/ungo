@@ -15,9 +15,7 @@
       <?php endif; ?>
 
       <?php if ($site_name): ?>
-        <h1 id="site-name">
-          <a href="<?php print $front_page; ?>" title="<?php print t('Home'); ?>" class="brand"><?php print $site_name; ?></a>
-        </h1>
+        <a href="<?php print $front_page; ?>" title="<?php print t('Home'); ?>" class="brand"><?php print $site_name; ?></a>
       <?php endif; ?>
 
       <?php if ($primary_nav || $secondary_nav || !empty($page['navigation'])): ?>
@@ -55,9 +53,9 @@
       <aside class="span3" role="complementary">
         <?php print render($page['sidebar_first']); ?>
       </aside>  <!-- /#sidebar-first -->
-    <?php endif; ?>  
+    <?php endif; ?>
 
-    <section class="<?php print _bootstrap_content_span($columns); ?>">  
+    <section class="<?php print _bootstrap_content_span($columns); ?>">
       <?php if ($page['highlighted']): ?>
         <div class="highlighted hero-unit"><?php print render($page['highlighted']); ?></div>
       <?php endif; ?>
@@ -72,7 +70,7 @@
       <?php if ($tabs): ?>
         <?php print render($tabs); ?>
       <?php endif; ?>
-      <?php if ($page['help']): ?> 
+      <?php if ($page['help']): ?>
         <div class="well"><?php print render($page['help']); ?></div>
       <?php endif; ?>
       <?php if ($action_links): ?>

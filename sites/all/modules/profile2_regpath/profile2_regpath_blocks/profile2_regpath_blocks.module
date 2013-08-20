@@ -1,0 +1,76 @@
+<?php
+
+/**
+ * @file
+ * Create unique registration blocks per Profile2 profile type.
+ */
+
+ /**
+ * Implements hook_block_info().
+ */
+function profile2_regpath_block_info() {
+
+  // Create a user registration block for each profile2 profile type.
+  if ($profile2_entity = entity_get_info('profile2')) {
+    foreach (profile2_get_types() as $type_name => $profile_type) {
+      $blocks['p2rp_register_' . $profile_type->id] = array(
+        'info' => t('User Register - @label', array('@label' => $profile_type->label)),
+      );
+    }
+  }
+
+  return $blocks;
+}
+
+/**
+ * Implements hook_block_view().
+ */
+function profile2_regpath_block_view($delta = '') {
+  global $user;
+  // set $block to NULL so that we have something to return for authenticated users.
+  $block = NULL;
+
+  switch ($delta) {
+    // Generate content for each profile2 profile type's pcp block.
+    default:
+      // Hide the block content from authenticated users.
+      if (!$user->uid) {
+        $profile_id = (int)str_replace('p2rp_register_', '', $delta);
+        if ($profile_type = reset(entity_load('profile2_type', array($profile_id)))) {
+          module_load_include('inc', 'profile2_regpath', 'registration_form');
+          
+          $block['subject'] = t('Register as @label', array('@label' => $profile_type->label));
+          $block['content'] = profile2_regpath_build_block_form($profile_type);
+        }
+      }
+      break;
+  }
+
+  return $block;
+}
+
+/*
+ *
+ */
+function profile2_regpath_build_block_form($profile_type) {
+  // We build the form with the 'block' argument so that profile2_regpath does not attach fields
+  // via hook_form_alter().
+  $form_state['profile_type_id'] = $profile_type->id;
+  $form_state['block_style'] = TRUE;
+  $form = drupal_build_form('profile2_regpath_form_block_'.$profile_type->id, $form_state);
+  
+  return $form;
+}
+
+/**
+ * Implements hook_forms()
+ */
+function profile2_regpath_blocks_forms($form_id, $args) {
+  $forms = array();
+  if (strpos($form_id, 'profile2_regpath_form_block_') === 0) {
+      $forms[$form_id] = array(
+          'callback' => 'user_register_form',
+      );
+  }
+  return $forms;
+}

@@ -2,8 +2,12 @@
 
 /* Returns the relevant profile2 user picture, $uid is sent along from comments */
 function cfdp_uf_get_user_picture(&$variables, $uid){
- 
-  // get user id from current node if it is not passed as parameter
+  
+  // Store path to default image for when user has no profile picture
+  $client_profile_picture_default = '<img alt="" src="/sites/default/files/styles/ungo_profile_img/public/default_images/def-client-profile-picture.jpg" typeof="foaf:Image">';
+  $counselor_profile_picture_default = '<img alt="" src="/sites/default/files/styles/ungo_profile_img/public/default_images/profile_counselor.jpg" typeof="foaf:Image">';
+
+  // Get user id from current node if it is not passed as parameter
   if (arg(0) == 'node' && is_numeric(arg(1)) && !$uid ) {
     // Get the nid
     $nid = arg(1);
@@ -11,45 +15,92 @@ function cfdp_uf_get_user_picture(&$variables, $uid){
     $uid = $node->uid;
   }
   
+  // Load the user object
   $user = user_load($uid);
 
-  /* @todo: if the user doesn't have a profile2 profile, we get a nasty error...'*/
-  if (in_array('client', $user->roles)) {
-    $profile = profile2_load_by_user($uid, 'client');
-  }
-  else if (in_array('counselor', $user->roles)) {
-    $profile = profile2_load_by_user($uid, 'counselor');
-  }
-  else if (in_array('authenticated user', $user->roles)) {
-    /* This is a pretty crude way of getting around the missing profile2 issue @todo: find better way */
-    return '<img alt="" src="/sites/default/files/default_images/profile_default_0.jpg" typeof="foaf:Image">';
-  }
-  else {
-    //user is anonymous - this could happen if anonymous users can post content. @todo: handle this case!
-    return '<img alt="" src="/sites/default/files/default_images/profile_default_0.jpg" typeof="foaf:Image">';
-  }
+  if($user && profile2_load_by_user($uid)){
+    
+    if(in_array('client', $user->roles) || in_array('counselor', $user->roles)) {
+      $profile = profile2_load_by_user($uid, 'client');
 
-  $display = array(
-                'type' => 'image',
-                'label'=> 'hidden',// inline, above
-                'settings'=>array(
-                            'image_style'=> 'ungo_profile_img',
-                            'image_link'=> 'content',
-                ));
+      // $profile is not an object when user has no profile2
+      if(is_object($profile)){
+        $profile_fields = array();
+        
+        foreach($profile as $key=>$value){
+            $profile_fields[$key] = $value;
+        }
+        unset($value);
                 
-  return drupal_render(field_view_field('profile2', $profile, 'field_profile_picture', $display));
+        if(!empty($profile_fields['field_profile_picture'])){
+        
+          $field_profile_picture = field_get_items('profile2', $profile, 'field_profile_picture');
+        }else{
+          $field_profile_picture = false;
+        }
+
+      }else{
+        $field_profile_picture = false;
+      }
+      
+      if($field_profile_picture){
+        
+        $display = array(
+              'type' => 'image',
+              'label'=> 'hidden',// inline, above
+              'settings'=>array(
+                          'image_style'=> 'ungo_profile_img',
+                          'image_link'=> 'content',
+                          )
+              );
+
+        // Return the profile_picture part of this profile2          
+        return drupal_render(field_view_field('profile2', $profile, 'field_profile_picture', $display));
+      
+      }else{
+        // Error returning the filed_profile_picture value, user has no picture, fallback to default picture
+        if(in_array('client', $user->roles)){
+          return $client_profile_picture_default;
+        }else{
+          return $counselor_profile_picture_default;
+        }
+      }
+      
+    }else{
+      
+      // User is anonymous - this could happen if anonymous users can post content
+      return $client_profile_picture_default;
+    }
+
+  }else{
+    // User has no profile2 profile
+    watchdog('warning','User %uid has no profile.', array('%uid'=>$uid));
+    
+    return $client_profile_picture_default;
+  }
 }
 
 /* Returns the counselor uid (field_counselor) of the logged in client. 
- * Being used in Client View @todo: handle the case of the client not having a counselor */
+ * Used in Client View - My Counselor display*/
 function cfdp_uf_get_counselor_uid(){
   global $user;
   $cid = NULL;
   if (in_array('client', $user->roles)) {
+    //$account = user_load($user->uid);
     // Get the client profile
-    $profile = profile2_load_by_user($user->uid, 'client');
-    // digging right into the object - @todo: this should be done with field_view_field() or similar API function
-    $cid = $profile->field_counselor['und'][0]['target_id'];
+    $profile = profile2_load_by_user($user, 'client');
+    
+    // Fetch the filed_counselor value form the profile2 object 
+    $field = field_get_items('profile2', $profile, 'field_counselor');
+
+    if($field){
+      
+      // Store the counselor uid
+      $cid = $field[0]['target_id'];
+      
+    }else{
+      watchdog('warning','Client has no counselor assigned!');      
+    }
   }
   // The function was called for a non-client
   else {
@@ -58,3 +109,406 @@ function cfdp_uf_get_counselor_uid(){
   return $cid;
 }
 
+/* Setup permissions for marking questions done by using the status field on the question content type */
+
+function cfdp_uf_permission() {
+  return array(
+    'view question status' => array(
+      'title' => t('View the field value'),
+      'description' => t('Allows a user to view the status of a question')
+    ),
+    'archive question' => array(
+      'title' => t('Set the status field value to arcchived'),
+      'description' => t('Allows a user to archive a question')
+    ),
+    'reopen question' => array(
+      'title' => t('Set the status field value from archived to open'),
+      'description' => t('Allows a user to reopen a question')
+    ), 
+  );
+}
+
+function cfdp_uf_menu() {
+ $items['cfdp_uf'] = array(
+  'title' => 'My title', // The name of the menu that will be displayed
+  'page callback' => 'cfdp_uf_page_callback', // The name of the function that will output a page
+ );
+ return $items;
+}
+
+function cfdp_uf_page_callback() {
+ // The argument is the name of the function with the form details
+ return drupal_get_form('cfdp_uf_form');
+}
+
+function cfdp_uf_form($form, &$form_state) {
+  
+  $node = cfdp_uf_get_current_node();
+
+  $alert_message = t("Are you sure you want to perform this action?"); 
+
+  if($node->field_status['und'][0]['value'] == 'archived'){
+
+    $label = t('Open');
+    $alert_message = t("Er du sikker på, at du vil genåbne dette spørgsmål? ");
+
+  }else if($node->field_status['und'][0]['value'] == 'pending'){
+
+    $label = t('Archive');
+    $alert_message = t("Er du sikker på, at du vil afslutte dette spørgsmål?");
+
+  }
+
+
+ $form = array (
+  '#action' => '#',
+  'archive' => array (
+   '#type' => 'hidden',
+   '#value' => 'archive',
+  ),
+  'submit' => array (
+   '#type' => 'submit',
+   '#value' => $label,
+   '#attributes' => array('onclick' => 'if(!confirm("'.$alert_message.'")){return false;}','class'=> array('btn-danger')),
+  ),
+ );
+
+ return $form;
+}
+
+function cfdp_uf_form_submit($form, &$form_state) {
+ 
+  // Load the current node object
+  $node = cfdp_uf_get_current_node();
+
+  // Check if the value of the status field is archvived(string)
+  if($node->field_status['und'][0]['value'] == 'archived'){
+
+    $action = 'under behandling';
+    $comments = '2';
+
+  }else if($node->field_status['und'][0]['value'] == 'pending'){
+
+    $action = 'færdig behandlet';
+    $comments = '1';
+
+  }
+  
+  $node->field_status['und'][0]['value'] = $action;
+  
+  // Enable or disable the comments
+  $node->comment = $comments;
+  
+  // Overwrite the current node with the new values
+  node_save($node);
+
+  if( $action == "under behandling" ){
+    drupal_set_message("Spørgsmålet er nu ". $action . ". Samtalen er åben.");
+  }else{
+    drupal_set_message("Spørgsmålet er nu  ". $action . ". Samtalen er afsluttet. Samtalen er blevet flyttet til arkivet.");
+  }
+}
+
+
+// Help function to load the current node
+function cfdp_uf_get_current_node(){
+  
+  $node = menu_get_object();
+  $nid = $node->nid;
+  $node = node_load($nid);
+
+  return $node;
+}
+
+// Alter the cancellation process and stop cancellation while counselor has clients
+function cfdp_uf_form_user_cancel_confirm_form_alter(&$form, &$form_state, $form_id) {
+  // Get the uid of the user who's account is about to be cancelled
+  $fields = array();
+  foreach($form['_account']['#value'] as $key=>$value){
+      $fields[$key] = $value;
+  }
+  unset($value);
+
+  // Store user id and typecast it as integer
+  $uid = (int)$fields['uid'];
+  
+  // Store the roles the user has
+  $user_roles = $fields['roles'];
+  
+  // Find if the user is a counselor or a client
+  foreach($user_roles as $key=>$value){
+      if($value == 'client'){
+        $user_role = 'client';
+      }elseif ($value == 'counselor') {
+        $user_role = 'counselor';
+      }else{
+        $user_role = null;
+      }
+  }
+
+  // Rewrite the cancel link to take the user back to the profile page.
+  $form['actions']['cancel']['#title'] = 'Go back';
+  $form['actions']['cancel']['#href'] = 'profile/'. $uid;
+  $form['actions']['cancel']['#options']['path'] = 'profile/'. $uid;
+
+  // Load the node module
+  module_load_include('inc', 'node', 'node.admin');
+  
+  // Disable all the radio buttons for the cancellaction methods
+  $form['user_cancel_method']['user_cancel_block']['#disabled'] = TRUE;
+  $form['user_cancel_method']['user_cancel_block_unpublish']['#disabled'] = TRUE;
+  $form['user_cancel_method']['user_cancel_reassign']['#disabled'] = TRUE;
+  $form['user_cancel_method']['user_cancel_delete']['#disabled'] = TRUE;
+  
+  if($user_role == 'counselor'){
+
+    
+    // Query the db for all client profiles linked to this cousnelor
+    $profiles = db_select('field_data_field_counselor', 'fdfc')
+    ->fields('fdfc', array('entity_id'))
+    ->condition('fdfc.field_counselor_target_id', $uid)
+    ->execute()->fetchAllAssoc('entity_id', $fetch = NULL);
+    
+    // Stop the cancellation chain if the counselor still has clients
+    if(count($profiles) >= 1){
+      watchdog('user', 'User account cancellation invoked for %user_role with id %uid. Clients still attached.', array('%uid'=> $uid, '%user_role' => $user_role));
+
+      drupal_set_message('<p>' . "Tildel venligst en anden rådgiver, til denne rådgiveres brugerer." . '</p>');
+
+      // Remove form elements for the cancellation method
+      unset($form['user_cancel_method'], $form['user_cancel_confirm'], $form['user_cancel_notify'], $form['description']);
+      
+      // Remove the confirm button
+      unset($form['actions']['submit']);
+
+    }else{
+      
+      watchdog('user', 'User account cancellation invoked for %user_role with id %uid', array('%uid'=> $uid, '%user_role' => $user_role));
+      
+      // Remove form elements for the cancellation method
+      unset($form['user_cancel_confirm'], $form['user_cancel_notify'], $form['description']);
+
+      drupal_set_message('<p>' . "Rådgiverens konto kan blive fjernet." . '</p>');
+      
+      // Overwrite the submit function call
+      $form['#submit'][] = 'cfdp_uf_user_cancel_form_submit';
+    }
+
+  }elseif($user_role == 'client'){
+    
+    // Query the db for all questions created by this client that are still opened
+    $query = db_select('node', 'n');
+    $query->join('field_data_field_status', 'fdfs', 'n.nid = fdfs.entity_id');
+    $query->fields('n', array('nid'));
+    $query->condition('n.uid', $uid);
+    $query->condition('n.type', 'question');
+    $query->condition('fdfs.field_status_value', 'pending');
+    $questions = $query->execute()->fetchAllAssoc('nid', $fetch = NULL);
+
+    watchdog('user', 'User account cancellation invoked for %user_role with id %uid', array('%uid'=> $uid, '%user_role' => $user_role));
+    $count_questions = count($questions);
+
+    if($count_questions >= 1){
+    
+      // Remove form elements for the cancellation method
+      unset($form['user_cancel_method'], $form['user_cancel_confirm'], $form['user_cancel_notify'], $form['description']);
+  
+      // Remove the confirm button
+      unset($form['actions']['submit']);
+      
+      // Inform the user about how many open questions this client has
+      drupal_set_message('Denne bruger har '.$count_questions.' igangværende spørgsmål. Afslut dem, før du lukker brugerens konto.');
+
+    }else{
+      
+      // Remove form elements for the cancellation method
+      unset($form['user_cancel_confirm'], $form['user_cancel_notify'], $form['description']);
+
+      drupal_set_message('Alle dine uploadede filer, vil blive fjernet og alle dine spørgsmål vil blive anonymiserede.');
+
+      // Overwrite the submit function call      
+      $form['#submit'][] = 'cfdp_uf_user_cancel_form_submit';
+    } // END else
+  } // END elseif
+}
+
+function cfdp_uf_user_cancel_form_submit(&$form, &$form_state) {
+  // Rather than negating the complex access expression from the original form we can
+  // just make the change in the else portion
+
+  global $user;
+  $account = $form_state['values']['_account'];
+  if (user_access('administer users') && empty($form_state['values']['user_cancel_confirm']) && $account->uid != $user->uid) {
+    // Account has already been cancelled by the system.
+  }
+  else {
+    // Cancel the account
+    user_cancel($form_state['values'], $account->uid, $form_state['values']['user_cancel_method']);
+  }
+  
+  // Redirect to dashboard
+  $form_state['redirect'] = 'oversigt';
+}
+
+// Provide a cancel link on the edit client profile page
+function cfdp_uf_form_profile2_edit_client_form_alter(&$form, &$form_state){
+  cfdp_uf_add_cancel_to_profile2($form, $form_state);
+}
+
+// Provide a cancel link on the edit counselor profile page
+function cfdp_uf_form_profile2_edit_counselor_form_alter(&$form, &$form_state){
+  cfdp_uf_add_cancel_to_profile2($form, $form_state);
+}
+
+// Refactored function to provide cancel link on profile2 edit pages for all roles
+function cfdp_uf_add_cancel_to_profile2(&$form, &$form_state){
+  
+  // Store the logged in user's uid
+  global $user;
+  $current_uid = $user->uid;
+  $current_user_roles = $user->roles;
+
+  // Default $path for the cancel link
+  $path = "oversigt";
+
+  // If user is annonymous, this is the registration form and the cancel link points to the homepage
+  if($current_uid != 0){
+    // Store the logged in users's roles and type of profile
+    if(in_array('counselor', $current_user_roles)){
+      $role = "counselor";
+      $type = "counselor";
+    }elseif (in_array('client', $current_user_roles)) {
+      $role = "client";
+      $type = "client";
+    }elseif(in_array("coordinator", $current_user_roles)){
+      $role = "coordinator";
+    }
+    
+    // When coordinator is editing profiles provide the profile type
+    if($role == "coordinator"){
+      if(array_key_exists("profile_counselor", $form)){
+        $type = "counselor";
+      }elseif(array_key_exists("profile_client", $form)){
+        $type = "client";
+      }
+    }
+
+    // Get the uid of the user who's account is about to be cancelled
+    $fields = array();
+    foreach($form['profile_'.$type]['#entity'] as $key=>$value){
+        $fields[$key] = $value;
+    }
+    unset($value);
+
+    // Store user id and typecast it as integer
+    $profile_uid = (int)$fields['uid'];
+
+    // Check if the current user is editing it's own profile
+    if($profile_uid == $current_uid){
+
+      // Counselor profiles have a different path when viewing their own profile
+      if($role == "counselor"){
+        $path = "my-profile";
+      }elseif($role == "client"){
+        $path = "profile/";
+      }
+    }else{
+      if($profile_uid != 0 ){
+        $path = "profile/" . $profile_uid;
+      }else{
+        $path ="oversigt";
+      }
+    }
+  }else{
+    $path ="oversigt";
+  }
+    
+    // Add the cancel link to the form and allow user to get back to the profile page.
+    $form['actions']['cancel'] = array(
+      '#type' => 'link',
+      '#title' => t('Cancel'),
+      '#href' => $path,
+      '#weight' => 50,
+      '#attributes' => array('class' => 'btn btn-info pull-right'),
+      '#options' => array('path' => $path)
+    );
+}
+
+  // Update all questions belonging to a client when a new cousnelor is assigned to them
+  // All open questions have to be reassigned to the new counselor
+function cfdp_uf_user_update(&$edit, $account, $category){
+  
+  watchdog('user', 'User profile update invoked.');
+  
+  if(user_access('edit any client profile')){
+    // Get the uid's of the new counselor and the client
+    $fields = array();
+    foreach($account as $key=>$value){
+        $fields[$key] = $value;
+    }
+    unset($value);
+
+    // Store the client's uid
+    $client_uid = (int)$fields['uid'];
+
+    // Store the new counselor's uid
+    if(array_key_exists('field_dependant_fallback_field_f', $fields) && !empty($fields['field_dependant_fallback_field_f']['und'])){
+
+      $new_counselor = (int)$fields['field_dependant_fallback_field_f']['und'][0]['target_id'];
+
+      // Get the uid of the old/current counselor
+      $original_fields = array();
+      foreach ($fields['original'] as $key => $value) {
+         $original_fields[$key] = $value;
+      }
+
+      if(array_key_exists('field_dependant_fallback_field_f', $original_fields) && !empty($original_fields['field_dependant_fallback_field_f']['und'])){
+        
+        // Store the old counselor's uid
+        $old_counselor = (int)$original_fields['field_dependant_fallback_field_f']['und'][0]['target_id'];
+      }
+    }else{
+      watchdog('error','Cound not find uid of old or new counselor.');
+      return;
+    }
+    // Load the node module
+    module_load_include('inc', 'node', 'node.admin');
+
+    // Query the db for all questions created by this client that are still opened
+    $query = db_select('node', 'n');
+    $query->join('field_data_field_status', 'fdfs', 'n.nid = fdfs.entity_id');
+    $query->fields('n', array('nid'));
+    $query->condition('n.uid', $client_uid);
+    $query->condition('n.type', 'question');
+    $query->condition('fdfs.field_status_value', 'pending');
+    $questions = $query->execute()->fetchAllAssoc('nid', $fetch = NULL);
+
+    if(count($questions) != 0){  
+      // Load each question and update the field_assigned_counselor with $new_counselor
+      foreach ($questions as $node) {
+        $question = node_load($node->nid);
+        $question->field_assigned_counselor['und'][0]['target_id'] = $new_counselor;
+
+        // Sotre changes made to the node in the database
+        node_save($question);
+
+        drupal_set_message('<pre>Question ' .  $question->nid . ' is now assigned to counselor ' . $question->field_assigned_counselor['und'][0]['target_id'] . '</pre>');
+
+        if(array_key_exists('old_counselor', $GLOBALS)){
+          watchdog('content', 'Question %nid reassigned from counselor %old_uid to counselor %new_uid.', array('%nid'=> $node->nid, '%old_uid'=>$old_counselor, '%new_uid'=>$new_counselor));
+        }else{
+          watchdog('content', 'Question %nid assigned to counselor %new_uid.', array('%nid'=> $node->nid, '%new_uid'=>$new_counselor));
+        }
+
+      } // END foreach
+    }else{
+      watchdog('notice','Client %client_uid has no (open) question. Nothing to reassign.', array('%client_uid'=>$client_uid));
+    }
+  } // ENDIF user access
+}
+
+function cfdp_uf_form_alter(&$form, $form_state, $form_id){
+    if ($form_id == 'user_register_form') {
+        $form['account']['notify']['#default_value'] = TRUE;
+    }
+}
