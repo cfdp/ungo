@@ -5439,6 +5439,16 @@ body {
 .profile-card {
   border-bottom: 1px solid #e5e5e5;
   padding: 10px 0;
+  *zoom: 1;
+}
+.profile-card:before,
+.profile-card:after {
+  display: table;
+  content: "";
+  line-height: 0;
+}
+.profile-card:after {
+  clear: both;
 }
 .profile-card .views-row {
   min-height: 65px;

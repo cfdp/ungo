@@ -152,6 +152,7 @@ body {
 .profile-card {
   border-bottom: 1px solid @grayLighter;
   padding: 10px 0;
+  .clearfix();
 
   .views-row { min-height: 65px; }
   .views-field { color: @grayLight; margin: 0 5px 3px 0; }
@@ -170,7 +171,7 @@ body {
   .views-field-field-bank .field-content { color: @grayLight; }
 }
 .users.clients{
-  .views-field-url { bottom: 12px; display: none; position: absolute; right: 0; 
+  .views-field-url { bottom: 12px; display: none; position: absolute; right: 0;
     .btn-mini [class^="icon-"] { margin: 1px 5px 0 0; }
   }
   .profile-card:hover .views-field-url { display: inline-block };
@@ -198,11 +199,11 @@ body {
   .document { padding: 10px; position: relative; word-break: break-all; }
   .document .views-field-created [class^="icon-"] {margin: 1px 0 0; }
   .views-field-title .field-content { margin: 0; }
-  .views-field-created { color: @grayLight; font-size: @fontSizeSmall; 
+  .views-field-created { color: @grayLight; font-size: @fontSizeSmall;
   }
   .views-field-field-dokument-fil { margin: 3px 0; }
   .views-field-delete-node { position: absolute; right: 10px; bottom: 10px; }
-  .views-field-delete-node [class^="icon-"] {margin: 1px 0 0; }    
+  .views-field-delete-node [class^="icon-"] {margin: 1px 0 0; }
   .view-footer { margin-top: 10px; }
 }
 
@@ -262,7 +263,7 @@ body {
 *                          Node Question                        *
 ****************************************************************/
 .node-question {
-  .submitted { border-bottom: 1px solid @grayLighter; border-top: 1px solid @grayLighter; font-style: normal; overflow: hidden; padding: 1em 0; 
+  .submitted { border-bottom: 1px solid @grayLighter; border-top: 1px solid @grayLighter; font-style: normal; overflow: hidden; padding: 1em 0;
     [class^='icon-'] { margin: 3px 1px 0 0; }
   }
 }
@@ -354,7 +355,7 @@ input, textarea, select, .uneditable-input {
 
 /* Fixing navigation bar dissapearance when responsive*/
 @media (max-width: 979px) {
-  
+
   .nav-collapse, .nav-collapse.collapse {
     overflow: visible;
   }
@@ -367,16 +368,16 @@ input, textarea, select, .uneditable-input {
   .nav-collapse .nav>li>a {
     margin-bottom: 0;
   }
-  .navbar-fixed-top .navbar-inner, .navbar-fixed-bottom .navbar-inner { 
+  .navbar-fixed-top .navbar-inner, .navbar-fixed-bottom .navbar-inner {
     padding: 0;
   }
   .navbar .nav-collapse .nav.pull-right {
     float: right;
   }
-  .btn { 
+  .btn {
     padding: 4px 10px;
   }
-  
+
   .nav-collapse .dropdown-menu {
     position: absolute;
     top: 100%;
