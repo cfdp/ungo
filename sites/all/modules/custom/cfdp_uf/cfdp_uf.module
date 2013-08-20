@@ -512,3 +512,11 @@ function cfdp_uf_form_alter(&$form, $form_state, $form_id){
         $form['account']['notify']['#default_value'] = TRUE;
     }
 }
+
+/**
+ * Implements hook_menu_alter().
+ * Remove view tab on edit user account page
+ */
+function cfdp_uf_menu_alter(&$items) {
+  unset($items['user/%user/view']['title']);
+}
