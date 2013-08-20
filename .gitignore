@@ -7,3 +7,6 @@ sites/*/private
 sites/all/modules/devel
 sites/all/modules/devel_themer
 sites/all/modules/simplehtmldom
+
+# Ignore mysql dumps
+/*.mysql
