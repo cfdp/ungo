@@ -24,7 +24,7 @@ function ungoko_preprocess_node(&$variables) {
     $variables['user_picture'] = cfdp_uf_get_user_picture($variables, null);
   }
 
-  $variables['submitted'] = "<i class=\"icon-calendar\"></i>" . t('@date', array('@date' => date(" j/M/Y - G:i A", $variables['created'])));
+  $variables['submitted'] = t('@date', array('@date' => date(" j/M/Y - G:i A", $variables['created'])));
 }
 
 /* Adding the "Well" bootstrap effecto to comments */
@@ -47,12 +47,12 @@ function ungoko_preprocess_comment(&$variables) {
 
   $variables['new'] = !empty($comment->new) ? t('new') : '';
   //$variables['picture'] = theme_get_setting('toggle_comment_user_picture') ? theme('user_picture', array('account' => $comment)) : '';
-  
+
   /* benjamin@cfdp.dk: We take the user picture from the profile2 field */
   if (theme_get_setting('toggle_comment_user_picture')){
     $uid = $comment->uid;
     $variables['picture'] = cfdp_uf_get_user_picture($variables, $uid);
-  } 
+  }
   $variables['signature'] = $comment->signature;
 
   $uri = entity_uri('comment', $comment);
@@ -64,7 +64,7 @@ function ungoko_preprocess_comment(&$variables) {
 
   $variables['title'] = l($comment->subject, $uri['path'], $uri['options']);
   $variables['permalink'] = l(t('Permalink'), $uri['path'], $uri['options']);
-  $variables['submitted'] = t('!username !datetime', array('!username' => $variables['author'], '!datetime' => "<span class=\"comment-date pull-right\"><i class=\"icon-calendar\"></i>" . $created . "</span>"));
+  $variables['submitted'] = t('!username !datetime', array('!username' => $variables['author'], '!datetime' => "<span class=\"comment-date pull-right\">" . $created . "</span>"));
 
   // Preprocess fields.
   field_attach_preprocess('comment', $comment, $variables['elements'], $variables);
@@ -81,7 +81,7 @@ function ungoko_preprocess_comment(&$variables) {
   else {
     $variables['status'] = ($comment->status == COMMENT_NOT_PUBLISHED) ? 'comment-unpublished' : 'comment-published';
   }
-  
+
   /* Adding the well class to comments...*/
   //$variables['classes_array'][] = "well";
 
@@ -108,23 +108,23 @@ function ungoko_preprocess_comment(&$variables) {
 }
 
 
-// Add placeholder attributes to the login form fields 
+// Add placeholder attributes to the login form fields
 // Push links to the end of the form
 function ungoko_form_user_login_block_alter(&$form, &$form_state, $form_id) {
-  
+
   $form['name']['#attributes'] = array('placeholder' => t("Email"));
   $form['pass']['#attributes'] = array('placeholder' => t("Password"));
   $form['links']['#weight'] = 100;
 
 }
 
-// Change labels in the comment form 
+// Change labels in the comment form
 function ungoko_form_comment_form_alter(&$form, &$form_state, $form_id) {
-  
+
   $label = t('Reply');
   $form['actions']['submit']['#value'] = $label;
   $form['actions']['submit']['#attributes']['class'][] = 'btn-primary';
-  
+
 }
 
 function ungoko_form_question_node_form_alter(&$form, &$form_state, $form_id){
@@ -133,7 +133,7 @@ function ungoko_form_question_node_form_alter(&$form, &$form_state, $form_id){
   $form['actions']['submit']['#attributes']['class'][] = 'btn-primary';
 }
 
-/*  Overrides bootstrap theme.inc file 
+/*  Overrides bootstrap theme.inc file
     Loads specific local jQuery version 1.7.2 required by Bootstrap instead of default Drupal
     Provide local bootstrap library file when CDN option is unchecked. */
 
@@ -144,7 +144,7 @@ function ungoko_js_alter(&$javascript) {
   $javascript['misc/jquery.js']['data'] = drupal_get_path('theme', 'bootstrap').'/js/jquery-1.7.2.min.js';
   $javascript['misc/jquery.js']['version'] = $jQuery_version;
   $files = array();
-  
+
   if (theme_get_setting('cdn_bootstrap')) {
     $files[] = 'http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/js/bootstrap.min.js';
   }else{

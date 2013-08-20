@@ -9,6 +9,9 @@
     <?php print render($title_suffix); ?>
 
   </header>
+  <?php if ($display_submitted): ?>
+    <span class="question-post-date"><?php print $submitted; ?></span>
+  <?php endif;?>
 
   <?php
     // Hide comments, tags, and links now so that we can render them later.
@@ -21,7 +24,7 @@
       <div class="submitted">
         <?php
         //Display the value of the status field if the user has the needed permission
-         if(user_access('view question status')): ?> 
+         if(user_access('view question status')): ?>
           <span class="question-status">
             <span class="question-status-label">Status:</span>
             <span class="question-status-value"><?php print render($content['field_status']['#items'][0]['value']); ?></span>
@@ -41,10 +44,9 @@
         <?php endif;?>
 
         <?php //print $user_picture; ?>
-        <span class="question-post-date pull-right"><?php print $submitted; ?></span>
       </div>
     <?php endif; ?>
-  
+
   <?php if (!empty($content['field_tags']) || !empty($content['links'])): ?>
     <footer>
       <?php print render($content['field_tags']); ?>

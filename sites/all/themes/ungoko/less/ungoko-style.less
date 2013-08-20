@@ -17,6 +17,15 @@
 body {
   padding-top:90px;
 }
+
+body#tinymce {
+  padding-top: 0;
+}
+
+img {
+  border-radius: 3px;
+}
+
 [class^="icon-"] { margin: 3px 7px 0 0; }
 
 .reveal { display: none; }
@@ -157,7 +166,9 @@ body {
   .views-row { min-height: 65px; }
   .views-field { color: @grayLight; margin: 0 5px 3px 0; }
   .field-content {color: @textColor;}
-  .views-field-field-profile-picture { margin: 6px 0 5px 0; }
+  .views-field-field-profile-picture {
+    margin: 0 0 5px 0;
+  }
 }
   .profile-card.views-row-first { padding-top: 0; }
   .profile-card.views-row-last { border-bottom: 1px solid transparent; padding-bottom: 0; }
@@ -189,7 +200,7 @@ body {
 
 .role-client .client-profile .edit-client { border: 1px solid @grayLighter; padding: 8px; overflow: hidden; }
 .role-client .client-profile .edit-client .views-label { color: @textColor; display: inline-block; padding: 4px 0 0; }
-.role-client .client-profile .edit-client a { width: 105px; }
+.role-client .client-profile .edit-client a { min-width: 120px; }
 
 /****************************************************************
 *                           Documents                           *
@@ -266,11 +277,21 @@ body {
   .submitted { border-bottom: 1px solid @grayLighter; border-top: 1px solid @grayLighter; font-style: normal; overflow: hidden; padding: 1em 0;
     [class^='icon-'] { margin: 3px 1px 0 0; }
   }
+
+  .question-post-date {
+    color: @grayLight;
+    margin-bottom: 0.4em;
+    display: block;
+    text-align: right;
+  }
 }
+
 .node-question .question-status { margin-right: 10px; }
 .node-question .question-status-value { color: @textColor; }
 .node-question .question-status-action form { display: inline-block; margin: 0; }
 .role-counselor .node-question .question-post-date { margin-top: 5px; }
+
+
 /****************************************************************
 *                        Question Comment                       *
 ****************************************************************/
@@ -280,17 +301,21 @@ body {
 
 }
 .node-question .comment:last-child { border-width: 0; }
-.node-question .comment header span { color: @grayLight; margin-left: 5px; }
-.node-question .comment header .username { color: @textColor; }
+.node-question .comment header span { color: @grayLight; margin-left: 5px; vertical-align: top; }
 
 .node-question .comment .field-name-field-profile-picture{ display: inline-block; }
 
 .node-question .comment{
   padding: 10px;
+  margin-bottom: 15px;
   h3 { margin: 10px 0 0; }
+
+  img {
+    width: 32px;
+  }
 }
 
-.node-question .comment .field-name-comment-body { margin-top: 10px; }
+.node-question .comment .field-name-comment-body { margin-top: 15px; }
 
 /****************************************************************
 *                             Forms                             *

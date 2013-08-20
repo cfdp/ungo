@@ -5266,6 +5266,12 @@ a.badge:focus {
 body {
   padding-top: 90px;
 }
+body#tinymce {
+  padding-top: 0;
+}
+img {
+  border-radius: 3px;
+}
 [class^="icon-"] {
   margin: 3px 7px 0 0;
 }
@@ -5461,7 +5467,7 @@ body {
   color: #333333;
 }
 .profile-card .views-field-field-profile-picture {
-  margin: 6px 0 5px 0;
+  margin: 0 0 5px 0;
 }
 .profile-card.views-row-first {
   padding-top: 0;
@@ -5510,7 +5516,7 @@ body {
   padding: 4px 0 0;
 }
 .role-client .client-profile .edit-client a {
-  width: 105px;
+  min-width: 120px;
 }
 /****************************************************************
 *                           Documents                           *
@@ -5661,6 +5667,12 @@ body {
 .node-question .submitted [class^='icon-'] {
   margin: 3px 1px 0 0;
 }
+.node-question .question-post-date {
+  color: #999999;
+  margin-bottom: 0.4em;
+  display: block;
+  text-align: right;
+}
 .node-question .question-status {
   margin-right: 10px;
 }
@@ -5693,21 +5705,23 @@ body {
 .node-question .comment header span {
   color: #999999;
   margin-left: 5px;
-}
-.node-question .comment header .username {
-  color: #333333;
+  vertical-align: top;
 }
 .node-question .comment .field-name-field-profile-picture {
   display: inline-block;
 }
 .node-question .comment {
   padding: 10px;
+  margin-bottom: 15px;
 }
 .node-question .comment h3 {
   margin: 10px 0 0;
 }
+.node-question .comment img {
+  width: 32px;
+}
 .node-question .comment .field-name-comment-body {
-  margin-top: 10px;
+  margin-top: 15px;
 }
 /****************************************************************
 *                             Forms                             *
