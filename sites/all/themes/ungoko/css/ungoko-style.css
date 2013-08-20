@@ -5679,7 +5679,8 @@ img {
 .node-question .question-status-value {
   color: #333333;
 }
-.node-question .question-status-action form {
+.node-question .question-status-action form,
+.node-question .question-status-reopen form {
   display: inline-block;
   margin: 0;
 }

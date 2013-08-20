@@ -184,12 +184,12 @@ function cfdp_uf_form_submit($form, &$form_state) {
   // Check if the value of the status field is archvived(string)
   if($node->field_status['und'][0]['value'] == 'archived'){
 
-    $action = 'under behandling';
+    $action = 'pending';
     $comments = '2';
 
   }else if($node->field_status['und'][0]['value'] == 'pending'){
 
-    $action = 'færdig behandlet';
+    $action = 'archived';
     $comments = '1';
 
   }
@@ -511,4 +511,12 @@ function cfdp_uf_form_alter(&$form, $form_state, $form_id){
     if ($form_id == 'user_register_form') {
         $form['account']['notify']['#default_value'] = TRUE;
     }
+}
+
+/**
+ * Implements hook_menu_alter().
+ * Remove view tab on edit user account page
+ */
+function cfdp_uf_menu_alter(&$items) {
+  unset($items['user/%user/view']['title']);
 }
