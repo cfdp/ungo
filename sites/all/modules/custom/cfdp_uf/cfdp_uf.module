@@ -184,12 +184,12 @@ function cfdp_uf_form_submit($form, &$form_state) {
   // Check if the value of the status field is archvived(string)
   if($node->field_status['und'][0]['value'] == 'archived'){
 
-    $action = 'under behandling';
+    $action = 'pending';
     $comments = '2';
 
   }else if($node->field_status['und'][0]['value'] == 'pending'){
 
-    $action = 'færdig behandlet';
+    $action = 'archived';
     $comments = '1';
 
   }
