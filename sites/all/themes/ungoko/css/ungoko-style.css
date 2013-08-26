@@ -5305,26 +5305,9 @@ img {
 /****************************************************************
 *                             Footer                            *
 ****************************************************************/
-.footer-terms {
-  text-align: center;
+.footer {
+  padding: 15px 0;
 }
-/*footer.footer {
-  padding-bottom: 0;
-  text-align: right;
-
-
-  &:before {
-    content:"";
-    display: block;
-    float: left;
-    position: relative;
-    bottom: 0;
-    width: 352px;
-    height: 230px;
-    background: url('../img/hands.png');
-  }
-}
-*/
 /****************************************************************
 *                             Front                             *
 ****************************************************************/
