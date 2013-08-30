@@ -1,12 +1,13 @@
 name = Node view permissions
 description = Enables permissions "View own content" and "View any content" for each content type.
-
+package = Access control
 configure = admin/config/content/node-view-permissions
 
 core = 7.x
-; Information added by drupal.org packaging script on 2012-05-16
-version = "7.x-1.0"
+
+; Information added by drupal.org packaging script on 2013-06-30
+version = "7.x-1.2"
 core = "7.x"
 project = "node_view_permissions"
-datestamp = "1337157068"
+datestamp = "1372586752"
 
