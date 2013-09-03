@@ -5290,7 +5290,7 @@ img {
   }
 }
 .navbar-inner {
-  background: url('/sites/default/files/beton.jpg') no-repeat;
+  background: url('/sites/default/files/beton.jpg') center 0 no-repeat;
   border-bottom: 0;
 }
 /****************************************************************
