@@ -5289,18 +5289,34 @@ img {
     padding-top: 90px;
   }
 }
+.navbar-inner {
+  background: url('/sites/default/files/beton.jpg') no-repeat;
+  border-bottom: 0;
+}
 /****************************************************************
 *                               Menu                            *
 ****************************************************************/
 /* Move main menu in between logo and user menu*/
 .nav-collapse ul.menu.nav:not(.pull-right) {
-  margin-left: 167px;
+  margin-left: 26px;
 }
 /* Style active state on menu items */
+.navbar .nav > li > a:focus,
+.navbar .nav > li > a:hover,
 .navbar .nav > li > a.active {
-  background: #cf4e12;
-  color: white;
-  text-decoration: none;
+  background: transparent;
+  border-bottom: 3px solid #cf4e12;
+}
+/* Remove text shadow on menu items */
+.navbar .nav > li > a {
+  border-bottom: 3px solid transparent;
+  text-shadow: 0 0 0 transparent;
+}
+.navbar .nav li.dropdown.open > .dropdown-toggle,
+.navbar .nav li.dropdown.active > .dropdown-toggle,
+.navbar .nav li.dropdown.open.active > .dropdown-toggle {
+  background: transparent;
+  border-bottom: 3px solid #cf4e12;
 }
 /****************************************************************
 *                             Footer                            *
@@ -5737,7 +5753,7 @@ select,
 }
 /* Navbar logo and menu */
 .navbar .logo {
-  margin: 9px 0;
+  margin: 15px 0;
 }
 .navbar .menu {
   margin: 18px 0;
