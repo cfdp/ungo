@@ -509,7 +509,7 @@ function cfdp_uf_user_update(&$edit, $account, $category){
 
 function cfdp_uf_form_alter(&$form, $form_state, $form_id){
     if ($form_id == 'user_register_form') {
-        $form['account']['notify']['#default_value'] = TRUE;
+        $form['account']['notify']['#default_value'] = FALSE;
     }
 }
 
