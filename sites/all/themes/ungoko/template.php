@@ -146,7 +146,7 @@ function ungoko_js_alter(&$javascript) {
   $files = array();
 
   if (theme_get_setting('cdn_bootstrap')) {
-    $files[] = 'http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/js/bootstrap.min.js';
+    $files[] = 'https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/js/bootstrap.min.js';
   }else{
     $files[] = $theme_path . '/js/bootstrap.min.js';
   }
@@ -163,4 +163,29 @@ function ungoko_js_alter(&$javascript) {
       $weight++;
     }
   }
+}
+
+function ungoko_css_alter(&$css) {
+  $theme_path = drupal_get_path('theme', 'bootstrap');
+
+  $excludes = _bootstrap_alter(bootstrap_theme_get_info('exclude'), 'css');
+
+  if (theme_get_setting('cdn_bootstrap')){
+    //first add the existing bootstrap css to the exclude
+    $excludes[$theme_path . '/bootstrap/css/bootstrap.css'] = FALSE;
+    $excludes[$theme_path . '/bootstrap/css/bootstrap-responsive.css'] = FALSE ;
+    $excludes['http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css'] = FALSE ;
+    
+    //and then add the cdn css
+    $cdn_url ='https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css';
+    $css[$cdn_url]['data'] = $cdn_url;
+    $css[$cdn_url]['type'] = 'external';
+    $css[$cdn_url]['every_page'] = TRUE;
+    $css[$cdn_url]['media'] = 'all';
+    $css[$cdn_url]['preprocess'] = TRUE;
+    $css[$cdn_url]['group'] = CSS_THEME;
+    $css[$cdn_url]['weight'] = 0;
+    $css[$cdn_url]['browsers'] = array('IE' => TRUE, '!IE' => TRUE);
+  }
+  $css = array_diff_key($css, $excludes);
 }
