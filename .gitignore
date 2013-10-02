@@ -11,10 +11,9 @@ sites/all/modules/devel
 sites/all/modules/devel_themer
 sites/all/modules/simplehtmldom
 
-<<<<<<< HEAD
 # Ignore mysql dumps
 /*.mysql
-=======
+
 # Stupid mac files
 .DS_Store
 
@@ -22,4 +21,6 @@ sites/all/modules/simplehtmldom
 .sass-cache
 
 tmp
->>>>>>> b5692d2efa0aa557d39274b949162baf572ecb17
+
+# Google webmaster tools verification file
+googleb6b8c9c8b2a347b6.html
