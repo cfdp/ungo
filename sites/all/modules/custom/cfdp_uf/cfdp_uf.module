@@ -520,3 +520,6 @@ function cfdp_uf_form_alter(&$form, $form_state, $form_id){
 function cfdp_uf_menu_alter(&$items) {
   unset($items['user/%user/view']['title']);
 }
+function cfdp_uf_mail_alter(&$message) {
+  $message['from'] = $message['headers']['From'] = '"Ung Okonomi" <teamet@ungokonomi.dk>';
+}
