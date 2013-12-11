@@ -521,5 +521,5 @@ function cfdp_uf_menu_alter(&$items) {
   unset($items['user/%user/view']['title']);
 }
 function cfdp_uf_mail_alter(&$message) {
-  $message['from'] = $message['headers']['From'] = '"Ung Okonomi" <teamet@ungokonomi.dk>';
+  $message['from'] = $message['headers']['From'] = '"Ung Økonomi" <teamet@ungokonomi.dk>';
 }
