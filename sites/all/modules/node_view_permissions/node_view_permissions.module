@@ -54,6 +54,9 @@ function node_view_permissions_node_access($node, $op, $account) {
   if (node_view_permissions_check_node_type_activation($type)) {
     if ($op == 'view') {
       if (user_access('view any ' . $type . ' content', $account) || (user_access('view own ' . $type . ' content', $account) && ($account->uid == $node->uid))) {
+        if (!$node->status && !user_access('view own unpublished content')) {
+          return NODE_ACCESS_DENY;
+        } 
         return NODE_ACCESS_ALLOW;
       }
       if (!count(module_implements('node_grants'))) {
