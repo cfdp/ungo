@@ -281,23 +281,31 @@ function template_preprocess_prod_monitor_performance(&$vars) {
     foreach ($data_set as $time => $params) {
       // Store title for this modules graphs.
       $vars['graphs'][$module]['title'] = $params['title'];
-      // Count all rows.
-      $count = count($params['data']);
-      foreach ($params['data'] as $title => $row) {
-        // Rows without a specified unit.
-        if (!isset($row[1])) {
-          $row[1] = '';
+      if (is_array($params['data'])) {
+        // Count all rows.
+        $count = count($params['data']);
+        foreach ($params['data'] as $title => $row) {
+          // Rows without a specified unit.
+          if (!isset($row[1])) {
+            $row[1] = '';
+          }
+          if ($i < $count) {
+            // Setup the columns for the graph in such a way that they are
+            // organised by unit so we can draw one graph per unit.
+            $vars['graphs'][$module][$row[1]]['cols'][] = $title;
+            $i++;
+          }
+          // Cast empty strings to 0 and store the data per timestamp and unit so
+          // that we can draw one graph per unit.
+          $vars['graphs'][$module][$row[1]]['rows'][$time][] = (int) $row[0];
         }
-        if ($i < $count) {
-          // Setup the columns for the graph in such a way that they are
-          // organised by unit so we can draw one graph per unit.
-          $vars['graphs'][$module][$row[1]]['cols'][] = $title;
-          $i++;
-        }
-        // Cast empty strings to 0 and store the data per timestamp and unit so
-        // that we can draw one graph per unit.
-        $vars['graphs'][$module][$row[1]]['rows'][$time][] = (int) $row[0];
       }
+      else {
+        $vars['graphs'][$module]['message'] = $params['data'];
+      }
+    }
+    if (count($vars['graphs'][$module]) > 2) {
+      unset($vars['graphs'][$module]['message']);
     }
   }
 }
@@ -320,7 +328,7 @@ function prod_monitor_cron() {
   $elapsed = $process = 0;
 
   foreach ($sites as $id => $site_info) {
-    $elapsed = REQUEST_TIME - $cron_start;
+    $elapsed = time() - $cron_start;
     if ($elapsed < $time_limit) {
       //TODO: add module status update check here.
       _prod_monitor_retrieve_data($id, $site_info);

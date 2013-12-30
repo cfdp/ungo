@@ -4,9 +4,9 @@ package = Monitoring
 core = 7.x
 configure = admin/reports/prod-monitor
 
-; Information added by drupal.org packaging script on 2013-02-26
-version = "7.x-1.6"
+; Information added by  packaging script on 2013-11-25
+version = "7.x-1.8"
 core = "7.x"
 project = "prod_check"
-datestamp = "1361916973"
+datestamp = "1385405033"
 

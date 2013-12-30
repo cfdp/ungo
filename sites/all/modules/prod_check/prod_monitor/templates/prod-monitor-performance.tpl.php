@@ -20,8 +20,12 @@
 
 <?php
     unset($data['title']);
-    foreach ($data as $unit => $numbers) {
-      $unit = strtolower($unit);
+    if (isset($data['message'])) {
+      print $data['message'];
+    }
+    else {
+      foreach ($data as $unit => $numbers) {
+        $unit = strtolower($unit);
 ?>
 <div id="<?php print $module . (!empty($unit) ? '-' . $unit : ''); ?>" style="width: 960px; height: 300px; text-align: center;" class="performance-data"><img style="padding-top: 140px;" src="<?php print base_path() . drupal_get_path('module', 'prod_monitor'); ?>/images/spinner.gif" width="20" height="20" /></div>
 <?php
@@ -48,6 +52,7 @@
 <p>&nbsp;</p>
 
 <?php
+      }
     }
   }
   // Actually add the JS files to the page. Order is important!

@@ -74,148 +74,9 @@ this module can provide it for you! Install it on the remote site and enable the
 fetching of it's data when adding a site to Production monitor.
 
 
-Development: hook_prod_check_alter()
-====================================
-
-You can implement hook_prod_check_alter() in your own module to add additional
-checks or modify the core checks.
-The hook receives the default functions divided into 7 categories:
-
- - settings
- - server
- - performance
- - security
- - modules
- - seo
- - prod_mon
- - perf_data
-
-'prod_mon' & 'perf_data' are special categories that will only be used by the
-accompanying Production monitor module.
-
-Your function that implements the actual check must accept 1 string parameter
-and return an array using the prod_check_execute_check() function.
-
-An example implementation (note the pass by reference in the hook!):
-
-<?php
-/**
- * Implements hook_prod_check_alter()
- * @param array reference to an associative array of all available checks
- */
-function my_module_prod_check_alter(&$checks) {
-  // Add custom check to the server category:
-  //  function_name => title
-  // Do not use t() for the title!
-  $checks['server']['functions']['my_module_additional_check'] = 'Additional check title';
-
-  // Add custom check for Production Monitor only
-  $checks['prod_mon']['functions']['my_module_prod_mon_check'] = 'My Production Monitor only check';
-
-  // Gather performance data
-  $checks['perf_data']['functions']['my_module_prod_check_return_data'] = 'Performance logging';
-
-  // Add entirely new category.
-  $checks['my_category'] = array(
-    'title' => 'Custom category',
-    'description' => 'Collection of checks I find important.',
-    'functions' => array(
-      'my_module_check_stuff' => 'Check stuff',
-      'my_module_check_more_stuff' => 'Check more stuff',
-    ),
-  );
-}
-
-/**
- * Custom function to check some things.
- * @param string the caller of the function, defaults to 'internal' but can also
- *        be 'xmlrpc' or 'nagios'
- * @return array you _must_ return prod_check_execute_check($check, $caller) as
- *         per the example below to insure a proper status array is returned.
- */
-function my_module_additional_check($caller = 'internal') {
-  $check = array();
-
-  $title = 'My modules settings';
-  $setting1 = t('Enable debug info');
-  $setting2 = t('Disable debug info');
-  $path = 'admin/settings/my-module-settings-page';
-  if ($caller != 'internal') {
-    $path = PRODCHECK_BASEURL . $path;
-  }
-
-  $check['my_module_additional_check'] = array(
-    '#title' => t($title),
-    '#state' => variable_get('my_module_debug', 1) != 1,
-    '#severity' => ($caller == 'nagios') ? NAGIOS_STATUS_CRITICAL : REQUIREMENT_ERROR,
-    '#value_ok'  => $setting2,
-    '#value_nok'  => $setting1,
-    '#description_ok'  => prod_check_ok_title($title, $path),
-    '#description_nok' => t('Your !link settings are set to %setting1, they should be set to %setting2 on a producion environment!',
-      array(
-        '!link' => '<em>'.l(t($title), $path, array('attributes' => array('title' => t($title)))).'</em>',
-        '%setting1' => $setting1,
-        '%setting2' => $setting2,
-      )
-    ),
-    '#nagios_key' => 'MYCHCK',
-    '#nagios_type' => 'state',
-  );
-
-  return prod_check_execute_check($check, $caller);
-}
-
-function my_module_check_stuff($caller = 'internal') {
-  [...]
-
-  return prod_check_execute_check($check, $caller);
-}
-
-function my_module_check_more_stuff($caller = 'internal') {
-  [...]
-
-  return prod_check_execute_check($check, $caller);
-}
-
-/**
- * Custom callback for a prod_mon only check. Note the additional parameter in
- * the prod_check_execute_check() call!
- */
-function my_module_prod_mon_check($caller = 'internal') {
-  [...]
-
-  return prod_check_execute_check($check, $caller, 'prod_mon');
-}
-
-/**
- * Return performance data to Production Monitor.
- */
-function my_module_prod_check_return_data() {
-  $data = my_module_gather_summary_data();
-
-  if (!$data) {
-    return array(
-      'my_module' => array (
-        'title' => 'Performance logging',
-        'data' => 'No performance data found.',
-       ),
-    );
-  }
-
-  return array(
-    'my_module' => array (
-      'title' => 'Performance logging',
-      'data' => array(
-        'Total number of page accesses' => array($data['total_accesses']),
-        'Average duration per page' => array($data['ms_avg'], 'ms'),
-        'Average memory per page' => array($data['mb_avg'], 'MB'),
-        'Average querycount' => array($data['query_count']),
-        'Average duration per query' => array($data['ms_query'], 'ms'),
-      ),
-    ),
-  );
-}
-?>
+Development
+===========
+See prod_check.api.php
 
 
 Installation
@@ -371,11 +232,14 @@ Cron is NOT used to do this, since we want to keep the transfer to a minimum.
 
 Hidden link
 ===========
-Production check adds a 'hidden link' to the site where you can check the APC
-status of your site. This page can be found on /admin/reports/status/apc.
-This is in analogy with the system module that adds these 'hidden pages':
+Production check adds some 'hidden links' to the site where you can check the
+APC, Memcache and DB status of your site. These pages can be found on:
+  /admin/reports/status/apc
+  /admin/reports/status/memcache
+  /admin/reports/status/database
+
+This is in analogy with the system module that adds this 'hidden page':
  /admin/reports/status/php
- /admin/reports/status/sql
 
 Truely unmissable when setting up your site on a production server to check if
 all is well!

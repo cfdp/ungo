@@ -34,7 +34,7 @@ function prod_check_requirements($phase) {
           'description' => t('You have not changed the e-mail address on the prod-check !link. The Site e-mail check will not function properly. Please read the README.txt file.', prod_check_link_array('settings page', 'admin/settings/prod-check')),
         );
       }
-      if (variable_get('prod_check_apcpass', 'password') == 'password') {
+      if (function_exists('apc_cache_info') && variable_get('prod_check_apcpass', 'password') == 'password') {
         $requirements['prod_check_apc'] = array(
           'title' => t('Production check'),
           'value' => t('APC password not configured.'),

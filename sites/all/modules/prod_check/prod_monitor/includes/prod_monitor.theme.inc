@@ -14,6 +14,11 @@ function theme_prod_monitor_update_report($variables) {
   $last = $variables['last'];
   $data = $variables['data'];
 
+  if (!is_array($data)) {
+    $output = '<p>'. $data .'</p>';
+    return $output;
+  }
+
   $output = '<div class="update checked">'. ($last ? t('Last checked: @time ago', array('@time' => format_interval(time() - $last))) : t('Last checked: never'));
   $output .= ' <span class="check-manually">('. l(t('Check manually'), 'admin/reports/prod-monitor/site/'.$id.'/update-check') .')</span>';
   $output .= "</div>\n";
