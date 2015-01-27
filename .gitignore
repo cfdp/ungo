@@ -11,6 +11,8 @@ sites/all/modules/devel
 sites/all/modules/devel_themer
 sites/all/modules/simplehtmldom
 sites/all/modules/stage_file_proxy
+sites/all/modules/maillog
+sites/all/modules/reroute_email
 
 # Ignore mysql dumps
 /*.mysql
@@ -22,6 +24,8 @@ sites/all/modules/stage_file_proxy
 .sass-cache
 
 tmp
+.htaccess
+
 
 # Google webmaster tools verification file
 google4ee11bda66af5318.html
