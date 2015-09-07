@@ -13,6 +13,7 @@ sites/all/modules/simplehtmldom
 sites/all/modules/stage_file_proxy
 sites/all/modules/maillog
 sites/all/modules/reroute_email
+sites/all/modules/masquerade
 
 # Ignore mysql dumps
 /*.mysql
