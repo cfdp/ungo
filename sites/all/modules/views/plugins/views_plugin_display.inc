@@ -53,7 +53,7 @@ class views_plugin_display extends views_plugin {
           $this->extender[$extender] = $plugin;
         }
         else {
-          vpr('Invalid display extender @extender', array('@handler' => $extender));
+          vpr('Invalid display extender @extender', array('@extender' => $extender));
         }
       }
     }
@@ -1061,6 +1061,11 @@ class views_plugin_display extends views_plugin {
       $title = $text;
     }
 
+    // Truncate the path as it is displayed as a link.
+    if ($section == 'path') {
+      $text = views_ui_truncate($text, 24);
+    }
+
     return l($text, 'admin/structure/views/nojs/display/' . $this->view->name . '/' . $this->display->id . '/' . $section, array('attributes' => array('class' => 'views-ajax-link ' . $class, 'title' => $title, 'id' => drupal_html_id('views-' . $this->display->id . '-' . $section)), 'html' => TRUE));
   }
 
@@ -1468,7 +1473,7 @@ class views_plugin_display extends views_plugin {
         $form['#title'] .= t('The title of this view');
         $form['title'] = array(
           '#type' => 'textfield',
-          '#description' => t('This title will be displayed with the view, wherever titles are normally displayed; i.e, as the page title, block title, etc.'),
+          '#description' => t('This title will be displayed with the view, wherever titles are normally displayed; i.e, as the page title, block title, etc. Use &lt;none&gt; to not assign a title; this can allow other modules to control the page title.'),
           '#default_value' => $this->get_option('title'),
         );
         break;
@@ -2575,6 +2580,23 @@ class views_plugin_display extends views_plugin {
           $url_options['query'] = $this->view->exposed_raw_input;
         }
         $theme = views_theme_functions('views_more', $this->view, $this->display);
+
+        $parsed_url = drupal_parse_url($path);
+        // Preserve the query string from url.
+        if (!empty($parsed_url['query'])) {
+          if (!empty($url_options['query'])) {
+            $url_options['query'] = array_merge($parsed_url['query'], $url_options['query']);
+          }
+          else {
+            $url_options['query'] = $parsed_url['query'];
+          }
+          $path = $parsed_url['path'];
+        }
+        // Add fragment if applicable.
+        if (!empty($parsed_url['fragment'])) {
+          $url_options['fragment'] = $parsed_url['fragment'];
+        }
+
         $path = check_url(url($path, $url_options));
 
         return theme($theme, array('more_url' => $path, 'link_text' => check_plain($this->use_more_text()), 'view' => $this->view));
@@ -2781,7 +2803,7 @@ class views_plugin_display extends views_plugin {
             }
           }
           else {
-            if ($id != $key && $identifier == $handler->options['expose']['identifier']) {
+            if ($id != $key && isset($handler->options['expose']['identifier']) && $identifier == $handler->options['expose']['identifier']) {
               return FALSE;
             }
           }
