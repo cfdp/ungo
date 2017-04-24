@@ -50,7 +50,7 @@ function profile2_regpath_menu() {
             'page arguments' => array(
               'profiles' => $profile_types,
             ),
-            'access callback' => 'user_is_anonymous',
+            'access callback' => 'user_register_access',
             'file' => 'registration_form.inc',
             'type' => MENU_LOCAL_TASK,
           );
@@ -171,7 +171,7 @@ function profile2_regpath_form_profile2_type_form_alter(&$form, &$form_state, $f
       '#title' => t('Path type(s)'),
       '#options' => array(
         'tabs' => t('Tabs'),
-        'separate' => t('Separate environments'), 
+        'separate' => t('Separate environments'),
       ),
       '#default_value' => is_object($settings) && isset($misc['path_type']) ? $misc['path_type'] : 'separate',
       '#description' => t('Please select the type of page that you would like Profile2 Registration path to generate. <br />
@@ -248,7 +248,7 @@ function profile2_regpath_form_profile2_type_form_alter(&$form, &$form_state, $f
       '#default_value' => is_object($settings) && isset($misc['password_title']) ? $misc['password_title'] : 'User Account',
       '#description' => t('Enter the title you want to display in the request new password page. The default title is <i>User Account</i>.')
     );
-    
+
     // Add text fields for custom registration confirmation message.
     $form['regpath']['settings']['confirmation_display'] = array(
       '#type' => 'checkbox',
@@ -310,7 +310,7 @@ function profile2_regpath_validate_settings($form, &$form_state) {
     if (profile2_regpath_url_validator(trim($form_state['values']['path'])) == FALSE) {
       form_set_error('path', 'Error, you did not enter a valid URL.');
     }
-    // Ensure that URL does not contain a '/'. 
+    // Ensure that URL does not contain a '/'.
     // @todo move this to profile2_regpath_url_validator.
     if (strpos($form_state['values']['path'], '/')) {
       form_set_error('path', 'Error, you cannot use a "/" in your unique path. You may specify only a single segment of the URL.');
@@ -528,7 +528,7 @@ function profile2_regpath_attach_profile_fields(&$form, &$form_state, $form_id, 
 function profile2_regpath_user_insert(&$edit, $account, $category) {
   // Show custom confirmation message.
   if (isset($_SESSION['profile2_regpath']['confirmation_message'])) {
-    drupal_set_message($_SESSION['profile2_regpath']['confirmation_message']);
+    drupal_set_message(filter_xss($_SESSION['profile2_regpath']['confirmation_message']));
     unset($_SESSION['profile2_regpath']['confirmation_message']);
   }
 }
