@@ -3,9 +3,9 @@ description = Attach profile2 profile forms to profile-specific registration url
 core = 7.x
 dependencies[] = profile2
 files[] = profile2_regpath.test
-; Information added by drupal.org packaging script on 2012-10-23
-version = "7.x-2.0-beta3"
+; Information added by Drupal.org packaging script on 2016-11-04
+version = "7.x-2.0-beta4"
 core = "7.x"
 project = "profile2_regpath"
-datestamp = "1351035740"
+datestamp = "1478269440"
 
